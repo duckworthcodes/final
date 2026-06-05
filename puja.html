@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>MahaPoojan — Sacred Puja Seva Booking</title>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --saffron: #C6721B;
+    --saffron-deep: #9E4F08;
+    --saffron-light: #F5C77E;
+    --saffron-pale: #FDF3E4;
+    --gold: #D4A853;
+    --gold-light: #F2E2B0;
+    --cream: #FAF6EE;
+    --ink: #1A1208;
+    --ink-mid: #3D2D12;
+    --ink-soft: #7A6040;
+    --white: #FFFFFF;
+    --border: rgba(198, 114, 27, 0.15);
+    --border-strong: rgba(198, 114, 27, 0.28);
+    --success: #2D7A4F;
+    --success-bg: #EAF5EE;
+  }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* Navigation */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 5vw;
+    background: rgba(250, 246, 238, 0.94);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--saffron-deep);
+    text-decoration: none;
+  }
+
+  .nav-logo span {
+    color: var(--gold);
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-link:hover {
+    color: var(--saffron);
+  }
+
+  .nav-cta {
+    background: var(--saffron);
+    color: white;
+    padding: 0.5rem 1.2rem;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+
+  .breadcrumb {
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  /* Page layout */
+  .page-wrapper {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: calc(100vh - 60px);
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+
+  .sidebar-heading {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.9rem;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: 0.6rem;
+    border: 1px solid transparent;
+    background: none;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.83rem;
+    font-weight: 400;
+    color: var(--ink-soft);
+    text-align: left;
+    width: 100%;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: var(--saffron-pale);
+    border-color: var(--border-strong);
+    color: var(--saffron-deep);
+    font-weight: 500;
+  }
+
+  .filter-count {
+    margin-left: auto;
+    font-size: 0.7rem;
+    background: var(--cream);
+    padding: 0.1rem 0.5rem;
+    border-radius: 1rem;
+  }
+
+  .price-range {
+    margin-top: 0.5rem;
+  }
+
+  .range-input {
+    width: 100%;
+    accent-color: var(--saffron);
+  }
+
+  .deity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .deity-chip {
+    padding: 0.5rem 0.4rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--border);
+    background: none;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .deity-chip.active,
+  .deity-chip:hover {
+    border-color: var(--saffron);
+    background: var(--saffron-pale);
+    color: var(--saffron-deep);
+    font-weight: 500;
+  }
+
+  /* Main grid */
+  .main {
+    padding: 2rem 2.5rem;
+  }
+
+  .listing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .listing-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+  }
+
+  .listing-title em {
+    color: var(--saffron-deep);
+    font-style: italic;
+  }
+
+  .sort-select {
+    font-family: 'Jost', sans-serif;
+    border: 1px solid var(--border);
+    background: white;
+    padding: 0.45rem 0.8rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+
+  /* Featured Banner */
+  .featured-banner {
+    background: linear-gradient(135deg, #2A1A06 0%, #1A0C02 100%);
+    border-radius: 1.2rem;
+    padding: 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .featured-banner::before {
+    content: 'ॐ';
+    position: absolute;
+    right: 200px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 8rem;
+    color: rgba(255, 255, 255, 0.03);
+    font-family: serif;
+    pointer-events: none;
+  }
+
+  .banner-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .banner-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: white;
+  }
+
+  .banner-sub {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 50ch;
+  }
+
+  .banner-cta {
+    background: var(--gold);
+    color: var(--ink-mid);
+    padding: 0.9rem 2rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* Puja Cards Grid */
+  .puja-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .puja-card {
+    background: white;
+    border-radius: 1.2rem;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .puja-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 30px rgba(26, 18, 8, 0.08);
+  }
+
+  .puja-card-top {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    position: relative;
+    background: linear-gradient(135deg, #3D1A00, #2A1A06);
+  }
+
+  .puja-badge {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border-radius: 1rem;
+    background: var(--gold);
+    color: var(--ink-mid);
+  }
+
+  .puja-card-bottom {
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .puja-deity-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--saffron);
+    text-transform: uppercase;
+  }
+
+  .puja-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0.3rem 0;
+  }
+
+  .puja-temple-line {
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.8rem;
+  }
+
+  .puja-includes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .puja-include-item {
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .puja-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+    padding-top: 0.8rem;
+    margin-top: auto;
+  }
+
+  .puja-price-amt {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .book-btn {
+    background: var(--saffron);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .book-btn:hover {
+    background: var(--saffron-deep);
+  }
+
+  /* Modal Overlay */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: rgba(26, 18, 8, 0.7);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .modal-overlay.open {
+    display: flex;
+  }
+
+  .modal {
+    background: var(--cream);
+    border-radius: 1.5rem;
+    width: 100%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    animation: fadeUp 0.3s ease;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-size: 1rem;
+    z-index: 20;
+  }
+
+  /* Steps */
+  .steps-bar {
+    display: flex;
+    padding: 1.5rem 2rem 0;
+    gap: 0.2rem;
+  }
+
+  .step-circle {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    border: 2px solid var(--border);
+    background: white;
+  }
+
+  .step-circle.active {
+    background: var(--saffron);
+    border-color: var(--saffron);
+    color: white;
+  }
+
+  .step-circle.done {
+    background: var(--success);
+    border-color: var(--success);
+    color: white;
+  }
+
+  .step-line {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    margin: 0 0.3rem;
+    align-self: center;
+  }
+
+  .step-line.done {
+    background: var(--success);
+  }
+
+  .steps-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2rem;
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+  }
+
+  .step-label.active {
+    color: var(--saffron);
+  }
+
+  .step-panel {
+    display: none;
+    padding: 0 2rem 2rem;
+  }
+
+  .step-panel.active {
+    display: block;
+    animation: fadeSlide 0.25s;
+  }
+
+  @keyframes fadeSlide {
+    from {
+      opacity: 0;
+      transform: translateX(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .selected-puja-header {
+    background: linear-gradient(135deg, #2A1A06, #1A0C02);
+    border-radius: 1rem;
+    padding: 1.2rem;
+    display: flex;
+    gap: 1rem;
+    color: white;
+    margin-bottom: 1.5rem;
+  }
+
+  .package-option {
+    border: 2px solid var(--border);
+    border-radius: 0.9rem;
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    background: white;
+    transition: all 0.2s;
+  }
+
+  .package-option.selected {
+    border-color: var(--saffron);
+    background: var(--saffron-pale);
+  }
+
+  .package-radio {
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    border: 2px solid var(--border-strong);
+    margin-right: 1rem;
+  }
+
+  .package-option.selected .package-radio {
+    background: var(--saffron);
+    border-color: var(--saffron);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-input, .form-select {
+    width: 100%;
+    padding: 0.7rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--border-strong);
+    font-family: 'Jost', sans-serif;
+  }
+
+  .pay-method {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 2px solid var(--border);
+    border-radius: 0.8rem;
+    padding: 1rem;
+    margin-bottom: 0.7rem;
+    cursor: pointer;
+    background: white;
+  }
+
+  .pay-method.selected {
+    border-color: var(--saffron);
+    background: var(--saffron-pale);
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    border-top: 1px solid var(--border);
+    background: white;
+    border-radius: 0 0 1.5rem 1.5rem;
+  }
+
+  .btn-next, .btn-back {
+    padding: 0.6rem 1.5rem;
+    border-radius: 2rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-next {
+    background: var(--saffron);
+    color: white;
+  }
+
+  .btn-back {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+  }
+
+  @media (max-width: 800px) {
+    .page-wrapper {
+      grid-template-columns: 1fr;
+    }
+    .sidebar {
+      display: none;
+    }
+    .main {
+      padding: 1rem;
+    }
+    .featured-banner {
+      grid-template-columns: 1fr;
+    }
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+  <link rel="stylesheet" href="assets/css/shared.css"/>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/images/logo.jpeg" alt="MahaPoojan" class="logo-img">
+  </a>
+  <ul class="nav-links">
+    <li><a href="puja.html" style="color: var(--saffron);">Puja Seva</a></li>
+    <li><a href="chadhava.html">Chadhava</a></li>
+    <li><a href="temples.html">Temples</a></li>
+    <li><a href="panchang.html">Panchang</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="puja-booking.html" class="nav-cta">Book Puja</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Category</div>
+      <div class="filter-group" id="categoryFilterGroup">
+        <button class="filter-btn active" data-filter="all"><span>All Pujas</span><span class="filter-count">6</span></button>
+        <button class="filter-btn" data-filter="special"><span>Special Events</span><span class="filter-count">2</span></button>
+        <button class="filter-btn" data-filter="daily"><span>Daily Nitya Puja</span><span class="filter-count">2</span></button>
+        <button class="filter-btn" data-filter="festival"><span>Festival Pujas</span><span class="filter-count">2</span></button>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Deity</div>
+      <div class="deity-grid" id="deityGrid"></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="listing-header">
+      <div><h1 class="listing-title">Puja <em>Seva</em></h1><div class="listing-meta">Sacred rituals by temple priests</div></div>
+      <select class="sort-select" id="sortSelect"><option>Most Popular</option><option>Price: Low to High</option><option>Price: High to Low</option></select>
+    </div>
+    <div class="featured-banner">
+      <div><div class="banner-eyebrow">🔱 Rare Celestial Event</div><div class="banner-title">Jupiter Transit Maha Puja</div><div class="banner-sub">3 sacred temples · 12 Brahmins · Live streaming</div></div>
+      <button class="banner-cta" onclick="openModalWithPuja('jupiter')">Book Now →</button>
+    </div>
+    <div class="puja-grid" id="pujaGrid"></div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="steps-bar" id="stepsBar"></div>
+    <div class="steps-labels" id="stepLabels"></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
+<script>
+  // ----- PUJA DATA -----
+  const pujasList = [
+    { id: 'rudrabhishek', name: 'Maha Rudrabhishek Puja', deity: 'Shiva', temple: 'Kashi Vishwanath, Varanasi', price: 1100, category: 'special', icon: '🔱', includes: ['Panchamrit Abhishek', '108 Bilva Patra'], participants: 4231 },
+    { id: 'satyanarayan', name: 'Satyanarayan Katha', deity: 'Vishnu', temple: 'ISKCON Vrindavan', price: 1500, category: 'festival', icon: '🌸', includes: ['Katha recitation', 'Prasad dispatch'], participants: 7890 },
+    { id: 'ganesh', name: 'Ganesh Abhishek', deity: 'Ganesh', temple: 'Siddhivinayak, Mumbai', price: 1100, category: 'daily', icon: '🐘', includes: ['Modak offering', 'Atharva Sheersha'], participants: 2104 },
+    { id: 'surya', name: 'Surya Grahan Shanti', deity: 'Surya', temple: 'Konark Temple', price: 800, category: 'special', icon: '🌞', includes: ['Surya Ashtakam', 'Copper Kalash'], participants: 1567 },
+    { id: 'durga', name: 'Durga Saptashati Path', deity: 'Devi', temple: 'Vaishno Devi', price: 2100, category: 'festival', icon: '🪷', includes: ['700 verses', 'Chunri offering'], participants: 5432 },
+    { id: 'lakshmi', name: 'Lakshmi Kubera Puja', deity: 'Lakshmi', temple: 'Kolhapur Mahalakshmi', price: 3100, category: 'daily', icon: '🌿', includes: ['Shri Sukta', 'Yantra dispatch'], participants: 3219 }
+  ];
+
+  let currentFilter = 'all';
+  let currentDeity = null;
+  let currentStep = 1;
+  let selectedPuja = null;
+  let selectedPackagePrice = 1100;
+  let selectedPackageName = 'Basic Seva';
+  let bookingReference = '';
+
+  function renderDeityFilters() {
+    const deities = [...new Set(pujasList.map(p => p.deity))];
+    const container = document.getElementById('deityGrid');
+    container.innerHTML = deities.map(d => `<button class="deity-chip" data-deity="${d}"><span class="deity-icon">${pujasList.find(p=>p.deity===d).icon || '🙏'}</span>${d}</button>`).join('');
+    document.querySelectorAll('.deity-chip').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.deity-chip').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentDeity = this.getAttribute('data-deity') === currentDeity ? null : this.getAttribute('data-deity');
+        if (!this.classList.contains('active')) currentDeity = null;
+        renderPujaCards();
+      });
+    });
+  }
+
+  function renderPujaCards() {
+    let filtered = pujasList.filter(p => currentFilter === 'all' || p.category === currentFilter);
+    if (currentDeity) filtered = filtered.filter(p => p.deity === currentDeity);
+    const sortValue = document.getElementById('sortSelect').value;
+    if (sortValue === 'Price: Low to High') filtered.sort((a,b) => a.price - b.price);
+    if (sortValue === 'Price: High to Low') filtered.sort((a,b) => b.price - a.price);
+    const grid = document.getElementById('pujaGrid');
+    grid.innerHTML = filtered.map(p => `
+      <div class="puja-card" onclick="openModalWithPuja('${p.id}')">
+        <div class="puja-card-top" style="background: linear-gradient(135deg,#2A1A06,#1A0C02);">${p.icon}<span class="puja-badge">${p.category === 'special' ? 'Special' : p.category === 'festival' ? 'Festival' : 'Seva'}</span></div>
+        <div class="puja-card-bottom">
+          <div class="puja-deity-tag">${p.deity}</div>
+          <div class="puja-name">${p.name}</div>
+          <div class="puja-temple-line">${p.temple}</div>
+          <div class="puja-includes">${p.includes.map(i => `<div class="puja-include-item">✦ ${i}</div>`).join('')}</div>
+          <div class="puja-footer"><div class="puja-price-amt">₹${p.price}</div><button class="book-btn">Book Puja</button></div>
+          <div class="puja-participants"><strong>${p.participants}</strong> devotees</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function openModalWithPuja(pujaId) {
+    selectedPuja = pujasList.find(p => p.id === pujaId) || pujasList[0];
+    selectedPackagePrice = selectedPuja.price;
+    bookingReference = 'SRM-' + Math.floor(Math.random() * 90000 + 10000);
+    currentStep = 1;
+    renderModal();
+    document.getElementById('bookingModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('bookingModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function renderModal() {
+    const stepsContainer = document.getElementById('stepsBar');
+    const labelsContainer = document.getElementById('stepLabels');
+    const bodyContainer = document.getElementById('modalBody');
+    const footer = document.getElementById('modalFooter');
+
+    stepsContainer.innerHTML = `<div class="step-item"><div class="step-circle" id="step1">1</div><div class="step-line" id="line1"></div></div>
+                                <div class="step-item"><div class="step-circle" id="step2">2</div><div class="step-line" id="line2"></div></div>
+                                <div class="step-item"><div class="step-circle" id="step3">3</div><div class="step-line" id="line3"></div></div>
+                                <div class="step-item"><div class="step-circle" id="step4">4</div></div>`;
+    labelsContainer.innerHTML = `<span class="step-label" id="label1">Puja & Package</span><span class="step-label" id="label2">Your Details</span><span class="step-label" id="label3">Payment</span><span class="step-label" id="label4">Confirmed</span>`;
+
+    const updateStepUI = () => {
+      for(let i=1;i<=4;i++) {
+        const circle = document.getElementById(`step${i}`);
+        const line = document.getElementById(`line${i}`);
+        const label = document.getElementById(`label${i}`);
+        if (i === currentStep) circle?.classList.add('active');
+        else circle?.classList.remove('active');
+        if (i < currentStep) { circle?.classList.add('done'); circle.innerText = '✓'; line?.classList.add('done');}
+        else if (i > currentStep) { circle?.classList.remove('done'); circle.innerText = i; line?.classList.remove('done');}
+        if (label) label.classList.toggle('active', i === currentStep);
+      }
+    };
+
+    const renderStepContent = () => {
+      if (currentStep === 1) {
+        bodyContainer.innerHTML = `
+          <div class="selected-puja-header"><div style="font-size:2rem">${selectedPuja.icon}</div><div><div class="selected-puja-name">${selectedPuja.name}</div><div>${selectedPuja.temple}</div><div class="selected-puja-price">from ₹${selectedPuja.price}</div></div></div>
+          <div class="form-section-title">Choose Package</div>
+          <div class="packages" id="packagesContainer"></div>
+          <div class="form-section"><div class="form-section-title">Preferred Date</div><input type="date" id="pujaDate" class="form-input" value="${new Date(Date.now() + 3*86400000).toISOString().split('T')[0]}"></div>`;
+        const pkgContainer = document.getElementById('packagesContainer');
+        pkgContainer.innerHTML = `
+          <div class="package-option" data-price="1100" data-name="Basic Seva"><div class="package-radio"></div><div><div class="package-name">Basic Seva</div><div>Puja + Video + Prasad via email</div></div><div>₹1100</div></div>
+          <div class="package-option" data-price="2100" data-name="Vishesh Seva"><div class="package-radio"></div><div><div class="package-name">Vishesh Seva</div><div>+ Brahmin Daan + Prasad dispatch</div></div><div>₹2100</div></div>
+          <div class="package-option" data-price="5100" data-name="Maha Seva"><div class="package-radio"></div><div><div class="package-name">Maha Seva</div><div>+ 51 Brahmins + Personal pandit call</div></div><div>₹5100</div></div>`;
+        document.querySelectorAll('.package-option').forEach(opt => {
+          opt.addEventListener('click', () => {
+            document.querySelectorAll('.package-option').forEach(o => o.classList.remove('selected'));
+            opt.classList.add('selected');
+            selectedPackagePrice = parseInt(opt.getAttribute('data-price'));
+            selectedPackageName = opt.getAttribute('data-name');
+          });
+          if (opt.getAttribute('data-price') == selectedPackagePrice) opt.classList.add('selected');
+        });
+      } 
+      else if (currentStep === 2) {
+        bodyContainer.innerHTML = `
+          <div class="info-box"><p>🙏 Sankalp details: Your name & gotra will be chanted during ritual.</p></div>
+          <div class="form-row"><div class="form-field"><label>Full Name *</label><input id="devoteeName" class="form-input" placeholder="Rahul Sharma"></div><div class="form-field"><label>Gotra *</label><input id="gotra" class="form-input" placeholder="Kashyap"></div></div>
+          <div class="form-row"><div class="form-field"><label>WhatsApp</label><input id="whatsapp" class="form-input" placeholder="+91 98765 43210"></div><div class="form-field"><label>Email</label><input id="email" class="form-input" placeholder="devotee@example.com"></div></div>
+          <div class="form-field"><label>Special Prayer Message</label><textarea id="prayerMsg" class="form-input" rows="3" placeholder="May my family be blessed..."></textarea></div>`;
+      } 
+      else if (currentStep === 3) {
+        bodyContainer.innerHTML = `
+          <div class="order-summary" style="background:white;border-radius:1rem;padding:1rem;"><h4>Order Summary</h4><div>Puja: ${selectedPuja.name}</div><div>Package: ${selectedPackageName}</div><div class="summary-row total">Total: ₹${selectedPackagePrice}</div></div>
+          <div class="form-section-title">Payment Method</div>
+          <div id="paymentMethods" class="payment-methods"></div>
+          <div class="security-badges" style="display:flex; gap:1rem; justify-content:center; margin-top:1rem">🔒 Secure · ✅ Certified · 📦 Prasad Guarantee</div>`;
+        const methods = ['💳 Credit/Debit Card', '📱 UPI (GPay/PhonePe)', '🏦 Net Banking', '🅿️ PayPal'];
+        const container = document.getElementById('paymentMethods');
+        container.innerHTML = methods.map((m,idx) => `<div class="pay-method ${idx===0 ? 'selected' : ''}" data-method="${m}"><span>${m}</span><div class="pay-method-radio"></div></div>`).join('');
+        document.querySelectorAll('.pay-method').forEach(pm => pm.addEventListener('click', function(){ document.querySelectorAll('.pay-method').forEach(p=>p.classList.remove('selected')); this.classList.add('selected'); }));
+      } 
+      else if (currentStep === 4) {
+        bodyContainer.innerHTML = `<div class="success-screen" style="text-align:center;padding:1rem"><div class="success-icon">🙏✨</div><h2>Booking Confirmed!</h2><p>Reference: ${bookingReference}</p><div class="success-details"><div>Puja: ${selectedPuja.name}</div><div>Amount: ₹${selectedPackagePrice}</div><div>Video & Prasad on the way</div></div><button class="btn-next" onclick="closeModal()">Explore More Pujas</button></div>`;
+      }
+    };
+
+    const updateFooter = () => {
+      if (currentStep === 4) { footer.style.display = 'none'; return; }
+      footer.style.display = 'flex';
+      footer.innerHTML = `<div><div class="footer-price-amt">₹${selectedPackagePrice}</div></div><div><button class="btn-back" id="backBtn" style="${currentStep===1?'display:none':''}">← Back</button><button class="btn-next" id="nextBtn">${currentStep===3 ? '🔒 Pay Now' : 'Continue →'}</button></div>`;
+      document.getElementById('backBtn')?.addEventListener('click', () => { if(currentStep>1){ currentStep--; renderModal(); } });
+      document.getElementById('nextBtn')?.addEventListener('click', () => { 
+        if(currentStep === 3) { 
+          currentStep = 4; 
+          renderModal(); 
+        } 
+        else if(currentStep < 3) { currentStep++; renderModal(); }
+      });
+    };
+
+    renderStepContent();
+    updateStepUI();
+    updateFooter();
+  }
+
+  // Filters & sorting listeners
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      currentFilter = this.getAttribute('data-filter');
+      currentDeity = null;
+      document.querySelectorAll('.deity-chip').forEach(b => b.classList.remove('active'));
+      renderPujaCards();
+    });
+  });
+  document.getElementById('sortSelect')?.addEventListener('change', () => renderPujaCards());
+
+  // Initialize page
+  renderDeityFilters();
+  renderPujaCards();
+  window.openModalWithPuja = openModalWithPuja;
+  window.closeModal = closeModal;
+</script>
+  <script src="assets/js/shared.js"></script>
+</body>
+</html>

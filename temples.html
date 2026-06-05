@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MahaPoojan — Sacred Temples of India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--saffron:#C6721B;--saffron-deep:#9E4F08;--saffron-light:#F5C77E;--saffron-pale:#FDF3E4;--gold:#D4A853;--cream:#FAF6EE;--ink:#1A1208;--ink-mid:#3D2D12;--ink-soft:#7A6040;--white:#fff;--border:rgba(198,114,27,.18);}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5vw;background:rgba(250,246,238,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--saffron-deep);text-decoration:none;}
+.nav-logo span{color:var(--gold);}
+.nav-links{display:flex;align-items:center;gap:2.2rem;list-style:none;}
+.nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--saffron);}
+.nav-cta{background:var(--saffron);color:white!important;padding:.55rem 1.4rem;border-radius:2rem;letter-spacing:.1em!important;}
+.nav-cta:hover{background:var(--saffron-deep)!important;}
+
+.page-hero{background:linear-gradient(160deg,#1A0A02 0%,#2A1206 40%,#0F1A0F 100%);padding:5rem 5vw 4rem;text-align:center;position:relative;overflow:hidden;}
+.page-hero::before{content:'🏛️';position:absolute;font-size:25rem;opacity:.03;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.page-eyebrow{font-size:.7rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:block;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;color:white;line-height:1.1;margin-bottom:1rem;}
+.page-title em{font-style:italic;color:var(--saffron-light);}
+.page-subtitle{font-size:1rem;color:rgba(255,255,255,.6);max-width:55ch;margin:0 auto 2.5rem;font-weight:300;line-height:1.7;}
+
+.stats-row{display:flex;justify-content:center;gap:4rem;flex-wrap:wrap;}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:600;color:var(--saffron-light);}
+.stat-lbl{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:.2rem;}
+
+.filter-bar{background:white;border-bottom:1px solid var(--border);padding:1.2rem 5vw;position:sticky;top:68px;z-index:50;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.filter-label{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);}
+.filter-chip{padding:.4rem 1rem;border-radius:2rem;border:1px solid var(--border);background:none;font-family:'Jost',sans-serif;font-size:.78rem;cursor:pointer;transition:all .2s;}
+.filter-chip.active,.filter-chip:hover{background:var(--saffron);color:white;border-color:var(--saffron);}
+.search-box{margin-left:auto;position:relative;}
+.search-box input{padding:.45rem 1rem .45rem 2.2rem;border:1px solid var(--border);border-radius:2rem;font-family:'Jost',sans-serif;font-size:.82rem;background:var(--cream);width:220px;}
+.search-box::before{content:'🔍';position:absolute;left:.7rem;top:50%;transform:translateY(-50%);font-size:.8rem;}
+
+.temples-section{padding:4rem 5vw;}
+.section-meta{margin-bottom:2rem;}
+.results-count{font-size:.82rem;color:var(--ink-soft);}
+
+.temple-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.8rem;}
+.temple-card{background:white;border-radius:1.5rem;border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;}
+.temple-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(26,18,8,.12);}
+.temple-img{height:220px;position:relative;overflow:hidden;}
+.temple-img img{width:100%;height:100%;object-fit:cover;}
+.temple-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(26,18,8,.65) 0%,transparent 55%);pointer-events:none;}
+.temple-overlay{position:absolute;bottom:1rem;left:1rem;right:1rem;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;}
+.temple-city{background:rgba(0,0,0,.55);color:var(--gold);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .7rem;border-radius:1rem;backdrop-filter:blur(6px);}
+.temple-type-badge{background:var(--saffron);color:white;font-size:.6rem;font-weight:600;text-transform:uppercase;padding:.2rem .6rem;border-radius:1rem;}
+.temple-info{padding:1.5rem;}
+.temple-deity-tag{font-size:.65rem;letter-spacing:.12em;color:var(--saffron);text-transform:uppercase;margin-bottom:.3rem;}
+.temple-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:.4rem;}
+.temple-desc{font-size:.82rem;color:var(--ink-soft);line-height:1.65;margin-bottom:1.2rem;}
+.temple-services{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem;}
+.svc-tag{font-size:.65rem;background:var(--saffron-pale);color:var(--saffron-deep);padding:.2rem .7rem;border-radius:1rem;border:1px solid rgba(198,114,27,.15);}
+.temple-actions{display:flex;gap:.8rem;}
+.btn-book{background:var(--saffron);color:white;border:none;padding:.55rem 1.2rem;border-radius:2rem;font-size:.78rem;font-weight:500;cursor:pointer;transition:background .2s;text-decoration:none;display:inline-block;}
+.btn-book:hover{background:var(--saffron-deep);}
+.btn-darshan{background:none;border:1px solid var(--border);color:var(--ink-mid);padding:.55rem 1.2rem;border-radius:2rem;font-size:.78rem;font-weight:500;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block;}
+.btn-darshan:hover{border-color:var(--saffron);color:var(--saffron);}
+
+.spotlight{background:var(--ink);padding:5rem 5vw;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.spotlight-eyebrow{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.spotlight-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;color:white;line-height:1.1;margin-bottom:1.2rem;}
+.spotlight-title em{font-style:italic;color:var(--saffron-light);}
+.spotlight-desc{font-size:.95rem;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:2rem;}
+.spotlight-facts{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem;}
+.fact-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:.8rem;padding:1rem;}
+.fact-label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.3rem;}
+.fact-val{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:white;}
+.spotlight-visual{background:linear-gradient(145deg,#2A1A06,#1A0C02);border-radius:1.5rem;padding:3rem;text-align:center;border:1px solid rgba(212,168,83,.2);}
+.spotlight-icon{font-size:8rem;margin-bottom:1.5rem;}
+
+.char-dham{padding:5rem 5vw;background:white;}
+.char-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem;}
+.dham-card{text-align:center;padding:0;border-radius:1.5rem;background:var(--cream);border:1px solid var(--border);transition:all .25s;overflow:hidden;}
+.dham-card:hover{background:white;box-shadow:0 10px 30px rgba(26,18,8,.08);transform:translateY(-4px);}
+.dham-card img{width:100%;height:150px;object-fit:cover;}
+.dham-card > div{padding:1.5rem;}
+.dham-icon{font-size:3.5rem;margin-bottom:1rem;}
+.dham-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;margin-bottom:.4rem;}
+.dham-location{font-size:.75rem;color:var(--ink-soft);}
+.dham-desc{font-size:.8rem;color:var(--ink-soft);margin-top:.5rem;line-height:1.6;}
+
+.jyotirlinga{padding:5rem 5vw;}
+.jl-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;margin-top:2.5rem;}
+.jl-card{background:white;border:1px solid var(--border);border-radius:1rem;padding:0;text-align:center;cursor:pointer;transition:all .2s;overflow:hidden;}
+.jl-card:hover{border-color:var(--saffron);background:var(--saffron-pale);}
+.jl-card img{width:100%;height:120px;object-fit:cover;}
+.jl-card > div{padding:1rem;}
+.jl-icon{font-size:2rem;margin-bottom:.5rem;}
+.jl-name{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:500;}
+.jl-loc{font-size:.65rem;color:var(--ink-soft);}
+
+footer{background:var(--ink);padding:4rem 5vw 2rem;color:white;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.08);}
+.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:.8rem;}
+.footer-tagline{font-size:.82rem;color:rgba(255,255,255,.45);line-height:1.7;}
+.footer-heading{font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1rem;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.footer-links a{font-size:.85rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:rgba(255,255,255,.25);padding-top:2rem;flex-wrap:wrap;gap:1rem;}
+.cert-badge{padding:.25rem .7rem;border:1px solid rgba(255,255,255,.12);border-radius:.3rem;font-size:.65rem;letter-spacing:.08em;}
+.footer-certifications{display:flex;gap:1rem;}
+
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){
+  .char-row{grid-template-columns:1fr 1fr;}
+  .jl-grid{grid-template-columns:repeat(3,1fr);}
+  .spotlight{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .filter-bar{top:60px;}
+}
+@media(max-width:600px){
+  .jl-grid{grid-template-columns:repeat(2,1fr);}
+  .char-row{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .search-box input{width:160px;}
+}
+</style>
+  <link rel="stylesheet" href="assets/css/shared.css"/>
+</head>
+<body>
+<nav>
+   <a href="index.html" class="nav-logo">
+    <img src="assets/images/logo.jpeg" alt="MahaPoojan Logo" class="logo-img">
+    </a>
+  <ul class="nav-links">
+    <li><a href="puja.html">Puja Seva</a></li>
+    <li><a href="chadhava.html">Chadhava</a></li>
+    <li><a href="temples.html" class="active">Temples</a></li>
+    <li><a href="panchang.html">Panchang</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="puja-booking.html" class="nav-cta">Book Puja</a></li>
+  </ul>
+</nav>
+
+<section class="page-hero">
+  <span class="page-eyebrow">Sacred Temples of India</span>
+  <h1 class="page-title">100+ Holy Temples,<br/><em>One Connection</em></h1>
+  <p class="page-subtitle">Every puja is conducted by the temple's own priests in authentic Vedic tradition. Explore India's most sacred sites and book directly.</p>
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-num">100+</div><div class="stat-lbl">Partner Temples</div></div>
+    <div class="stat-item"><div class="stat-num">28</div><div class="stat-lbl">States Covered</div></div>
+    <div class="stat-item"><div class="stat-num">Numerous</div><div class="stat-lbl">Pujas Performed</div></div>
+    <div class="stat-item"><div class="stat-num">12</div><div class="stat-lbl">Jyotirlingas</div></div>
+  </div>
+</section>
+
+<div class="filter-bar">
+  <span class="filter-label">Filter:</span>
+  <button class="filter-chip active" data-type="all">All Temples</button>
+  <button class="filter-chip" data-type="shiva">Shiva</button>
+  <button class="filter-chip" data-type="vishnu">Vishnu</button>
+  <button class="filter-chip" data-type="shakti">Shakti</button>
+  <button class="filter-chip" data-type="ganesh">Ganesh</button>
+  <button class="filter-chip" data-type="jyotirlinga">Jyotirlinga</button>
+  <div class="search-box"><input type="text" id="searchInput" placeholder="Search temple or city…" oninput="filterTemples()"/></div>
+</div>
+
+<section class="temples-section">
+  <div class="section-meta"><span class="results-count" id="resultsCount">Showing all temples</span></div>
+  <div class="temple-grid fade-up" id="templeGrid"></div>
+</section>
+
+<section class="char-dham fade-up">
+  <div style="text-align:center;">
+    <span style="font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);">Sacred Pilgrimage</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:300;line-height:1.15;margin-top:.5rem;">The Char <em style="font-style:italic;color:var(--saffron-deep);">Dham</em></h2>
+    <p style="font-size:1rem;color:var(--ink-soft);margin-top:.8rem;max-width:50ch;margin-left:auto;margin-right:auto;">India's four sacred pilgrimage sites that every Hindu aspires to visit in a lifetime. Book pujas at all four.</p>
+  </div>
+  <div class="char-row">
+    <div class="dham-card">
+        <img src="assets/images/badrinath.jpeg" alt="Badrinath Temple">
+        <div>
+            <div class="dham-icon">🏔️</div>
+            <div class="dham-name">Badrinath</div>
+            <div class="dham-location">📍 Uttarakhand</div>
+            <div class="dham-desc">The abode of Lord Vishnu in the Himalayas. One of the Char Dhams, open only in summer.</div>
+        </div>
+    </div>
+    <div class="dham-card">
+        <img src="assets/images/dwarka.jpeg" alt="Dwarka Temple">
+        <div>
+            <div class="dham-icon">🌊</div>
+            <div class="dham-name">Dwarka</div>
+            <div class="dham-location">📍 Gujarat</div>
+            <div class="dham-desc">The city built by Lord Krishna — a coastal temple of immense spiritual significance.</div>
+        </div>
+    </div>
+    <div class="dham-card">
+        <img src="assets/images/puri.jpeg" alt="Puri Jagannath Temple">
+        <div>
+            <div class="dham-icon">🏛️</div>
+            <div class="dham-name">Puri</div>
+            <div class="dham-location">📍 Odisha</div>
+            <div class="dham-desc">Home of Lord Jagannath and the famous annual Rath Yatra — one of the world's largest religious gatherings.</div>
+        </div>
+    </div>
+    <div class="dham-card">
+        <img src="assets/images/rameshwaram.jpeg" alt="Rameshwaram Temple">
+        <div>
+            <div class="dham-icon">🌅</div>
+            <div class="dham-name">Rameshwaram</div>
+            <div class="dham-location">📍 Tamil Nadu</div>
+            <div class="dham-desc">The southernmost Char Dham, where Lord Ram worshipped Shiva before the Lanka war.</div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<div class="spotlight fade-up">
+  <div>
+    <div class="spotlight-eyebrow">Temple Spotlight</div>
+    <h2 class="spotlight-title">Kashi <em>Vishwanath</em></h2>
+    <p class="spotlight-desc">The most sacred of all Shiva temples, sitting on the western bank of the Ganga in Varanasi. Kashi Vishwanath is one of the twelve Jyotirlingas and a destination every Hindu seeks to visit in their lifetime. MahaPoojan enables you to receive the blessings of Baba Vishwanath from wherever you are in the world.</p>
+    <div class="spotlight-facts">
+      <div class="fact-box"><div class="fact-label">Location</div><div class="fact-val">Varanasi, UP</div></div>
+      <div class="fact-box"><div class="fact-label">Deity</div><div class="fact-val">Lord Shiva</div></div>
+      <div class="fact-box"><div class="fact-label">Daily Darshan</div><div class="fact-val">4:00 AM – 11:00 PM</div></div>
+      <div class="fact-box"><div class="fact-label">Pujas Available</div><div class="fact-val">24 rituals</div></div>
+    </div>
+    <a href="puja-booking.html" class="btn-book" style="display:inline-block;margin-right:1rem;">Book Puja Here →</a>
+    <a href="darshan.html" class="btn-darshan" style="display:inline-block;">Watch Live Darshan</a>
+  </div>
+  <div class="spotlight-visual">
+    <img src="assets/images/kashi.jpeg" alt="Kashi Vishwanath" style="width: 100%; border-radius: 1rem; margin-bottom: 1rem;">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:white;margin-bottom:.5rem;">Har Har Mahadev</div>
+    <div style="font-size:.78rem;color:rgba(255,255,255,.45);">The Light of Kashi never goes out</div>
+  </div>
+</div>
+
+<section class="jyotirlinga fade-up">
+  <div style="text-align:center;margin-bottom:0;">
+    <span style="font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);">Twelve Holy Sites</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:300;line-height:1.15;margin-top:.5rem;">The 12 <em style="font-style:italic;color:var(--saffron-deep);">Jyotirlingas</em></h2>
+  </div>
+  <div class="jl-grid">
+    <div class="jl-card"><img src="data:image/jpeg;base64,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" alt="Somnath"><div><div class="jl-icon">🔱</div><div class="jl-name">Somnath</div><div class="jl-loc">Gujarat</div></div></div>
+    <div class="jl-card"><img src="https://nomadsaikat.com/wp-content/uploads/2024/05/How-to-Reach-Mallikarjuna-Jyotirlinga.webp" alt="Mallikarjuna"><div><div class="jl-icon">🔱</div><div class="jl-name">Mallikarjuna</div><div class="jl-loc">Andhra Pradesh</div></div></div>
+    <div class="jl-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpsiXzP9hwqDHJb86p4rqZ2Vn8hJbGoZIOCw&s" alt="Mahakaleshwar"><div><div class="jl-icon">🔱</div><div class="jl-name">Mahakaleshwar</div><div class="jl-loc">Ujjain, MP</div></div></div>
+    <div class="jl-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkxwx7hPpWgu2qgJ5L58s3yKRN7ckylpAeWQ&s" alt="Omkareshwar"><div><div class="jl-icon">🔱</div><div class="jl-name">Omkareshwar</div><div class="jl-loc">Madhya Pradesh</div></div></div>
+    <div class="jl-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeynOoT5WRw1aw2T0pzj1CjIFlP6TOWxbfDw&s" alt="Kedarnath"><div><div class="jl-icon">🔱</div><div class="jl-name">Kedarnath</div><div class="jl-loc">Uttarakhand</div></div></div>
+    <div class="jl-card"><img src="assets/images/maharashtra-temple.jpeg" alt="Bhimashankar"><div><div class="jl-icon">🔱</div><div class="jl-name">Bhimashankar</div><div class="jl-loc">Maharashtra</div></div></div>
+    <div class="jl-card"><img src="assets/images/kashi.jpeg" alt="Kashi Vishwanath"><div><div class="jl-icon">🔱</div><div class="jl-name">Kashi Vishwanath</div><div class="jl-loc">Varanasi, UP</div></div></div>
+    <div class="jl-card"><img src="assets/images/maharashtra-temple.jpeg" alt="Trimbakeshwar"><div><div class="jl-icon">🔱</div><div class="jl-name">Trimbakeshwar</div><div class="jl-loc">Maharashtra</div></div></div>
+    <div class="jl-card"><img src="assets/images/vaidyanath.jpeg" alt="Vaidyanath"><div><div class="jl-icon">🔱</div><div class="jl-name">Vaidyanath</div><div class="jl-loc">Jharkhand</div></div></div>
+    <div class="jl-card"><img src="assets/images/dwarka.jpeg" alt="Nageshwar"><div><div class="jl-icon">🔱</div><div class="jl-name">Nageshwar</div><div class="jl-loc">Gujarat</div></div></div>
+    <div class="jl-card"><img src="assets/images/rameshwaram.jpeg" alt="Rameshwaram"><div><div class="jl-icon">🔱</div><div class="jl-name">Rameshwaram</div><div class="jl-loc">Tamil Nadu</div></div></div>
+    <div class="jl-card"><img src="assets/images/grishneshwar.jpeg" alt="Grishneshwar"><div><div class="jl-icon">🔱</div><div class="jl-name">Grishneshwar</div><div class="jl-loc">Maharashtra</div></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p class="footer-tagline">India's largest devotional platform, connecting 30 million Hindus worldwide to their faith, culture, and sacred temples.</p></div>
+    <div><div class="footer-heading">Services</div><ul class="footer-links"><li><a href="puja.html">Puja Seva</a></li><li><a href="chadhava.html">Chadhava</a></li><li><a href="darshan.html">Live Darshan</a></li><li><a href="panchang.html">Panchang</a></li><li><a href="horoscope.html">Horoscope</a></li></ul></div>
+    <div><div class="footer-heading">Explore</div><ul class="footer-links"><li><a href="temples.html">Sacred Temples</a></li><li><a href="library.html">Library</a></li><li><a href="library.html">Bhajans & Aartis</a></li><li><a href="panchang.html">Fasts & Festivals</a></li></ul></div>
+    <div><div class="footer-heading">Company</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="about.html#contact">Contact</a></li><li><a href="legal.html">Privacy Policy</a></li><li><a href="legal.html">Terms of Use</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div>© 2026 MahaPoojan, Inc. · MahaPoojan Devotional Services, India</div><div class="footer-certifications"><span class="cert-badge">Secure Checkout</span><span class="cert-badge">Temple Verified</span><span class="cert-badge">Demo Mode</span></div></div>
+</footer>
+
+<script>
+const temples = [
+  { name: "Kashi Vishwanath", deity: "Shiva", city: "Varanasi", state: "UP", type: "shiva", jyotirlinga: true, image: "assets/images/kashi.jpeg", desc: "One of the 12 Jyotirlingas, the most sacred Shiva temple on the Ganges.", services: ["Puja", "Darshan", "Abhishek"] },
+  { name: "Tirumala Tirupati", deity: "Vishnu", city: "Tirupati", state: "AP", type: "vishnu", jyotirlinga: false, image: "assets/images/tirupati.jpeg", desc: "The richest and most-visited temple in the world, home to Lord Venkateswara.", services: ["Puja", "Darshan", "Prasad"] },
+  { name: "Mahakaleshwar", deity: "Shiva", city: "Ujjain", state: "MP", type: "shiva", jyotirlinga: true, image: "assets/images/mahakal.jpeg", desc: "Famous for the Bhasma Aarti performed at dawn.", services: ["Puja", "Darshan", "Bhasma Aarti"] },
+  { name: "Siddhivinayak", deity: "Ganesh", city: "Mumbai", state: "MH", type: "ganesh", jyotirlinga: false, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXRcPzmhr1Ld9no9i_EMG0hDSztsT0V-8h6A&s", desc: "Mumbai's most revered Ganesh temple, fulfilling devotees' wishes.", services: ["Puja", "Darshan", "Modak"] },
+  { name: "Vaishno Devi", deity: "Shakti", city: "Katra", state: "J&K", type: "shakti", jyotirlinga: false, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPnvBu_nE4gQ6WI4YLCPtxIvXWURuUr-QLg&s", desc: "One of the holiest Shaktipeeths, nestled in the Trikuta Mountains.", services: ["Puja", "Darshan", "Prasad"] },
+  { name: "Jagannath Puri", deity: "Vishnu", city: "Puri", state: "Odisha", type: "vishnu", jyotirlinga: false, image: "assets/images/puri.jpeg", desc: "Home of the famous Rath Yatra and Lord Jagannath.", services: ["Puja", "Darshan", "Rath Yatra"] },
+  { name: "Meenakshi Amman", deity: "Shakti", city: "Madurai", state: "TN", type: "shakti", jyotirlinga: false, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtZinoqUc6F29T18xp35jJ48FXHFPKK45bVg&s", desc: "Stunning temple with 14 gopurams, dedicated to Goddess Meenakshi.", services: ["Puja", "Darshan"] },
+  { name: "Somnath", deity: "Shiva", city: "Somnath", state: "GJ", type: "shiva", jyotirlinga: true, image: "https://static.toiimg.com/photo/msid-46918897,width-96,height-65.cms", desc: "The first Jyotirlinga, rebuilt 16 times, on the shores of the Arabian Sea.", services: ["Puja", "Darshan", "Aarti"] },
+  { name: "ISKCON Vrindavan", deity: "Vishnu", city: "Vrindavan", state: "UP", type: "vishnu", jyotirlinga: false, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2Lx1EM0LRfRz8gnAIteXQ7NkuChlWmzO2tg&s", desc: "Beautiful Krishna temple with kirtans and devotional atmosphere.", services: ["Puja", "Darshan", "Kirtan"] },
+  { name: "Kedarnath", deity: "Shiva", city: "Kedarnath", state: "UK", type: "shiva", jyotirlinga: true, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgGy7eUiCPucSumGRrTh5dBG9jE4BANdr_6A&s", desc: "High-altitude Jyotirlinga in the Himalayas, open only 6 months a year.", services: ["Puja", "Darshan"] },
+  { name: "Kamakhya Temple", deity: "Shakti", city: "Guwahati", state: "Assam", type: "shakti", jyotirlinga: false, image: "https://s7ap1.scene7.com/is/image/incredibleindia/kamakhya-temple-dispur-assam-2-attr-hero?qlt=82&ts=1742179171313", desc: "Famous Shaktipeeth where the yoni of Goddess Sati fell.", services: ["Puja", "Darshan", "Ambubachi"] },
+  { name: "Badrinath", deity: "Vishnu", city: "Badrinath", state: "UK", type: "vishnu", jyotirlinga: false, image: "assets/images/badrinath.jpeg", desc: "One of the Char Dhams, dedicated to Lord Vishnu in the Himalayas.", services: ["Puja", "Darshan"] },
+  { name: "Rameshwaram", deity: "Shiva", city: "Rameshwaram", state: "TN", type: "shiva", jyotirlinga: true, image: "assets/images/rameshwaram.jpeg", desc: "Where Lord Ram worshipped Shiva to atone after the Lanka war.", services: ["Puja", "Darshan", "Abhishek"] }
+];
+
+let currentType = 'all';
+
+function renderTemples(type = 'all', search = '') {
+  let filtered = type === 'all' ? temples : temples.filter(t => t.type === type);
+  if (search) {
+    filtered = filtered.filter(t => 
+      t.name.toLowerCase().includes(search.toLowerCase()) || 
+      t.city.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+  
+  document.getElementById('resultsCount').textContent = `Showing ${filtered.length} temple${filtered.length !== 1 ? 's' : ''}`;
+  
+  const grid = document.getElementById('templeGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = filtered.map(t => `
+    <div class="temple-card">
+      <div class="temple-img">
+        <img src="${t.image}" alt="${t.name} Temple" onerror="this.src='https://via.placeholder.com/400x220?text=Temple+Image'">
+        <div class="temple-overlay">
+          <span class="temple-city">📍 ${t.city}, ${t.state}</span>
+          ${t.jyotirlinga ? '<span class="temple-type-badge">Jyotirlinga</span>' : ''}
+        </div>
+      </div>
+      <div class="temple-info">
+        <div class="temple-deity-tag">${t.deity}</div>
+        <div class="temple-name">${t.name}</div>
+        <div class="temple-desc">${t.desc}</div>
+        <div class="temple-services">${t.services.map(s => `<span class="svc-tag">${s}</span>`).join('')}</div>
+        <div class="temple-actions">
+          <a href="puja-booking.html" class="btn-book">Book Puja</a>
+          <a href="darshan.html" class="btn-darshan">Live Darshan</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterTemples() {
+  const searchInput = document.getElementById('searchInput');
+  const searchTerm = searchInput ? searchInput.value : '';
+  renderTemples(currentType, searchTerm);
+}
+
+// Set up filter buttons
+document.querySelectorAll('.filter-chip').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    currentType = this.dataset.type;
+    filterTemples();
+  });
+});
+
+// Initialize
+renderTemples();
+
+// Search input listener
+const searchBox = document.getElementById('searchInput');
+if (searchBox) {
+  searchBox.addEventListener('input', filterTemples);
+}
+
+// Fade-up animation observer
+const fadeEls = document.querySelectorAll('.fade-up');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+fadeEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

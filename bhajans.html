@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MahaPoojan — Bhajans, Festivals & Sacred Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --saffron: #C6721B;
+    --saffron-deep: #9E4F08;
+    --saffron-light: #F5C77E;
+    --saffron-pale: #FDF3E4;
+    --gold: #D4A853;
+    --gold-light: #F2E2B0;
+    --cream: #FAF6EE;
+    --ink: #1A1208;
+    --ink-mid: #3D2D12;
+    --ink-soft: #7A6040;
+    --white: #FFFFFF;
+    --border: rgba(198,114,27,0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 5vw;
+    background: rgba(250,246,238,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--saffron-deep);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .nav-links a:hover { color: var(--saffron); }
+  .nav-links a.active { color: var(--saffron); border-bottom: 1px solid var(--saffron); padding-bottom: 0.2rem; }
+  .nav-cta {
+    background: var(--saffron);
+    color: white !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2rem;
+  }
+  .hero {
+    padding: 8rem 5vw 4rem;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--saffron);
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--saffron);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    margin: 1rem 0 0.8rem;
+  }
+  .hero-title em { font-style: italic; color: var(--saffron-deep); }
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--ink-soft);
+    max-width: 550px;
+    margin: 0 auto;
+  }
+
+  /* three sections style */
+  .resource-section {
+    padding: 5rem 5vw;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .section-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--saffron);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 300;
+    margin-top: 0.5rem;
+  }
+  .section-title em { font-style: italic; color: var(--saffron-deep); }
+
+  /* bhajans grid */
+  .bhajan-grid, .festival-grid, .store-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .bhajan-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+    cursor: pointer;
+  }
+  .bhajan-card:hover { transform: translateY(-5px); background: white; }
+  .bhajan-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .bhajan-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; }
+  .bhajan-desc { font-size: 0.8rem; color: var(--ink-soft); margin-top: 0.3rem; }
+  .play-btn {
+    margin-top: 1rem;
+    background: var(--saffron-pale);
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--saffron-deep);
+  }
+
+  /* festival cards */
+  .festival-card {
+    background: white;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+  }
+  .festival-img {
+    height: 140px;
+    background: linear-gradient(135deg, #3D2D12, #1A0C02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+  .festival-info { padding: 1.2rem; }
+  .festival-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; }
+  .festival-date { font-size: 0.7rem; color: var(--saffron); margin: 0.3rem 0; letter-spacing: 0.05em; }
+  .festival-desc { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; }
+
+  /* store product */
+  .store-card {
+    background: white;
+    border-radius: 1.5rem;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .store-img {
+    height: 160px;
+    background: var(--saffron-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+  .store-info { padding: 1rem 1.2rem 1.2rem; }
+  .store-title { font-weight: 600; font-size: 1rem; }
+  .store-price { color: var(--saffron-deep); font-weight: 600; margin: 0.4rem 0; }
+  .store-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 2rem;
+    padding: 0.4rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .store-btn:hover { background: var(--saffron); color: white; border-color: var(--saffron); }
+
+  /* audio player modal */
+  .audio-modal {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--ink);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 200;
+    transform: translateY(100%);
+    transition: transform 0.3s;
+    border-top: 1px solid var(--gold);
+  }
+  .audio-modal.active { transform: translateY(0); }
+  .audio-info { display: flex; flex-direction: column; }
+  .audio-title { font-family: 'Cormorant Garamond', serif; font-size: 1rem; }
+  .audio-controls button {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
+  }
+  .close-audio { background: none; border: none; color: rgba(255,255,255,0.5); font-size: 1.2rem; cursor: pointer; }
+
+  footer {
+    background: #0F0A04;
+    padding: 3rem 5vw 2rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 2rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .footer-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--saffron-light); }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 0.5rem; }
+  .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem; }
+  .footer-bottom { display: flex; justify-content: space-between; font-size: 0.7rem; flex-wrap: wrap; }
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+  .fade-up { opacity: 0; transform: translateY(30px); transition: 0.7s; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+</style>
+  <link rel="stylesheet" href="assets/css/shared.css"/>
+</head>
+<body>
+
+<nav>
+   <a href="index.html" class="nav-logo">
+    <img src="assets/images/logo.jpeg" alt="MahaPoojan Logo" class="logo-img">
+    </a>
+  <ul class="nav-links">
+    <li><a href="puja.html">Puja Seva</a></li>
+    <li><a href="temples.html">Temples</a></li>
+    <li><a href="panchang.html">Panchang</a></li>
+    <li><a href="library.html" class="active">Bhajans & More</a></li>
+    <li><a href="bhajans.html">Store</a></li>
+    <li><a href="puja-booking.html" class="nav-cta">Book Puja</a></li>
+  </ul>
+</nav>
+
+<section class="hero fade-up">
+  <div class="hero-eyebrow">Sacred Sounds & Traditions</div>
+  <h1 class="hero-title">Bhajans, Festivals & <em>Divine Store</em></h1>
+  <p class="hero-sub">Immerse in devotion with timeless aartis, explore upcoming vrats, and bring home sanctified products.</p>
+</section>
+
+<!-- BHAJANS & AARTIS SECTION -->
+<section class="resource-section" id="bhajans">
+  <div class="section-header fade-up">
+    <div class="section-eyebrow">Listen with Bhakti</div>
+    <h2 class="section-title">5000+ <em>Bhajans & Aartis</em></h2>
+  </div>
+  <div class="bhajan-grid fade-up">
+    <div class="bhajan-card" data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" data-name="Om Jai Jagdish Hare (Aarti)">
+      <div class="bhajan-icon">🔔🪔</div>
+      <div class="bhajan-title">Om Jai Jagdish Hare</div>
+      <div class="bhajan-desc">Universal aarti sung in temples worldwide — pure vibrations of peace.</div>
+      <div class="play-btn">🎵 Play Aarti</div>
+    </div>
+    <div class="bhajan-card" data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" data-name="Shri Ram Chandra Kripalu Bhajman">
+      <div class="bhajan-icon">🏹🕉️</div>
+      <div class="bhajan-title">Shri Ram Chandra Kripalu</div>
+      <div class="bhajan-desc">Tulsidas' divine hymn invoking Lord Rama's grace and compassion.</div>
+      <div class="play-btn">🎵 Play Bhajan</div>
+    </div>
+    <div class="bhajan-card" data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" data-name="Hanuman Chalisa (Fast)">
+      <div class="bhajan-icon">🐒🔱</div>
+      <div class="bhajan-title">Hanuman Chalisa</div>
+      <div class="bhajan-desc">40 verses of strength & devotion — remove obstacles with Bajrangbali.</div>
+      <div class="play-btn">🎵 Play Chalisa</div>
+    </div>
+    <div class="bhajan-card" data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" data-name="Ambe Tu Hai Jagdambe">
+      <div class="bhajan-icon">🌸🌺</div>
+      <div class="bhajan-title">Ambe Tu Hai Jagdambe</div>
+      <div class="bhajan-desc">Aarti for Maa Durga — powerful protection and maternal love.</div>
+      <div class="play-btn">🎵 Play Aarti</div>
+    </div>
+    <div class="bhajan-card" data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" data-name="Vaishnava Jana To">
+      <div class="bhajan-icon">🙏🎶</div>
+      <div class="bhajan-title">Vaishnava Jana To</div>
+      <div class="bhajan-desc">Mahatma Gandhi's favourite bhajan — compassion & humility.</div>
+      <div class="play-btn">🎵 Play Bhajan</div>
+    </div>
+    <div class="bhajan-card" data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" data-name="Shiv Tandav Stotram">
+      <div class="bhajan-icon">🕉️🌙</div>
+      <div class="bhajan-title">Shiv Tandav Stotram</div>
+      <div class="bhajan-desc">Ravana's cosmic hymn in praise of Lord Shiva's cosmic dance.</div>
+      <div class="play-btn">🎵 Play Stotram</div>
+    </div>
+  </div>
+</section>
+
+<!-- FASTS & FESTIVALS SECTION -->
+<section class="resource-section" style="background: white;">
+  <div class="section-header fade-up">
+    <div class="section-eyebrow">Sacred Calendar</div>
+    <h2 class="section-title">Fasts, Vrats & <em>Festivals</em></h2>
+  </div>
+  <div class="festival-grid fade-up">
+    <div class="festival-card">
+      <div class="festival-img">🌞☀️</div>
+      <div class="festival-info">
+        <div class="festival-name">Surya Shashthi (Chhath Puja)</div>
+        <div class="festival-date">November 2026 · Starts 4 Nov</div>
+        <div class="festival-desc">Ancient festival dedicated to Sun God, observed with holy dip & offerings.</div>
+        <div style="margin-top:0.6rem;"><span style="font-size:0.7rem; color:var(--saffron);">📿 Read more →</span></div>
+      </div>
+    </div>
+    <div class="festival-card">
+      <div class="festival-img">🕯️🌸</div>
+      <div class="festival-info">
+        <div class="festival-name">Kartik Purnima</div>
+        <div class="festival-date">15 November 2026</div>
+        <div class="festival-desc">Dev Diwali in Varanasi — Ganga aarti, deep daan, and sacred bathing.</div>
+        <div style="margin-top:0.6rem;"><span style="font-size:0.7rem; color:var(--saffron);">📿 Know rituals →</span></div>
+      </div>
+    </div>
+    <div class="festival-card">
+      <div class="festival-img">🐚🕉️</div>
+      <div class="festival-info">
+        <div class="festival-name">Somvati Amavasya</div>
+        <div class="festival-date">Monday, 22 June 2026</div>
+        <div class="festival-desc">No moon day on Monday — special pitru tarpan and donations for ancestors.</div>
+        <div style="margin-top:0.6rem;"><span style="font-size:0.7rem; color:var(--saffron);">📿 Read more →</span></div>
+      </div>
+    </div>
+    <div class="festival-card">
+      <div class="festival-img">🍃🌿</div>
+      <div class="festival-info">
+        <div class="festival-name">Ekadashi Fasts (Nirjala)</div>
+        <div class="festival-date">Jyeshtha Shukla Ekadashi · 6 June</div>
+        <div class="festival-desc">Most rigorous fast without water — immense spiritual merit and self-control.</div>
+        <div style="margin-top:0.6rem;"><span style="font-size:0.7rem; color:var(--saffron);">📿 Observance guide →</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MahaPoojan STORE SECTION -->
+<section class="resource-section" id="store">
+  <div class="section-header fade-up">
+    <div class="section-eyebrow">Sacred Offerings</div>
+    <h2 class="section-title">MahaPoojan <em>Store</em></h2>
+  </div>
+  <div class="store-grid fade-up">
+    <div class="store-card">
+      <div class="store-img">🪔✨</div>
+      <div class="store-info">
+        <div class="store-title">Tirupati Laddu Prasad (Pack of 6)</div>
+        <div class="store-price">₹899</div>
+        <button class="store-btn">Add to Cart</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="store-img">📿🔱</div>
+      <div class="store-info">
+        <div class="store-title">Rudraksha Mala (7 Mukhi)</div>
+        <div class="store-price">₹2,499</div>
+        <button class="store-btn">Add to Cart</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="store-img">🕯️🌿</div>
+      <div class="store-info">
+        <div class="store-title">Panchagavya Dhoop Sticks</div>
+        <div class="store-price">₹349</div>
+        <button class="store-btn">Add to Cart</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="store-img">📖🌟</div>
+      <div class="store-info">
+        <div class="store-title">Shrimad Bhagavad Gita (Sanskrit/Hindi)</div>
+        <div class="store-price">₹450</div>
+        <button class="store-btn">Add to Cart</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="store-img">🏺🔔</div>
+      <div class="store-info">
+        <div class="store-title">Brass Puja Thali Set (7 pcs)</div>
+        <div class="store-price">₹1,850</div>
+        <button class="store-btn">Add to Cart</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="store-img">🌸🌺</div>
+      <div class="store-info">
+        <div class="store-title">Tulsi Mala with Sandalwood Beads</div>
+        <div class="store-price">₹650</div>
+        <button class="store-btn">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+  <div style="text-align: center; margin-top: 2rem;">
+    <button class="store-btn" style="background: var(--saffron); color: white; padding: 0.7rem 2rem;">View All Store Items →</button>
+  </div>
+</section>
+
+<!-- hidden audio player modal bottom -->
+<div id="audioPlayerModal" class="audio-modal">
+  <div class="audio-info">
+    <div class="audio-title" id="audioTrackName">Bhajan Title</div>
+    <div style="font-size:0.7rem; opacity:0.7;">Now playing</div>
+  </div>
+  <div class="audio-controls">
+    <button id="playPauseBtn">⏸️</button>
+    <button id="stopAudioBtn">⏹️</button>
+  </div>
+  <button id="closeAudioBtn" class="close-audio">✕</button>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p style="font-size:0.75rem;">Your companion in devotion — bhajans, vrats, and sacred prasad worldwide.</p></div>
+    <div><div class="footer-heading" style="font-weight:500;">Resources</div><ul class="footer-links"><li><a href="library.html">Bhajans Library</a></li><li><a href="#">Festival Calendar</a></li><li><a href="legal.html">Store Return Policy</a></li></ul></div>
+    <div><div class="footer-heading" style="font-weight:500;">Support</div><ul class="footer-links"><li><a href="legal.html">Help Center</a></li><li><a href="#">Track Order</a></li><li><a href="#">Contact Pujari</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 MahaPoojan</span><span>🕉️ 30M+ Devotees Trusted</span></div>
+</footer>
+
+<script>
+  // Audio player simulation (uses sample online mp3s for demo)
+  const modal = document.getElementById('audioPlayerModal');
+  const audioTrackName = document.getElementById('audioTrackName');
+  const playPauseBtn = document.getElementById('playPauseBtn');
+  const stopBtn = document.getElementById('stopAudioBtn');
+  const closeBtn = document.getElementById('closeAudioBtn');
+  let currentAudio = null;
+  let isPlaying = false;
+
+  function stopCurrentAudio() {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      currentAudio = null;
+    }
+    isPlaying = false;
+    playPauseBtn.innerHTML = '▶️';
+  }
+
+  function playAudio(url, title) {
+    stopCurrentAudio();
+    audioTrackName.innerText = title;
+    modal.classList.add('active');
+    currentAudio = new Audio(url);
+    currentAudio.loop = false;
+    currentAudio.play();
+    isPlaying = true;
+    playPauseBtn.innerHTML = '⏸️';
+    currentAudio.addEventListener('ended', () => {
+      stopCurrentAudio();
+      modal.classList.remove('active');
+    });
+  }
+
+  // attach event listeners to bhajan cards
+  document.querySelectorAll('.bhajan-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      const audioUrl = card.dataset.audio;
+      const name = card.dataset.name;
+      if (audioUrl) {
+        e.stopPropagation();
+        playAudio(audioUrl, name);
+      }
+    });
+  });
+
+  playPauseBtn.addEventListener('click', () => {
+    if (currentAudio) {
+      if (isPlaying) {
+        currentAudio.pause();
+        playPauseBtn.innerHTML = '▶️';
+        isPlaying = false;
+      } else {
+        currentAudio.play();
+        playPauseBtn.innerHTML = '⏸️';
+        isPlaying = true;
+      }
+    }
+  });
+
+  stopBtn.addEventListener('click', () => {
+    stopCurrentAudio();
+    modal.classList.remove('active');
+  });
+
+  closeBtn.addEventListener('click', () => {
+    stopCurrentAudio();
+    modal.classList.remove('active');
+  });
+
+  // Store add to cart alerts
+  const storeBtns = document.querySelectorAll('.store-btn');
+  storeBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      alert('🙏 Item added to your cart! Proceed to checkout or continue shopping.');
+    });
+  });
+
+  // Intersection Observer for fade-up
+  const faders = document.querySelectorAll('.fade-up');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  faders.forEach(el => obs.observe(el));
+
+  // nav shadow
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) nav.style.boxShadow = '0 4px 30px rgba(26,18,8,0.12)';
+    else nav.style.boxShadow = 'none';
+  });
+</script>
+  <script src="assets/js/shared.js"></script>
+</body>
+</html>

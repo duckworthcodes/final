@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MahaPoojan — Book a Puja | Sacred Rituals Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<!-- Razorpay Script -->
+<script>
+  function loadRazorpay() {
+    return new Promise((resolve, reject) => {
+      if (window.Razorpay) return resolve();
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('Failed to load Razorpay SDK. Check your internet connection.'));
+      document.head.appendChild(script);
+    });
+  }
+</script>
+<style>
+  :root {
+    --saffron: #C6721B;
+    --saffron-deep: #9E4F08;
+    --saffron-light: #F5C77E;
+    --saffron-pale: #FDF3E4;
+    --gold: #D4A853;
+    --cream: #FAF6EE;
+    --ink: #1A1208;
+    --ink-mid: #3D2D12;
+    --ink-soft: #7A6040;
+    --white: #FFFFFF;
+    --border: rgba(198,114,27,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 5vw;
+    background: rgba(250,246,238,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--saffron-deep);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--saffron); }
+  .nav-cta {
+    background: var(--saffron);
+    color: white !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2rem;
+  }
+
+  .booking-hero {
+    padding: 8rem 5vw 4rem;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 1rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--saffron);
+  }
+  .booking-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .booking-title em { font-style: italic; color: var(--saffron-deep); }
+
+  .booking-container {
+    max-width: 1300px;
+    margin: 2rem auto 5rem;
+    padding: 0 5vw;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+  }
+
+  .puja-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .puja-option {
+    background: white;
+    border-radius: 1.2rem;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .puja-option.selected {
+    border-left: 5px solid var(--saffron);
+    background: var(--saffron-pale);
+  }
+  .puja-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  .puja-price {
+    font-weight: 600;
+    color: var(--saffron-deep);
+    font-size: 1.1rem;
+  }
+
+  .booking-form-card {
+    background: white;
+    border-radius: 1.8rem;
+    box-shadow: 0 25px 50px rgba(26,18,8,0.08);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    position: sticky;
+    top: 100px;
+  }
+  .form-header {
+    background: linear-gradient(115deg, var(--ink) 0%, #2E2316 100%);
+    padding: 1.5rem 2rem;
+    color: white;
+  }
+  .form-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+  }
+  .form-body {
+    padding: 2rem;
+  }
+  .input-group {
+    margin-bottom: 1.3rem;
+  }
+  .input-group label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--ink-mid);
+    margin-bottom: 0.4rem;
+  }
+  .input-group input, .input-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    font-size: 0.9rem;
+  }
+  .name-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .price-breakdown {
+    background: var(--saffron-pale);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 1.5rem 0;
+  }
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  .total-row {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    margin-top: 0.5rem;
+    padding-top: 0.7rem;
+    font-weight: 700;
+    color: var(--saffron-deep);
+  }
+  .btn-book {
+    width: 100%;
+    background: var(--saffron);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-book:hover {
+    background: var(--saffron-deep);
+    transform: translateY(-2px);
+  }
+  .btn-book:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .trust-badge {
+    text-align: center;
+    margin-top: 1.2rem;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-card {
+    background: white;
+    max-width: 400px;
+    width: 90%;
+    border-radius: 2rem;
+    text-align: center;
+    padding: 2rem;
+    animation: fadeInUp 0.3s ease;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+  .modal-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .modal-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .modal-close {
+    background: var(--saffron);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 2rem;
+    cursor: pointer;
+  }
+
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--saffron-pale);
+    border-top: 4px solid var(--saffron);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .loading-text { color: white; font-size: 1rem; font-weight: 500; }
+
+  footer {
+    background: #0F0A04;
+    padding: 3rem 5vw 2rem;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 2rem;
+  }
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--saffron-light);
+  }
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .footer-links a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 900px) {
+    .booking-container { grid-template-columns: 1fr; }
+    .name-row { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">🪔 Maha<span>Poojan</span></a>
+  <ul class="nav-links">
+    <li><a href="puja.html">Puja Seva</a></li>
+    <li><a href="chadhava.html">Chadhava</a></li>
+    <li><a href="temples.html">Temples</a></li>
+    <li><a href="panchang.html">Panchang</a></li>
+    <li><a href="horoscope.html">Horoscope</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="puja-booking.html" class="nav-cta">Book Puja</a></li>
+  </ul>
+</nav>
+
+<section class="booking-hero">
+  <div class="hero-eyebrow">Book a Puja</div>
+  <h1 class="booking-title">Let Your <em>Prayers</em> Reach the Divine</h1>
+</section>
+
+<div class="booking-container">
+  <div class="puja-list">
+    <div class="puja-option selected" data-price="1100" data-name="Satyanarayan Puja" data-temple="Kashi Vishwanath">
+      <div class="puja-info"><h3>🪔 Satyanarayan Puja</h3><div class="puja-meta">Kashi Vishwanath Temple · 2 Hrs</div></div>
+      <div class="puja-price">₹1,100</div>
+    </div>
+    <div class="puja-option" data-price="2100" data-name="Maha Mrityunjaya Puja" data-temple="Mahakaleshwar, Ujjain">
+      <div class="puja-info"><h3>🔱 Maha Mrityunjaya Puja</h3><div class="puja-meta">Mahakaleshwar · 108 Jaap</div></div>
+      <div class="puja-price">₹2,100</div>
+    </div>
+    <div class="puja-option" data-price="3100" data-name="Rudra Abhishekam" data-temple="Somnath Temple">
+      <div class="puja-info"><h3>📿 Rudra Abhishekam</h3><div class="puja-meta">Somnath Jyotirlinga · 11 Priests</div></div>
+      <div class="puja-price">₹3,100</div>
+    </div>
+    <div class="puja-option" data-price="2500" data-name="Durga Saptashati Path" data-temple="Vaishno Devi Mandir">
+      <div class="puja-info"><h3>🌸 Durga Saptashati Path</h3><div class="puja-meta">Vaishno Devi · 7 Days</div></div>
+      <div class="puja-price">₹2,500</div>
+    </div>
+    <div class="puja-option" data-price="1800" data-name="Graha Shanti Puja" data-temple="Navagraha Temple">
+      <div class="puja-info"><h3>⭐ Graha Shanti Puja</h3><div class="puja-meta">Navagraha Temple · Planetary Peace</div></div>
+      <div class="puja-price">₹1,800</div>
+    </div>
+  </div>
+
+  <div class="booking-form-card">
+    <div class="form-header">
+      <h3>Confirm Your Seva</h3>
+      <p>Fill the details — we'll perform the ritual in your name</p>
+    </div>
+    <div class="form-body">
+      <form id="bookingForm">
+        <div class="name-row">
+          <div class="input-group"><label>Your Name *</label><input type="text" id="devoteeName" required placeholder="e.g. Rajesh Sharma"></div>
+          <div class="input-group"><label>Gotra</label><input type="text" id="gotra" placeholder="Vashistha / Kaushika"></div>
+        </div>
+        <div class="input-group"><label>Email Address *</label><input type="email" id="email" required placeholder="receipt & video proof"></div>
+        <div class="input-group"><label>Phone (WhatsApp) *</label><input type="tel" id="phone" required placeholder="+91 98765 43210"></div>
+        <div class="input-group"><label>Preferred Date</label><input type="date" id="pujaDate"></div>
+        <div class="input-group"><label>Special Sankalp</label><textarea rows="2" id="sankalp" placeholder="For family health, business growth..."></textarea></div>
+        
+        <div class="price-breakdown">
+          <div class="price-row"><span>Selected Puja:</span><span id="selectedPujaName">Satyanarayan Puja</span></div>
+          <div class="price-row"><span>Puja Fee:</span><span>₹<span id="pujaFee">1100</span></span></div>
+          <div class="price-row"><span>Prasad Shipping:</span><span>₹250</span></div>
+          <div class="price-row total-row"><span>Total Amount:</span><span>₹<span id="totalAmount">1350</span></span></div>
+        </div>
+        
+        <button type="submit" class="btn-book" id="bookPujaBtn">Book Puja → Pay Securely</button>
+        <div class="trust-badge">
+          <span>🔒 Secure Payments (Razorpay)</span>
+          <span>📹 Live Video Proof</span>
+          <span>🌎 Worldwide Shipping</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="successModal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-icon">🕉️✨</div>
+    <h4>Puja Booked Successfully!</h4>
+    <p id="successMessage">Your ritual confirmation has been sent. You'll receive video proof within 24 hours.</p>
+    <button class="modal-close" onclick="closeModal()">Jai Shri Ram 🙏</button>
+  </div>
+</div>
+
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" id="loadingText">Processing payment...</div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p style="font-size:0.75rem;">India's most trusted devotional platform</p></div>
+    <div><div class="footer-heading">Quick Links</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="#">Temple Partners</a></li></ul></div>
+    <div><div class="footer-heading">Contact</div><ul class="footer-links"><li><a href="legal.html">support@MahaPoojan.com</a></li><li><a href="#">+91 80 4718 0666</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 MahaPoojan</span></div>
+</footer>
+
+<script>
+// ============================================
+// RAZORPAY INTEGRATION - COMPLETE
+// ============================================
+
+// Server URL (change to your actual server URL when deploying)
+const SERVER_URL = 'http://127.0.0.1:3000';
+
+// Razorpay Key ID (public - safe to expose)
+const RAZORPAY_KEY_ID = 'rzp_test_SxqJrDZrBdDhj7';
+
+// Shipping cost
+const SHIPPING_COST = 250;
+
+// Global variables
+let selectedPujaPrice = 1100;
+let selectedPujaName = "Satyanarayan Puja";
+let selectedPujaTemple = "Kashi Vishwanath Temple";
+
+// Helper functions
+function showLoading(message) {
+  document.getElementById('loadingText').textContent = message;
+  document.getElementById('loadingOverlay').style.display = 'flex';
+}
+
+function hideLoading() {
+  document.getElementById('loadingOverlay').style.display = 'none';
+}
+
+function showSuccessModal(paymentId, pujaName, devoteeName) {
+  const message = document.getElementById('successMessage');
+  message.innerHTML = `
+    <strong>${pujaName}</strong> confirmed for <strong>${devoteeName}</strong>!<br/>
+    Payment ID: ${paymentId}<br/>
+    You will receive video proof on WhatsApp within 24 hours.
+  `;
+  document.getElementById('successModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('successModal').style.display = 'none';
+}
+
+// Update price display when puja changes
+function updatePriceDisplay() {
+  const total = selectedPujaPrice + SHIPPING_COST;
+  document.getElementById('pujaFee').innerText = selectedPujaPrice;
+  document.getElementById('totalAmount').innerText = total;
+  document.getElementById('selectedPujaName').innerText = selectedPujaName;
+}
+
+// Puja selection handlers
+const pujaOptions = document.querySelectorAll('.puja-option');
+pujaOptions.forEach(opt => {
+  opt.addEventListener('click', () => {
+    pujaOptions.forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    
+    selectedPujaPrice = parseInt(opt.dataset.price);
+    selectedPujaName = opt.dataset.name;
+    selectedPujaTemple = opt.dataset.temple;
+    
+    updatePriceDisplay();
+  });
+});
+
+// Initialize display
+updatePriceDisplay();
+
+// ============================================
+// API CALLS
+// ============================================
+
+async function createOrder(amount) {
+  const response = await fetch(`${SERVER_URL}/api/create-order`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+      amount: amount,
+      currency: 'INR',
+      receipt: `puja_${Date.now()}`
+    })
+  });
+  
+  if (!response.ok) {
+    let errMsg = 'Failed to create order';
+    try { const e = await response.json(); errMsg = e.error || errMsg; } catch {}
+    throw new Error(errMsg);
+  }
+  
+  return await response.json();
+}
+
+async function verifyPayment(orderId, paymentId, signature) {
+  const response = await fetch(`${SERVER_URL}/api/verify-payment`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      order_id: orderId,
+      payment_id: paymentId,
+      signature: signature
+    })
+  });
+  
+  const result = await response.json();
+  
+  if (!response.ok || !result.success) {
+    throw new Error(result.error || 'Payment verification failed');
+  }
+  
+  return result;
+}
+
+// ============================================
+// MAIN PAYMENT FLOW
+// ============================================
+
+const bookingForm = document.getElementById('bookingForm');
+const bookBtn = document.getElementById('bookPujaBtn');
+
+bookingForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  // Get form values
+  const devoteeName = document.getElementById('devoteeName').value.trim();
+  const gotra = document.getElementById('gotra').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const pujaDate = document.getElementById('pujaDate').value;
+  const sankalp = document.getElementById('sankalp').value.trim();
+  const totalAmount = parseInt(document.getElementById('totalAmount').innerText);
+  
+  // Validation
+  if (!devoteeName) {
+    alert("🙏 Please enter your name as it will appear in the puja sankalp.");
+    document.getElementById('devoteeName').focus();
+    return;
+  }
+  
+  if (!email || !email.includes('@')) {
+    alert("🙏 Please enter a valid email address.");
+    document.getElementById('email').focus();
+    return;
+  }
+  
+  if (!phone || phone.length < 10) {
+    alert("🙏 Please enter a valid phone number for WhatsApp updates.");
+    document.getElementById('phone').focus();
+    return;
+  }
+  
+  // Disable button and show loading
+  bookBtn.disabled = true;
+  showLoading("Creating payment order...");
+  
+  try {
+    // Step 0: Ensure Razorpay SDK is loaded
+    await loadRazorpay();
+
+    // Step 1: Create order on backend
+    const order = await createOrder(totalAmount * 100); // Convert to paise
+    
+    console.log('Order created:', order);
+    
+    // Step 2: Prepare Razorpay options
+    const options = {
+      key: RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: order.currency,
+      name: "MahaPoojan",
+      description: `${selectedPujaName} at ${selectedPujaTemple}`,
+      order_id: order.order_id,
+      prefill: {
+        name: devoteeName,
+        email: email,
+        contact: phone
+      },
+      notes: {
+        puja_name: selectedPujaName,
+        temple: selectedPujaTemple,
+        gotra: gotra || "Not specified",
+        sankalp: sankalp || "General blessings",
+        preferred_date: pujaDate || "As soon as possible"
+      },
+      theme: {
+        color: "#C6721B"
+      },
+      modal: {
+        ondismiss: function() {
+          console.log("Payment modal closed by user");
+          bookBtn.disabled = false;
+          hideLoading();
+          alert("Payment was cancelled. You can try again whenever you're ready 🙏");
+        }
+      }
+    };
+    
+    // Step 3: Open Razorpay modal
+    showLoading("Opening secure payment window...");
+    
+    const razorpay = new Razorpay(options);
+    
+    razorpay.on('payment.failed', function(response) {
+      console.error('Payment failed:', response.error);
+      bookBtn.disabled = false;
+      hideLoading();
+      alert(`Payment failed: ${response.error.description || 'Please try again'}`);
+    });
+    
+    razorpay.on('payment.success', async function(response) {
+      console.log('Payment success:', response);
+      showLoading("Verifying payment...");
+      
+      try {
+        // Step 4: Verify payment signature
+        const verification = await verifyPayment(
+          response.razorpay_order_id,
+          response.razorpay_payment_id,
+          response.razorpay_signature
+        );
+        
+        console.log('Verification result:', verification);
+        
+        // Step 5: Show success
+        hideLoading();
+        showSuccessModal(response.razorpay_payment_id, selectedPujaName, devoteeName);
+        
+        // Reset form
+        bookingForm.reset();
+        
+        // Reset puja selection
+        pujaOptions.forEach(o => o.classList.remove('selected'));
+        pujaOptions[0].classList.add('selected');
+        selectedPujaPrice = 1100;
+        selectedPujaName = "Satyanarayan Puja";
+        selectedPujaTemple = "Kashi Vishwanath Temple";
+        updatePriceDisplay();
+        
+      } catch (error) {
+        console.error('Verification error:', error);
+        hideLoading();
+        alert(`Payment received but verification failed. Please contact support with your payment ID: ${response.razorpay_payment_id}`);
+      }
+      
+      bookBtn.disabled = false;
+    });
+    
+    razorpay.open();
+    
+  } catch (error) {
+    console.error('Error in payment flow:', error);
+    hideLoading();
+    bookBtn.disabled = false;
+    alert(`Something went wrong: ${error.message}\n\nPlease try again or contact support.`);
+  }
+});
+
+// Close modal on outside click
+window.onclick = function(event) {
+  const modal = document.getElementById('successModal');
+  if (event.target === modal) {
+    closeModal();
+  }
+};
+</script>
+</body>
+</html>

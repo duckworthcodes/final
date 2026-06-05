@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MahaPoojan — About Us | Our Sacred Journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --saffron: #C6721B;
+    --saffron-deep: #9E4F08;
+    --saffron-light: #F5C77E;
+    --saffron-pale: #FDF3E4;
+    --gold: #D4A853;
+    --gold-light: #F2E2B0;
+    --cream: #FAF6EE;
+    --ink: #1A1208;
+    --ink-mid: #3D2D12;
+    --ink-soft: #7A6040;
+    --red-temple: #8B2020;
+    --white: #FFFFFF;
+    --border: rgba(198,114,27,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 5vw;
+    background: rgba(250,246,238,0.94);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+
+  /* ---- Logo image styles (replaces text) ---- */
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .logo-img {
+    height: 56px;
+    width: auto;
+    display: block;
+    transition: transform 0.2s ease;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+  }
+
+  .logo-img:hover {
+    transform: scale(1.02);
+  }
+
+  /* For extra small screens, slightly reduce logo size if needed */
+  @media (max-width: 600px) {
+    .logo-img {
+      height: 48px;
+    }
+  }
+  @media (max-width: 450px) {
+    .logo-img {
+      height: 42px;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--saffron); }
+  .nav-links a.active { color: var(--saffron); border-bottom: 1px solid var(--saffron); padding-bottom: 0.2rem; }
+
+  .nav-cta {
+    background: var(--saffron);
+    color: white !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2rem;
+    letter-spacing: 0.1em !important;
+  }
+
+  .nav-cta:hover { background: var(--saffron-deep); color: white !important; }
+
+  /* hero about */
+  .about-hero {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 5vw 5rem;
+    position: relative;
+    background: linear-gradient(135deg, rgba(198,114,27,0.03) 0%, rgba(26,18,8,0.02) 100%);
+  }
+
+  .about-hero-content {
+    max-width: 780px;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 1.8rem;
+    justify-content: center;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--saffron);
+  }
+  .hero-eyebrow::after { margin-left: 0.6rem; }
+  .hero-eyebrow::before { margin-right: 0.6rem; }
+
+  .about-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.8rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-title em {
+    font-style: italic;
+    color: var(--saffron-deep);
+  }
+
+  .about-sub {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .mandala-divider {
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 2rem;
+    opacity: 0.4;
+    letter-spacing: 0.8rem;
+  }
+
+  /* mission section */
+  .mission-section {
+    padding: 6rem 5vw;
+    background: white;
+  }
+
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .mission-content .section-eyebrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 1rem;
+  }
+
+  .mission-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+    color: var(--ink);
+  }
+
+  .mission-text {
+    font-size: 0.98rem;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+  }
+
+  .mission-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat-bubble {
+    text-align: center;
+    background: var(--saffron-pale);
+    padding: 1rem 1.6rem;
+    border-radius: 2rem;
+  }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--saffron-deep);
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .mission-visual {
+    background: linear-gradient(145deg, #2A1A06, #1A0C02);
+    border-radius: 2rem;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    border: 1px solid rgba(212,168,83,0.2);
+  }
+  .mission-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  /* timeline / journey */
+  .journey {
+    padding: 6rem 5vw;
+    background: var(--cream);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .section-title em {
+    font-style: italic;
+    color: var(--saffron-deep);
+  }
+
+  .timeline {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .timeline-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    width: 260px;
+    text-align: center;
+    border: 1px solid var(--border);
+    transition: transform 0.3s;
+  }
+  .timeline-card:hover {
+    transform: translateY(-6px);
+  }
+  .timeline-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--saffron);
+    margin-bottom: 0.8rem;
+  }
+  .timeline-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .timeline-desc {
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* values */
+  .values {
+    padding: 6rem 5vw;
+    background: white;
+  }
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .value-card {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: var(--cream);
+    border-radius: 1.5rem;
+    border: 1px solid var(--border);
+  }
+  .value-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .value-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .value-desc {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+
+  /* leadership team */
+  .leadership {
+    padding: 5rem 5vw;
+    background: var(--cream);
+  }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 2rem auto 0;
+  }
+  .team-card {
+    background: white;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .team-avatar {
+    background: linear-gradient(135deg, #3D2D12, #1A0C02);
+    padding: 2rem;
+    font-size: 3rem;
+    color: var(--gold);
+  }
+  .team-info {
+    padding: 1.5rem;
+  }
+  .team-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  .team-role {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin: 0.3rem 0 0.6rem;
+  }
+  .team-bio {
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* cta */
+  .join-cta {
+    background: var(--ink);
+    padding: 5rem 5vw;
+    text-align: center;
+    position: relative;
+  }
+  .join-cta::before {
+    content: 'ॐ';
+    font-size: 12rem;
+    color: rgba(255,255,255,0.02);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: serif;
+    pointer-events: none;
+  }
+  .join-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    color: white;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+  .join-title em { color: var(--gold); font-style: italic; }
+  .join-text {
+    color: rgba(255,255,255,0.55);
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    font-weight: 300;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--saffron);
+    color: white;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1rem 2.2rem;
+    border-radius: 3rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary:hover {
+    background: var(--saffron-deep);
+    transform: translateY(-2px);
+  }
+
+  /* footer */
+  footer {
+    background: #0F0A04;
+    padding: 4rem 5vw 2rem;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--saffron-light);
+    margin-bottom: 0.8rem;
+  }
+  .footer-tagline {
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1.5rem;
+    max-width: 28ch;
+  }
+  .footer-heading {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 1.2rem;
+  }
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .footer-links a {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+    flex-wrap: wrap;
+  }
+  .cert-badge {
+    padding: 0.25rem 0.7rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 0.3rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    .mission-grid, .values-grid, .team-grid, .footer-grid { grid-template-columns: 1fr; }
+    .timeline { flex-direction: column; align-items: center; }
+    .nav-links { display: none; }
+    .mission-stats { justify-content: center; }
+  }
+  @media (max-width: 600px) {
+    .values-grid { gap: 1rem; }
+  }
+</style>
+  <link rel="stylesheet" href="assets/css/shared.css"/>
+</head>
+<body>
+
+<nav>
+  <!-- REPLACED TEXT LOGO WITH IMAGE LOGO using inline SVG data URI from the provided design -->
+  <a href="index.html" class="nav-logo" aria-label="MahaPoojan Home">
+    <img class="logo-img" src="assets/images/logo.jpeg" alt="MahaPoojan">
+  </a>
+  <ul class="nav-links">
+    <li><a href="puja.html">Puja Seva</a></li>
+    <li><a href="chadhava.html">Chadhava</a></li>
+    <li><a href="temples.html">Temples</a></li>
+    <li><a href="panchang.html">Panchang</a></li>
+    <li><a href="horoscope.html">Horoscope</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="puja-booking.html" class="nav-cta">Book Puja</a></li>
+  </ul>
+</nav>
+
+<!-- About Hero -->
+<section class="about-hero">
+  <div class="about-hero-content fade-up">
+    <div class="hero-eyebrow">Our Story</div>
+    <h1 class="about-title">Bridging <em>Devotion</em><br/>Across Continents</h1>
+    <p class="about-sub">MahaPoojan was born from a simple yet profound belief: that distance should never separate a devotee from the divine. Today, we are the spiritual home for millions of Hindus worldwide — a bridge of faith, culture, and sacred rituals.</p>
+  </div>
+</section>
+
+<div class="mandala-divider">🕉️ ✦ ॐ ✦ 🕉️</div>
+
+<!-- Mission Section -->
+<section class="mission-section">
+  <div class="mission-grid">
+    <div class="mission-content fade-up">
+      <span class="section-eyebrow">Our Dharma</span>
+      <h2 class="mission-title">To Make Every Hindu Feel <em>Spiritually Present</em> — No Matter the Miles</h2>
+      <p class="mission-text">We're new, we're small, and we're full of heart. MahaPoojan was born because we believe that everyone — from curious teenagers exploring meditation to grandparents who've never missed a Tuesday fast — deserves access to authentic pujas, genuine priests, and the peace that comes from faith. No judgment. No complexity. Just devotion, made simple.</p>
+`     <p class="mission-text">Whether you're taking your first step toward spirituality or have walked this    path for decades, you belong here. We're building a community where tradition meets warmth, where every question is welcomed, and where every prayer is honored — no matter how big or small.</p>
+
+      <div class="mission-stats">
+        <div class="stat-bubble"><div class="stat-number">100+</div><div class="stat-label">Partner Temples</div></div>
+        <div class="stat-bubble"><div class="stat-number">Globally</div><div class="stat-label">Present</div></div>
+      </div>
+    </div>
+    <div class="fade-up" style="display: flex; align-items: center; justify-content: center; padding: 2rem;">
+    <img src="assets/images/logo.jpeg" alt="MahaPoojan Logo" style="max-width: 80%; height: auto;">
+    </div>
+    </div>
+    
+</div>
+  </div>
+</section>
+
+<!-- Core Values -->
+<section class="values">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">Our Ethos</span>
+    <h2 class="section-title">Guided by <em>Sanatan Dharma</em></h2>
+  </div>
+  <div class="values-grid">
+    <div class="value-card fade-up"><div class="value-icon">🙏</div><div class="value-name">Authenticity</div><div class="value-desc">Every puja is performed by temple priests using traditional rituals. No shortcuts, no digitised deities — only real devotion.</div></div>
+    <div class="value-card fade-up"><div class="value-icon">🌍</div><div class="value-name">Inclusivity</div><div class="value-desc">All Hindu traditions are honoured — whether you follow Smarta, Vaishnava, or Shaiva customs, we welcome you.</div></div>
+    <div class="value-card fade-up"><div class="value-icon">🔒</div><div class="value-name">Transparency</div><div class="value-desc">Live video proof, real-time puja updates, and direct temple partnership ensures 100% trust.</div></div>
+  </div>
+</section>
+
+<!-- Leadership -->
+<section class="leadership">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">The Guiding Souls</span>
+    <h2 class="section-title">Meet the <em>Team</em></h2>
+  </div>
+  <div class="team-grid">
+   <div class="team-card fade-up">
+    <div class="team-avatar">🕉️</div>
+    <div class="team-info">
+        <div class="team-name">Acharya Deepak Sharma Ji</div>
+        <div class="team-role">Founder & CEO</div>
+        <div class="team-bio">Astrologer, Vastu Specialist, Ved & Vedant Practitioner. On a mission to bridge ancient wisdom with modern hearts.</div>
+    </div>
+</div>
+    <div class="team-card fade-up"><div class="team-avatar">📿</div><div class="team-info"><div class="team-name">Pt. Haridwar Sharma Ji</div><div class="team-role">Chief Priest & Advisor</div><div class="team-bio">20+ years of Vedic experience, ensuring all rituals follow authentic Agama and Puranic standards.</div></div></div>
+    <div class="team-card fade-up"><div class="team-avatar">🌺</div><div class="team-info"><div class="team-name">Mrs. Jyoti Sharma Ji</div><div class="team-role">Head of Devotee Experience</div><div class="team-bio">Leads the global support team that brings blessings to devotees </div></div></div>
+  </div>
+</section>
+
+<!-- Impact + CTA -->
+<section class="join-cta">
+  <div class="fade-up">
+    <h2 class="join-title">Join the <em>Family of Spiritual Light</em></h2>
+    <p class="join-text">Be part of a movement that keeps the sacred flame of Indian temples alive — wherever life has taken you.</p>
+    <a href="#" class="btn-primary">Download MahaPoojan App →</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p class="footer-tagline">India's largest devotional platform, connecting All Hindus worldwide to their faith and sacred temples.</p></div>
+    <div><div class="footer-heading">About</div><ul class="footer-links"><li><a href="bhajans.html">Our Story</a></li><li><a href="bhajans.html">Team</a></li><li><a href="bhajans.html">Press</a></li><li><a href="bhajans.html">Careers</a></li></ul></div>
+    <div><div class="footer-heading">Services</div><ul class="footer-links"><li><a href="puja.html">Puja Seva</a></li><li><a href="darshan.html">Live Darshan</a></li><li><a href="chadhava.html">Chadhava</a></li><li><a href="panchang.html">Panchang</a></li></ul></div>
+    <div><div class="footer-heading">Support</div><ul class="footer-links"><li><a href="legal.html">Help Center</a></li><li><a href="legal.html">Privacy Policy</a></li><li><a href="legal.html">Terms of Use</a></li><li><a href="legal.html">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div>© 2026 MahaPoojan, Inc.</div><div class="footer-certifications">
+</footer>
+
+<script>
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) el.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) nav.style.boxShadow = '0 4px 30px rgba(26,18,8,0.12)';
+    else nav.style.boxShadow = 'none';
+  });
+  setTimeout(() => {
+    document.querySelectorAll('.fade-up').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible');
+    });
+  }, 200);
+</script>
+  <script src="assets/js/shared.js"></script>
+</body>
+</html>

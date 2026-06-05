@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MahaPoojan — Live Temple Darshan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--saffron:#C6721B;--saffron-deep:#9E4F08;--saffron-light:#F5C77E;--saffron-pale:#FDF3E4;--gold:#D4A853;--cream:#FAF6EE;--ink:#1A1208;--ink-mid:#3D2D12;--ink-soft:#7A6040;--border:rgba(198,114,27,.18);}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:#0E0800;color:white;overflow-x:hidden;}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5vw;background:rgba(14,8,0,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(212,168,83,.12);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--saffron-light);text-decoration:none;}
+.nav-logo span{color:var(--gold);}
+.nav-links{display:flex;align-items:center;gap:2.2rem;list-style:none;}
+.nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--saffron-light);}
+.nav-cta{background:var(--saffron);color:white!important;padding:.55rem 1.4rem;border-radius:2rem;}
+.nav-cta:hover{background:var(--saffron-deep)!important;}
+
+/* HERO */
+.darshan-hero{padding:4rem 5vw 3rem;position:relative;overflow:hidden;}
+.darshan-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(198,114,27,.15) 0%,transparent 70%);pointer-events:none;}
+.hero-eyebrow{font-size:.7rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;}
+.live-dot{width:.5rem;height:.5rem;border-radius:50%;background:#ff4444;display:inline-block;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem;}
+.hero-title em{font-style:italic;color:var(--saffron-light);}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.55);max-width:55ch;margin-bottom:2rem;font-weight:300;line-height:1.7;}
+
+/* FEATURED LIVE */
+.featured-live{padding:0 5vw 3rem;}
+.featured-stream{border-radius:1.5rem;overflow:hidden;border:1px solid rgba(212,168,83,.2);background:#1A0C02;position:relative;cursor:pointer;}
+.stream-screen{height:420px;display:flex;align-items:center;justify-content:center;position:relative;background:linear-gradient(145deg,#2A1A06 0%,#0E0800 100%);}
+.stream-icon{font-size:8rem;opacity:.3;}
+.stream-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:2rem;}
+.stream-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.live-badge{display:inline-flex;align-items:center;gap:.4rem;background:#ff4444;color:white;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .9rem;border-radius:2rem;}
+.viewers-badge{background:rgba(0,0,0,.6);color:rgba(255,255,255,.8);font-size:.72rem;padding:.3rem .8rem;border-radius:2rem;backdrop-filter:blur(6px);}
+.stream-bottom{}
+.stream-temple-name{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;text-shadow:0 2px 20px rgba(0,0,0,.8);}
+.stream-details{font-size:.82rem;color:rgba(255,255,255,.6);margin-top:.3rem;}
+.stream-controls{display:flex;align-items:center;gap:1rem;margin-top:1rem;}
+.ctrl-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:white;padding:.5rem 1.2rem;border-radius:2rem;font-size:.78rem;cursor:pointer;backdrop-filter:blur(6px);transition:all .2s;}
+.ctrl-btn:hover,.ctrl-btn.active{background:var(--saffron);border-color:var(--saffron);}
+.watch-btn{background:var(--saffron);border:none;color:white;padding:.6rem 1.8rem;border-radius:2rem;font-size:.82rem;font-weight:500;cursor:pointer;}
+
+/* AARTI SCHEDULE */
+.schedule-row{background:rgba(255,255,255,.03);border-top:1px solid rgba(212,168,83,.1);padding:1.2rem 2rem;display:flex;gap:1rem;overflow-x:auto;}
+.aarti-slot{flex-shrink:0;background:rgba(255,255,255,.05);border:1px solid rgba(212,168,83,.1);border-radius:.8rem;padding:.8rem 1.2rem;text-align:center;min-width:120px;transition:all .2s;cursor:pointer;}
+.aarti-slot.current{background:rgba(198,114,27,.2);border-color:rgba(198,114,27,.4);}
+.aarti-slot:hover{background:rgba(198,114,27,.15);}
+.aarti-time{font-size:.68rem;color:var(--gold);letter-spacing:.08em;margin-bottom:.3rem;}
+.aarti-name{font-family:'Cormorant Garamond',serif;font-size:.95rem;}
+.aarti-status{font-size:.6rem;color:rgba(255,255,255,.4);margin-top:.2rem;}
+.aarti-live{color:#ff6666;font-weight:600;}
+
+/* TEMPLE STREAMS GRID */
+.streams-section{padding:3rem 5vw;}
+.section-header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;}
+.section-title-h{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;}
+.section-title-h em{font-style:italic;color:var(--saffron-light);}
+.filter-row{display:flex;gap:.6rem;margin-bottom:2rem;flex-wrap:wrap;}
+.filter-pill{padding:.4rem 1rem;border-radius:2rem;border:1px solid rgba(212,168,83,.2);background:rgba(255,255,255,.05);font-family:'Jost',sans-serif;font-size:.75rem;cursor:pointer;color:rgba(255,255,255,.6);transition:all .2s;}
+.filter-pill.active,.filter-pill:hover{background:var(--saffron);color:white;border-color:var(--saffron);}
+.streams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;}
+.stream-card{border-radius:1.2rem;overflow:hidden;border:1px solid rgba(212,168,83,.12);background:#1A0C02;cursor:pointer;transition:transform .25s,box-shadow .25s;}
+.stream-card:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(0,0,0,.4);}
+.sc-thumb{height:160px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;}
+.sc-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(26,12,2,.8) 0%,transparent 60%);}
+.sc-live{position:absolute;top:.6rem;left:.6rem;z-index:2;background:#ff4444;color:white;font-size:.58rem;font-weight:700;letter-spacing:.12em;padding:.18rem .6rem;border-radius:1rem;}
+.sc-scheduled{position:absolute;top:.6rem;left:.6rem;z-index:2;background:rgba(212,168,83,.8);color:#1A0C02;font-size:.58rem;font-weight:700;letter-spacing:.08em;padding:.18rem .6rem;border-radius:1rem;}
+.sc-viewers{position:absolute;top:.6rem;right:.6rem;z-index:2;background:rgba(0,0,0,.6);color:rgba(255,255,255,.8);font-size:.62rem;padding:.2rem .6rem;border-radius:1rem;backdrop-filter:blur(4px);}
+.sc-info{padding:1.2rem;}
+.sc-deity{font-size:.6rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:.3rem;}
+.sc-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;margin-bottom:.2rem;}
+.sc-location{font-size:.72rem;color:rgba(255,255,255,.45);margin-bottom:.8rem;}
+.sc-next{font-size:.72rem;color:rgba(255,255,255,.5);margin-bottom:.8rem;}
+.sc-next span{color:var(--saffron-light);}
+.sc-btn{display:block;text-align:center;background:rgba(255,255,255,.08);border:1px solid rgba(212,168,83,.2);color:rgba(255,255,255,.8);padding:.5rem;border-radius:.6rem;font-size:.78rem;cursor:pointer;transition:all .2s;text-decoration:none;}
+.sc-btn:hover{background:var(--saffron);border-color:var(--saffron);color:white;}
+
+/* STATS BAND */
+.stats-band{background:rgba(198,114,27,.08);border-top:1px solid rgba(198,114,27,.15);border-bottom:1px solid rgba(198,114,27,.15);padding:2.5rem 5vw;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;}
+.sb-item{text-align:center;}
+.sb-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--saffron-light);}
+.sb-lbl{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:.2rem;}
+
+/* NOTIFICATION SECTION */
+.notify-section{padding:4rem 5vw;text-align:center;}
+.notify-card{background:rgba(255,255,255,.04);border:1px solid rgba(212,168,83,.15);border-radius:1.5rem;padding:3rem;max-width:600px;margin:0 auto;}
+.notify-icon{font-size:3rem;margin-bottom:1rem;}
+.notify-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin-bottom:.8rem;}
+.notify-desc{font-size:.9rem;color:rgba(255,255,255,.55);margin-bottom:2rem;line-height:1.7;}
+.notify-form{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;}
+.notify-input{padding:.7rem 1.2rem;border-radius:2rem;border:1px solid rgba(212,168,83,.25);background:rgba(255,255,255,.07);color:white;font-family:'Jost',sans-serif;font-size:.9rem;min-width:260px;}
+.notify-input::placeholder{color:rgba(255,255,255,.3);}
+.notify-btn{background:var(--saffron);color:white;border:none;padding:.7rem 1.8rem;border-radius:2rem;font-size:.85rem;font-weight:500;cursor:pointer;}
+
+footer{background:#0A0600;padding:4rem 5vw 2rem;border-top:1px solid rgba(212,168,83,.08);}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);}
+.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:.8rem;color:white;}
+.footer-tagline{font-size:.82rem;color:rgba(255,255,255,.35);line-height:1.7;}
+.footer-heading{font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:1rem;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.footer-links a{font-size:.85rem;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+.footer-bottom{display:flex;justify-content:space-between;font-size:.75rem;color:rgba(255,255,255,.2);padding-top:2rem;}
+.cert-badge{padding:.25rem .7rem;border:1px solid rgba(255,255,255,.1);border-radius:.3rem;font-size:.65rem;}
+.footer-certifications{display:flex;gap:1rem;}
+
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){
+  .stats-band{grid-template-columns:1fr 1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+  .stream-screen{height:240px;}
+  .stats-band{grid-template-columns:1fr 1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .notify-form{flex-direction:column;align-items:center;}
+}
+</style>
+  <link rel="stylesheet" href="assets/css/shared.css"/>
+</head>
+<body class="dark-nav">
+<nav>
+   <a href="index.html" class="nav-logo">
+    <img src="assets/images/logo.jpeg" alt="MahaPoojan Logo" class="logo-img">
+    </a>
+  <ul class="nav-links">
+    <li><a href="puja.html">Puja Seva</a></li>
+    <li><a href="chadhava.html">Chadhava</a></li>
+    <li><a href="temples.html">Temples</a></li>
+    <li><a href="panchang.html">Panchang</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="puja-booking.html" class="nav-cta">Book Puja</a></li>
+  </ul>
+</nav>
+
+<section class="darshan-hero">
+  <div class="hero-eyebrow"><span class="live-dot"></span> 14 Temples Streaming Live Now</div>
+  <h1 class="hero-title">Live Temple<br/><em>Darshan</em></h1>
+  <p class="hero-sub">Watch the morning aarti at Kashi Vishwanath or the evening darshan at Tirupati — live, from anywhere in the world. Your connection to the sacred never breaks.</p>
+</section>
+
+<!-- FEATURED LIVE STREAM -->
+<div class="featured-live fade-up">
+  <div class="featured-stream" id="featuredStream" onclick="switchFeatured('kashi')">
+    <div class="stream-screen">
+      <div class="stream-icon" id="featuredIcon">🔱</div>
+      <div class="stream-overlay">
+        <div class="stream-top">
+          <span class="live-badge"><span class="live-dot" style="background:white;"></span> LIVE</span>
+          <span class="viewers-badge" id="featuredViewers">👁 24,831 watching</span>
+        </div>
+        <div class="stream-bottom">
+          <div class="stream-temple-name" id="featuredName">Kashi Vishwanath Mandir</div>
+          <div class="stream-details" id="featuredDetails">📍 Varanasi, UP · Mangal Aarti — 4:30 AM</div>
+          <div class="stream-controls">
+            <button class="ctrl-btn active">▶ Watch Live</button>
+            <button class="ctrl-btn">🔔 Get Aarti Reminder</button>
+            <button class="ctrl-btn" onclick="event.stopPropagation();bookPuja()">🙏 Book Puja Here</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="schedule-row" id="scheduleRow"></div>
+  </div>
+</div>
+
+<!-- STREAMS GRID -->
+<section class="streams-section fade-up">
+  <div class="section-header-row">
+    <h2 class="section-title-h">All Temple <em>Streams</em></h2>
+    <span style="font-size:.78rem;color:rgba(255,255,255,.4);" id="liveCount">14 live · 8 upcoming</span>
+  </div>
+  <div class="filter-row">
+    <button class="filter-pill active" data-cat="all">All Temples</button>
+    <button class="filter-pill" data-cat="live">🔴 Live Now</button>
+    <button class="filter-pill" data-cat="upcoming">⏰ Upcoming</button>
+    <button class="filter-pill" data-cat="shiva">Shiva</button>
+    <button class="filter-pill" data-cat="vishnu">Vishnu</button>
+    <button class="filter-pill" data-cat="shakti">Shakti</button>
+  </div>
+  <div class="streams-grid" id="streamsGrid"></div>
+</section>
+
+<div class="stats-band fade-up">
+  <div class="sb-item"><div class="sb-num">100+</div><div class="sb-lbl">Partner Temples</div></div>
+  <div class="sb-item"><div class="sb-num">24/7</div><div class="sb-lbl">Continuous Streams</div></div>
+  <div class="sb-item"><div class="sb-num">30M+</div><div class="sb-lbl">Devotees Worldwide</div></div>
+  <div class="sb-item"><div class="sb-num">4K</div><div class="sb-lbl">Ultra HD Darshan</div></div>
+</div>
+
+<section class="notify-section fade-up">
+  <div class="notify-card">
+    <div class="notify-icon">🔔</div>
+    <h2 class="notify-title">Never Miss an Aarti</h2>
+    <p class="notify-desc">Get WhatsApp and email reminders before every aarti at your favourite temples. Set once, receive divine blessings every day.</p>
+    <div class="notify-form">
+      <input type="tel" class="notify-input" placeholder="+91 / +1 WhatsApp number"/>
+      <button class="notify-btn">Set Aarti Reminder →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p class="footer-tagline">India's largest devotional platform, connecting 30 million Hindus worldwide to their faith, culture, and sacred temples.</p></div>
+    <div><div class="footer-heading">Services</div><ul class="footer-links"><li><a href="puja.html">Puja Seva</a></li><li><a href="chadhava.html">Chadhava</a></li><li><a href="darshan.html">Live Darshan</a></li><li><a href="panchang.html">Panchang</a></li><li><a href="horoscope.html">Horoscope</a></li></ul></div>
+    <div><div class="footer-heading">Explore</div><ul class="footer-links"><li><a href="temples.html">Sacred Temples</a></li><li><a href="library.html">Library</a></li><li><a href="library.html">Bhajans & Aartis</a></li><li><a href="panchang.html">Fasts & Festivals</a></li></ul></div>
+    <div><div class="footer-heading">Company</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="about.html#contact">Contact</a></li><li><a href="legal.html">Privacy Policy</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div>© 2026 MahaPoojan, Inc. · Bengaluru</div><div class="footer-certifications"><span class="cert-badge">ISO 27001</span><span class="cert-badge">4K Streaming</span></div></div>
+</footer>
+
+<script>
+const temples = [
+  {id:'kashi',name:'Kashi Vishwanath',deity:'Shiva',location:'Varanasi, UP',icon:'🔱',bg:'linear-gradient(135deg,#2A1A06,#0E0800)',status:'live',viewers:24831,nextAarti:'Mangal Aarti · Now',cat:'shiva'},
+  {id:'tirupati',name:'Tirumala Tirupati',deity:'Vishnu',location:'Tirupati, AP',icon:'🌸',bg:'linear-gradient(135deg,#1A0A1A,#0E0800)',status:'live',viewers:18420,nextAarti:'Suprabhatam · Now',cat:'vishnu'},
+  {id:'mahakal',name:'Mahakaleshwar',deity:'Shiva',location:'Ujjain, MP',icon:'🪷',bg:'linear-gradient(135deg,#0F1A0F,#0E0800)',status:'live',viewers:12305,nextAarti:'Bhasma Aarti · Now',cat:'shiva'},
+  {id:'vaishno',name:'Vaishno Devi',deity:'Shakti',location:'Katra, J&K',icon:'🏔️',bg:'linear-gradient(135deg,#0A0A1A,#0E0800)',status:'live',viewers:9120,nextAarti:'Live Darshan · Now',cat:'shakti'},
+  {id:'siddhivinayak',name:'Siddhivinayak',deity:'Ganesh',location:'Mumbai, MH',icon:'🐘',bg:'linear-gradient(135deg,#1A1A0A,#0E0800)',status:'live',viewers:7860,nextAarti:'Evening Aarti · 7:30 PM',cat:'ganesh'},
+  {id:'jagannath',name:'Jagannath Puri',deity:'Vishnu',location:'Puri, Odisha',icon:'🔆',bg:'linear-gradient(135deg,#1A0A00,#0E0800)',status:'live',viewers:6540,nextAarti:'Sandhya Aarti · 7:00 PM',cat:'vishnu'},
+  {id:'meenakshi',name:'Meenakshi Amman',deity:'Shakti',location:'Madurai, TN',icon:'🌺',bg:'linear-gradient(135deg,#1A0800,#0E0800)',status:'upcoming',viewers:0,nextAarti:'Evening Aarti · 8:00 PM',cat:'shakti'},
+  {id:'somnath',name:'Somnath Temple',deity:'Shiva',location:'Somnath, GJ',icon:'🌊',bg:'linear-gradient(135deg,#0A1218,#0E0800)',status:'upcoming',viewers:0,nextAarti:'Sandhya Aarti · 7:30 PM',cat:'shiva'},
+  {id:'iskcon',name:'ISKCON Vrindavan',deity:'Krishna',location:'Vrindavan, UP',icon:'🪗',bg:'linear-gradient(135deg,#1A0A1A,#0E0800)',status:'live',viewers:4230,nextAarti:'Mangala Aarti · Now',cat:'vishnu'},
+  {id:'kedarnath',name:'Kedarnath Temple',deity:'Shiva',location:'Kedarnath, UK',icon:'🏔️',bg:'linear-gradient(135deg,#0A0A0A,#0E0800)',status:'upcoming',viewers:0,nextAarti:'Morning Aarti · 6:00 AM',cat:'shiva'},
+  {id:'mahalakshmi',name:'Kolhapur Mahalakshmi',deity:'Shakti',location:'Kolhapur, MH',icon:'🌿',bg:'linear-gradient(135deg,#0F1A0F,#0E0800)',status:'live',viewers:3105,nextAarti:'Evening Aarti · Now',cat:'shakti'},
+  {id:'badrinath',name:'Badrinath Temple',deity:'Vishnu',location:'Badrinath, UK',icon:'❄️',bg:'linear-gradient(135deg,#0A1A2A,#0E0800)',status:'upcoming',viewers:0,nextAarti:'Morning Abhishek · 7:00 AM',cat:'vishnu'},
+];
+
+const kashiAartis = [
+  {time:'4:30 AM',name:'Mangal Aarti',status:'live'},
+  {time:'8:00 AM',name:'Bhog Aarti',status:'done'},
+  {time:'11:00 AM',name:'Sandhya Aarti',status:'done'},
+  {time:'12:00 PM',name:'Bhog Aarti',status:'done'},
+  {time:'7:00 PM',name:'Sandhya Aarti',status:'upcoming'},
+  {time:'9:00 PM',name:'Shringaar Aarti',status:'upcoming'},
+  {time:'10:30 PM',name:'Shayan Aarti',status:'upcoming'},
+];
+
+function renderSchedule() {
+  document.getElementById('scheduleRow').innerHTML = kashiAartis.map(a => `
+    <div class="aarti-slot ${a.status==='live'?'current':''}">
+      <div class="aarti-time">${a.time}</div>
+      <div class="aarti-name">${a.name}</div>
+      <div class="aarti-status ${a.status==='live'?'aarti-live':''}">${a.status==='live'?'● Live Now':a.status==='done'?'Completed':'Upcoming'}</div>
+    </div>
+  `).join('');
+}
+
+let currentCat = 'all';
+function renderStreams(cat='all') {
+  let filtered = cat==='all' ? temples : cat==='live' ? temples.filter(t=>t.status==='live') : cat==='upcoming' ? temples.filter(t=>t.status==='upcoming') : temples.filter(t=>t.cat===cat);
+  document.getElementById('streamsGrid').innerHTML = filtered.map(t => `
+    <div class="stream-card" onclick="switchFeatured('${t.id}')">
+      <div class="sc-thumb" style="background:${t.bg};">
+        ${t.icon}
+        ${t.status==='live'?`<span class="sc-live">● LIVE</span><span class="sc-viewers">👁 ${t.viewers.toLocaleString()}</span>`:`<span class="sc-scheduled">⏰ Upcoming</span>`}
+      </div>
+      <div class="sc-info">
+        <div class="sc-deity">${t.deity}</div>
+        <div class="sc-name">${t.name}</div>
+        <div class="sc-location">📍 ${t.location}</div>
+        <div class="sc-next">Next: <span>${t.nextAarti}</span></div>
+        <button class="sc-btn">${t.status==='live'?'▶ Watch Live':'🔔 Set Reminder'}</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function switchFeatured(id) {
+  const t = temples.find(x=>x.id===id);
+  if (!t) return;
+  document.getElementById('featuredIcon').textContent = t.icon;
+  document.getElementById('featuredName').textContent = t.name;
+  document.getElementById('featuredDetails').textContent = `📍 ${t.location} · ${t.nextAarti}`;
+  document.getElementById('featuredViewers').textContent = t.status==='live'?`👁 ${t.viewers.toLocaleString()} watching`:'⏰ Upcoming';
+  document.getElementById('featuredStream').style.background = '#1A0C02';
+}
+
+function bookPuja() { window.location.href = 'puja-booking.html'; }
+
+document.querySelectorAll('.filter-pill').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    renderStreams(this.dataset.cat);
+  });
+});
+
+renderSchedule();
+renderStreams();
+
+// Animate viewer counts
+setInterval(() => {
+  temples.forEach(t => {
+    if (t.status==='live') t.viewers += Math.floor(Math.random()*20-5);
+  });
+}, 3000);
+
+const obs = new IntersectionObserver(e => e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+  <script src="assets/js/shared.js"></script>
+</body>
+</html>

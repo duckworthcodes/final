@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MahaPoojan — Chadhava Offerings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --saffron: #C6721B; --saffron-deep: #9E4F08; --saffron-light: #F5C77E;
+  --saffron-pale: #FDF3E4; --gold: #D4A853; --gold-light: #F2E2B0;
+  --cream: #FAF6EE; --ink: #1A1208; --ink-mid: #3D2D12; --ink-soft: #7A6040;
+  --white: #FFFFFF; --border: rgba(198,114,27,0.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5vw;background:rgba(250,246,238,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--saffron-deep);letter-spacing:.03em;text-decoration:none;}
+.nav-logo span{color:var(--gold);}
+.nav-links{display:flex;align-items:center;gap:2.2rem;list-style:none;}
+.nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--saffron);}
+.nav-cta{background:var(--saffron);color:white!important;padding:.55rem 1.4rem;border-radius:2rem;letter-spacing:.1em!important;}
+.nav-cta:hover{background:var(--saffron-deep)!important;}
+
+/* PAGE HERO */
+.page-hero{background:linear-gradient(135deg,#2A1A06 0%,#1A0C02 100%);padding:5rem 5vw 4rem;text-align:center;position:relative;overflow:hidden;}
+.page-hero::before{content:'📿';position:absolute;font-size:22rem;opacity:.03;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.page-eyebrow{font-size:.7rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:block;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;color:white;line-height:1.1;margin-bottom:1rem;}
+.page-title em{font-style:italic;color:var(--saffron-light);}
+.page-subtitle{font-size:1rem;font-weight:300;color:rgba(255,255,255,.6);max-width:55ch;margin:0 auto 2rem;}
+
+/* HOW IT WORKS */
+.how-section{padding:5rem 5vw;background:white;}
+.section-eyebrow{display:inline-block;font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);margin-bottom:1rem;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:300;line-height:1.15;color:var(--ink);}
+.section-title em{font-style:italic;color:var(--saffron-deep);}
+.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3rem;}
+.step-box{text-align:center;padding:2rem 1.5rem;border-radius:1.2rem;border:1px solid var(--border);background:var(--cream);position:relative;}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:rgba(198,114,27,.12);line-height:1;margin-bottom:1rem;}
+.step-icon{font-size:2rem;margin-bottom:1rem;}
+.step-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;margin-bottom:.5rem;}
+.step-desc{font-size:.82rem;color:var(--ink-soft);line-height:1.6;}
+.step-connector{position:absolute;right:-1.1rem;top:50%;transform:translateY(-50%);font-size:1.2rem;color:var(--gold);z-index:2;}
+
+/* OFFERINGS GRID */
+.offerings-section{padding:5rem 5vw;}
+.filter-row{display:flex;gap:.8rem;margin-bottom:2.5rem;flex-wrap:wrap;}
+.filter-pill{padding:.45rem 1.2rem;border-radius:2rem;border:1px solid var(--border);background:white;font-family:'Jost',sans-serif;font-size:.78rem;cursor:pointer;transition:all .2s;}
+.filter-pill.active,.filter-pill:hover{background:var(--saffron);color:white;border-color:var(--saffron);}
+.offerings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;}
+.offering-card{background:white;border-radius:1.2rem;border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;}
+.offering-card:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(26,18,8,.1);}
+.offering-top{height:160px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;}
+.offering-badge{position:absolute;top:.7rem;right:.7rem;font-size:.6rem;font-weight:600;text-transform:uppercase;padding:.2rem .7rem;border-radius:1rem;background:var(--gold);color:var(--ink-mid);}
+.offering-body{padding:1.2rem;}
+.offering-deity{font-size:.65rem;letter-spacing:.12em;color:var(--saffron);text-transform:uppercase;margin-bottom:.3rem;}
+.offering-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;margin-bottom:.3rem;}
+.offering-temple{font-size:.75rem;color:var(--ink-soft);margin-bottom:.8rem;}
+.offering-desc{font-size:.8rem;color:var(--ink-soft);line-height:1.6;margin-bottom:1rem;}
+.offering-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:.8rem;}
+.offering-price{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;}
+.offer-btn{background:var(--saffron);color:white;border:none;padding:.45rem 1rem;border-radius:2rem;font-size:.78rem;font-weight:500;cursor:pointer;transition:background .2s;}
+.offer-btn:hover{background:var(--saffron-deep);}
+.video-proof{display:inline-flex;align-items:center;gap:.4rem;font-size:.7rem;color:var(--ink-soft);margin-top:.5rem;}
+.video-proof span{color:#2D7A4F;}
+
+/* TRUST BANNER */
+.trust-banner{background:var(--ink);padding:3rem 5vw;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;}
+.tb-item{text-align:center;}
+.tb-icon{font-size:1.8rem;margin-bottom:.5rem;}
+.tb-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:white;margin-bottom:.3rem;}
+.tb-desc{font-size:.75rem;color:rgba(255,255,255,.5);}
+
+/* TESTIMONIALS */
+.testimonials{padding:5rem 5vw;background:white;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+.testi-card{background:var(--cream);border-radius:1.2rem;padding:2rem;border:1px solid var(--border);}
+.testi-quote{font-size:3rem;color:var(--saffron-light);line-height:.8;margin-bottom:1rem;font-family:'Cormorant Garamond',serif;}
+.testi-text{font-size:.88rem;line-height:1.75;color:var(--ink-soft);margin-bottom:1.5rem;}
+.testi-author{display:flex;align-items:center;gap:.8rem;}
+.author-av{width:2.5rem;height:2.5rem;border-radius:50%;background:var(--saffron);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;color:white;}
+.author-nm{font-size:.85rem;font-weight:500;}
+.author-loc{font-size:.72rem;color:var(--ink-soft);}
+.stars{color:var(--gold);font-size:.85rem;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(26,18,8,.7);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1.5rem;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--cream);border-radius:1.5rem;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 30px 60px rgba(0,0,0,.3);animation:mup .3s ease;}
+@keyframes mup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:1rem;right:1rem;width:2rem;height:2rem;border-radius:50%;background:white;border:1px solid var(--border);cursor:pointer;font-size:1rem;z-index:20;}
+.modal-header{background:linear-gradient(135deg,#2A1A06,#1A0C02);padding:2rem;border-radius:1.5rem 1.5rem 0 0;color:white;}
+.modal-icon{font-size:3rem;margin-bottom:1rem;}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;}
+.modal-body{padding:2rem;}
+.form-label{font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.4rem;display:block;}
+.form-input{width:100%;padding:.7rem 1rem;border:1px solid var(--border);border-radius:.6rem;font-family:'Jost',sans-serif;font-size:.9rem;margin-bottom:1rem;background:white;}
+.form-row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.modal-footer{padding:1rem 2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:white;border-radius:0 0 1.5rem 1.5rem;}
+.price-display{font-family:'Cormorant Garamond',serif;font-size:1.6rem;}
+.confirm-btn{background:var(--saffron);color:white;border:none;padding:.7rem 2rem;border-radius:2rem;font-weight:500;cursor:pointer;}
+
+/* FOOTER */
+footer{background:var(--ink);padding:4rem 5vw 2rem;color:white;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.08);}
+.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:.8rem;}
+.footer-tagline{font-size:.82rem;color:rgba(255,255,255,.45);line-height:1.7;}
+.footer-heading{font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1rem;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.footer-links a{font-size:.85rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:rgba(255,255,255,.25);padding-top:2rem;}
+.cert-badge{padding:.25rem .7rem;border:1px solid rgba(255,255,255,.12);border-radius:.3rem;font-size:.65rem;letter-spacing:.08em;}
+.footer-certifications{display:flex;gap:1rem;align-items:center;font-size:.7rem;color:rgba(255,255,255,.35);}
+
+/* FADE */
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){
+  .steps-row{grid-template-columns:1fr 1fr;}
+  .step-connector{display:none;}
+  .trust-banner{grid-template-columns:1fr 1fr;}
+  .testi-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+  .form-row2{grid-template-columns:1fr;}
+  .steps-row{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+}
+</style>
+  <link rel="stylesheet" href="assets/css/shared.css"/>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/images/logo.jpeg" alt="MahaPoojan Logo" class="logo-img">
+    </a>
+  <ul class="nav-links">
+    <li><a href="puja.html">Puja Seva</a></li>
+    <li><a href="chadhava.html" class="active">Chadhava</a></li>
+    <li><a href="temples.html">Temples</a></li>
+    <li><a href="panchang.html">Panchang</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="puja-booking.html" class="nav-cta">Book Puja</a></li>
+  </ul>
+</nav>
+
+<section class="page-hero">
+  <span class="page-eyebrow">Sacred Offerings</span>
+  <h1 class="page-title">Offer <em>Chadhava</em><br/>at India's Holy Temples</h1>
+  <p class="page-subtitle">Present sacred offerings — flowers, fruits, sweets, coins, and more — directly at the deity's sanctum. Every offering is video-recorded and delivered to you.</p>
+  <a href="chadhava.html" class="nav-cta" style="display:inline-block;margin-top:1rem;text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;">Explore Offerings ↓</a>
+</section>
+
+<section class="how-section fade-up">
+  <div style="text-align:center;margin-bottom:.5rem;">
+    <span class="section-eyebrow">How It Works</span>
+    <h2 class="section-title">Simple. <em>Sacred.</em> Seamless.</h2>
+  </div>
+  <div class="steps-row">
+    <div class="step-box">
+      <div class="step-num">01</div>
+      <div class="step-icon">📿</div>
+      <div class="step-name">Choose Offering</div>
+      <div class="step-desc">Browse our curated list of sacred items — flowers, coconut, sweets, gold coins — at the temple of your choice.</div>
+      <div class="step-connector">→</div>
+    </div>
+    <div class="step-box">
+      <div class="step-num">02</div>
+      <div class="step-icon">🙏</div>
+      <div class="step-name">Give Your Sankalp</div>
+      <div class="step-desc">Provide your name, gotra, and prayer intention. The priest will offer it in your name at the deity's feet.</div>
+      <div class="step-connector">→</div>
+    </div>
+    <div class="step-box">
+      <div class="step-num">03</div>
+      <div class="step-icon">▶️</div>
+      <div class="step-name">Receive Video Proof</div>
+      <div class="step-desc">A dedicated camera records your offering being placed. You receive the video directly on WhatsApp or email.</div>
+      <div class="step-connector">→</div>
+    </div>
+    <div class="step-box">
+      <div class="step-num">04</div>
+      <div class="step-icon">📦</div>
+      <div class="step-name">Prasad Dispatched</div>
+      <div class="step-desc">A portion of the blessed prasad is dispatched to your address — whether in Mumbai or Melbourne.</div>
+    </div>
+  </div>
+</section>
+
+<section class="offerings-section" id="offerings">
+  <div class="section-header fade-up" style="margin-bottom:2rem;">
+    <span class="section-eyebrow">Sacred Offerings</span>
+    <h2 class="section-title">Choose Your <em>Devotion</em></h2>
+  </div>
+  <div class="filter-row fade-up" id="filterRow">
+    <button class="filter-pill active" data-cat="all">All Offerings</button>
+    <button class="filter-pill" data-cat="flowers">Flowers & Patra</button>
+    <button class="filter-pill" data-cat="sweets">Sweets & Fruits</button>
+    <button class="filter-pill" data-cat="abhishek">Abhishek Items</button>
+    <button class="filter-pill" data-cat="coins">Gold & Coins</button>
+    <button class="filter-pill" data-cat="diya">Diyas & Agarbatti</button>
+  </div>
+  <div class="offerings-grid fade-up" id="offeringsGrid"></div>
+</section>
+
+<div class="trust-banner fade-up">
+  <div class="tb-item"><div class="tb-icon">📹</div><div class="tb-title">100% Video Proof</div><div class="tb-desc">Every offering recorded and delivered to you</div></div>
+  <div class="tb-item"><div class="tb-icon">🏛️</div><div class="tb-title">100+ Temples</div><div class="tb-desc">Partner temples across India</div></div>
+  <div class="tb-item"><div class="tb-icon">📦</div><div class="tb-title">Prasad Worldwide</div><div class="tb-desc">Shipping YOu Worldwide</div></div>
+  <div class="tb-item"><div class="tb-icon">🔒</div><div class="tb-title">Secure Payments</div><div class="tb-desc">Razorpay certified & ISO 27001</div></div>
+</div>
+
+<section class="testimonials fade-up">
+  <div style="text-align:center;">
+    <span class="section-eyebrow">Devotee Experiences</span>
+    <h2 class="section-title">Offerings from <em>the Heart</em></h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">I offered a gold coin at Tirupati for my daughter's wedding. The video brought tears to my eyes — I could see the priest placing it in front of the Lord. Unforgettable.</p>
+      <div class="testi-author"><div class="author-av">VR</div><div><div class="author-nm">Vasudha Rao</div><div class="author-loc">🇺🇸 Houston, USA</div><div class="stars">★★★★★</div></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">On my mother's birthday I offered 108 roses at Kashi Vishwanath. She wept watching the video — it was as if she was there herself. MahaPoojan made that possible from Singapore.</p>
+      <div class="testi-author"><div class="author-av">AM</div><div><div class="author-nm">Arun Mehta</div><div class="author-loc">🇸🇬 Singapore</div><div class="stars">★★★★★</div></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">The prasad from Siddhivinayak arrived in just 5 days in London — beautifully packaged, still fragrant. This is dharma made accessible for the diaspora.</p>
+      <div class="testi-author"><div class="author-av">SK</div><div><div class="author-nm">Sunita Krishnan</div><div class="author-loc">🇬🇧 London, UK</div><div class="stars">★★★★★</div></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">🪔 MahaPoojan</div>
+      <p class="footer-tagline">India's largest devotional platform, connecting all Hindus worldwide to their faith, culture, and sacred temples.</p>
+    </div>
+    <div>
+      <div class="footer-heading">Services</div>
+      <ul class="footer-links">
+        <li><a href="puja.html">Puja Seva</a></li>
+        <li><a href="chadhava.html">Chadhava</a></li>
+        <li><a href="darshan.html">Live Darshan</a></li>
+        <li><a href="panchang.html">Panchang</a></li>
+        <li><a href="horoscope.html">Horoscope</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Explore</div>
+      <ul class="footer-links">
+        <li><a href="temples.html">Sacred Temples</a></li>
+        <li><a href="library.html">Library</a></li>
+        <li><a href="library.html">Bhajans & Aartis</a></li>
+        <li><a href="panchang.html">Fasts & Festivals</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Company</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="about.html">Contact</a></li>
+        <li><a href="legal.html">Privacy Policy</a></li>
+        <li><a href="legal.html">Terms of Use</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 MahaPoojan, Inc. · MahaPoojan Devotional Services, India</div>
+    <div class="footer-certifications">
+      <span class="cert-badge">ISO 27001</span>
+      <span class="cert-badge">Digital India</span>
+      <span class="cert-badge">Razorpay Secured</span>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="offerModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeOfferModal()">✕</button>
+    <div class="modal-header" id="modalHeader"></div>
+    <div class="modal-body" id="modalBodyContent"></div>
+    <div class="modal-footer">
+      <div class="price-display" id="modalPrice">₹151</div>
+      <button class="confirm-btn" onclick="confirmOffer()">Confirm Offering →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const offerings = [
+  { id:'lotus', name:'108 Lotus Flowers', deity:'Lakshmi', temple:'Kolhapur Mahalakshmi', price:151, cat:'flowers', icon:'🪷', desc:'108 fresh lotus flowers offered at the feet of Goddess Mahalakshmi — the most beloved offering of Lakshmi Devi.', badge:'Popular' },
+  { id:'bilva', name:'Bilva Patra Mala', deity:'Shiva', temple:'Kashi Vishwanath', price:51, cat:'flowers', icon:'🌿', desc:'Sacred Bilva leaves strung into a mala and offered to Lord Shiva. Highly auspicious during Shravan.', badge:'Shravan Special' },
+  { id:'champa', name:'Champa & Marigold Garland', deity:'Vishnu', temple:'ISKCON Vrindavan', price:101, cat:'flowers', icon:'🌼', desc:'Fragrant Champa and Marigold garland draped around the deity\'s idol — a traditional welcome to the Lord.', badge:'' },
+  { id:'modak', name:'21 Modak Offering', deity:'Ganesh', temple:'Siddhivinayak, Mumbai', price:201, cat:'sweets', icon:'🟠', desc:'21 fresh modaks prepared in the temple kitchen, offered to Ganpati Bappa. Your favourite sweet becomes His prasad.', badge:'Best Seller' },
+  { id:'panchafruit', name:'Pancha Phala Thali', deity:'All Deities', temple:'Tirumala Tirupati', price:251, cat:'sweets', icon:'🍌', desc:'A platter of five sacred fruits — banana, coconut, guava, pomegranate, and mango — offered to the Lord.', badge:'' },
+  { id:'panchamrit', name:'Panchamrit Abhishek', deity:'Shiva', temple:'Mahakaleshwar, Ujjain', price:551, cat:'abhishek', icon:'🥛', desc:'Ritual bathing of the Shivalinga with five sacred substances: milk, curd, honey, ghee, and sugar.', badge:'High Merit' },
+  { id:'gangajal', name:'Gangajal Abhishek', deity:'Shiva', temple:'Kashi Vishwanath', price:301, cat:'abhishek', icon:'💧', desc:'Holy water from the Ganga poured over the Shivalinga in a ritualistic abhishek by temple priests.', badge:'' },
+  { id:'gold_coin', name:'Gold Coin Offering', deity:'Vishnu', temple:'Tirumala Tirupati', price:1100, cat:'coins', icon:'🪙', desc:'A 24-carat gold coin bearing Lord Venkateswara\'s image, offered at the Hundi and placed before the deity.', badge:'Premium' },
+  { id:'silver_coin', name:'Silver Coin Chadhava', deity:'Lakshmi', temple:'Kolhapur Mahalakshmi', price:501, cat:'coins', icon:'🔘', desc:'A silver coin offered at the lotus feet of Goddess Mahalakshmi on your behalf by the temple priest.', badge:'' },
+  { id:'diya_108', name:'108 Ghee Diya Darshan', deity:'All Deities', temple:'Kashi Vishwanath', price:401, cat:'diya', icon:'🪔', desc:'108 pure ghee diyas lit in a sacred pattern around the temple sanctum during aarti time.', badge:'Auspicious' },
+  { id:'agarbatti', name:'Chandan Agarbatti Seva', deity:'Ganesh', temple:'Siddhivinayak, Mumbai', price:151, cat:'diya', icon:'🕯️', desc:'Premium sandalwood agarbattis lit before Lord Ganesha. The fragrance is believed to carry prayers to heaven.', badge:'' },
+  { id:'tulsi', name:'Tulsi Mala Offering', deity:'Vishnu', temple:'ISKCON Vrindavan', price:101, cat:'flowers', icon:'🌱', desc:'A mala of 108 Tulsi beads placed at the feet of Lord Krishna — the most sacred offering to Vishnu.', badge:'' },
+];
+
+let currentOffer = null;
+
+function renderOfferings(cat='all') {
+  const grid = document.getElementById('offeringsGrid');
+  const filtered = cat === 'all' ? offerings : offerings.filter(o => o.cat === cat);
+  grid.innerHTML = filtered.map(o => `
+    <div class="offering-card" onclick="openOfferModal('${o.id}')">
+      <div class="offering-top" style="background:linear-gradient(135deg,#2A1A06,#1A0C02);">
+        ${o.icon}
+        ${o.badge ? `<div class="offering-badge">${o.badge}</div>` : ''}
+      </div>
+      <div class="offering-body">
+        <div class="offering-deity">${o.deity}</div>
+        <div class="offering-name">${o.name}</div>
+        <div class="offering-temple">📍 ${o.temple}</div>
+        <div class="offering-desc">${o.desc}</div>
+        <div class="offering-footer">
+          <div class="offering-price">₹${o.price}</div>
+          <button class="offer-btn">Offer Now</button>
+        </div>
+        <div class="video-proof"><span>●</span> Video proof included</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openOfferModal(id) {
+  currentOffer = offerings.find(o => o.id === id);
+  document.getElementById('modalHeader').innerHTML = `<div class="modal-icon">${currentOffer.icon}</div><div class="modal-title">${currentOffer.name}</div><div style="font-size:.8rem;color:rgba(255,255,255,.55);margin-top:.3rem;">📍 ${currentOffer.temple}</div>`;
+  document.getElementById('modalPrice').textContent = '₹' + currentOffer.price;
+  document.getElementById('modalBodyContent').innerHTML = `
+    <p style="font-size:.88rem;color:var(--ink-soft);line-height:1.7;margin-bottom:1.5rem;">${currentOffer.desc}</p>
+    <div class="form-row2">
+      <div><label class="form-label">Your Full Name *</label><input class="form-input" id="offerName" placeholder="Rahul Sharma"/></div>
+      <div><label class="form-label">Gotra</label><input class="form-input" id="offerGotra" placeholder="Kashyap"/></div>
+    </div>
+    <label class="form-label">Prayer / Sankalp</label>
+    <textarea class="form-input" id="offerPrayer" rows="3" placeholder="May my family receive the blessings of the Lord..."></textarea>
+    <label class="form-label">WhatsApp for Video Proof *</label>
+    <input class="form-input" id="offerWA" placeholder="+91 98765 43210"/>
+    <div style="background:var(--saffron-pale);border-radius:.8rem;padding:1rem;font-size:.8rem;color:var(--ink-soft);">
+      📹 You will receive a video of your offering within 24 hours on WhatsApp
+    </div>
+  `;
+  document.getElementById('offerModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeOfferModal() {
+  document.getElementById('offerModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function confirmOffer() {
+  const name = document.getElementById('offerName')?.value;
+  if (!name) { alert('Please enter your name'); return; }
+  document.getElementById('modalBodyContent').innerHTML = `
+    <div style="text-align:center;padding:2rem 0;">
+      <div style="font-size:3rem;margin-bottom:1rem;">🙏✨</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:1rem;">Offering Confirmed!</h3>
+      <p style="color:var(--ink-soft);">Your ${currentOffer.name} at ${currentOffer.temple} has been booked in the name of <strong>${name}</strong>. You will receive a video proof on your WhatsApp within 24 hours.</p>
+      <div style="margin-top:1.5rem;padding:1rem;background:var(--saffron-pale);border-radius:1rem;font-size:.85rem;">🕉️ May the divine blessings of the Lord be with you and your family.</div>
+    </div>`;
+  document.getElementById('modalPrice').textContent = '';
+  document.querySelector('.confirm-btn').textContent = 'Close';
+  document.querySelector('.confirm-btn').onclick = closeOfferModal;
+}
+
+document.querySelectorAll('.filter-pill').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    renderOfferings(this.dataset.cat);
+  });
+});
+
+renderOfferings();
+
+// Scroll animations
+const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:.1});
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+  <script src="assets/js/shared.js"></script>
+</body>
+</html>

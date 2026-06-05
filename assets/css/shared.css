@@ -1,0 +1,99 @@
+/* MahaPoojan — shared styles (nav, mobile menu, logo, footer helpers) */
+
+.logo-img {
+  height: 56px;
+  width: auto;
+  display: block;
+}
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(198, 114, 27, 0.25);
+  border-radius: 0.5rem;
+  background: white;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--ink-mid, #3D2D12);
+  flex-shrink: 0;
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid #C6721B;
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  nav .nav-links {
+    display: none !important;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(85vw, 320px);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 5rem 1.5rem 2rem;
+    background: rgba(250, 246, 238, 0.98);
+    backdrop-filter: blur(16px);
+    border-left: 1px solid rgba(198, 114, 27, 0.18);
+    box-shadow: -8px 0 40px rgba(26, 18, 8, 0.12);
+    z-index: 300;
+    overflow-y: auto;
+  }
+
+  nav .nav-links.is-open {
+    display: flex !important;
+  }
+
+  nav .nav-links li {
+    border-bottom: 1px solid rgba(198, 114, 27, 0.1);
+  }
+
+  nav .nav-links a {
+    display: block;
+    padding: 1rem 0;
+    font-size: 0.85rem !important;
+  }
+
+  nav .nav-links .nav-cta {
+    text-align: center;
+    margin-top: 1rem;
+  }
+}
+
+.nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 18, 8, 0.45);
+  z-index: 250;
+}
+
+.nav-backdrop.is-open {
+  display: block;
+}
+
+body.nav-open {
+  overflow: hidden;
+}
+
+/* Dark-theme pages (darshan) */
+body.dark-nav nav .nav-links.is-open {
+  background: rgba(14, 8, 0, 0.98);
+  border-left-color: rgba(212, 168, 83, 0.15);
+}
+
+body.dark-nav .nav-toggle {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(212, 168, 83, 0.25);
+  color: white;
+}

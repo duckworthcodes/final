@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MahaPoojan — Your Sacred Connection to India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --saffron: #C6721B;
+    --saffron-deep: #9E4F08;
+    --saffron-light: #F5C77E;
+    --saffron-pale: #FDF3E4;
+    --gold: #D4A853;
+    --gold-light: #F2E2B0;
+    --cream: #FAF6EE;
+    --ink: #1A1208;
+    --ink-mid: #3D2D12;
+    --ink-soft: #7A6040;
+    --red-temple: #8B2020;
+    --white: #FFFFFF;
+    --border: rgba(198,114,27,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 5vw;
+    background: rgba(250,246,238,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--saffron-deep);
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--saffron); }
+
+  .nav-cta {
+    background: var(--saffron);
+    color: white !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2rem;
+    letter-spacing: 0.1em !important;
+  }
+
+  .nav-cta:hover { background: var(--saffron-deep); color: white !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 5vw;
+    padding-top: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-mandala {
+    position: absolute;
+    right: -8vw;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60vw;
+    height: 60vw;
+    opacity: 0.07;
+    animation: slowRotate 60s linear infinite;
+  }
+
+  @keyframes slowRotate { to { transform: translateY(-50%) rotate(360deg); } }
+
+  .hero-content { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 1.8rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--saffron);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 5.5vw, 5.8rem);
+    font-weight: 300;
+    line-height: 1.08;
+    color: var(--ink);
+    margin-bottom: 1.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--saffron-deep);
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    max-width: 44ch;
+    margin-bottom: 3rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--saffron);
+    color: white;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1rem 2.2rem;
+    border-radius: 3rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: var(--saffron-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(198,114,27,0.3);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: transparent;
+    color: var(--ink-mid);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1rem 2.2rem;
+    border-radius: 3rem;
+    border: 1px solid rgba(61,45,18,0.25);
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--saffron);
+    color: var(--saffron);
+  }
+
+  .hero-trust {
+    margin-top: 3.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .trust-item {
+    text-align: center;
+  }
+
+  .trust-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--saffron-deep);
+    line-height: 1;
+  }
+
+  .trust-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 0.3rem;
+  }
+
+  .trust-divider {
+    width: 1px;
+    height: 2.5rem;
+    background: var(--border);
+  }
+
+  /* Hero Visual */
+  .hero-visual {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-phone-mockup {
+    width: 280px;
+    height: 560px;
+    background: var(--ink);
+    border-radius: 2.5rem;
+    position: relative;
+    box-shadow: 0 40px 80px rgba(26,18,8,0.35), 0 0 0 1px rgba(198,114,27,0.2);
+    overflow: hidden;
+  }
+
+  .phone-inner {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, #2A1A06 0%, #1A1208 50%, #0F0A04 100%);
+    display: flex;
+    flex-direction: column;
+    padding: 2.2rem 1.4rem 1.4rem;
+  }
+
+  .phone-status {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 1.4rem;
+    letter-spacing: 0.05em;
+  }
+
+  .phone-greeting {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 0.2rem;
+  }
+
+  .phone-date {
+    font-size: 0.68rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+  }
+
+  .phone-darshan-card {
+    background: linear-gradient(135deg, rgba(198,114,27,0.25) 0%, rgba(139,32,32,0.2) 100%);
+    border: 1px solid rgba(212,168,83,0.3);
+    border-radius: 1.2rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .phone-darshan-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .phone-darshan-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 0.3rem;
+  }
+
+  .phone-darshan-sub {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .phone-live-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #4CAF50;
+    border-radius: 50%;
+    margin-right: 4px;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .phone-stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .phone-stat {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 0.9rem;
+    padding: 0.8rem;
+  }
+
+  .phone-stat-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--saffron-light);
+    line-height: 1;
+  }
+
+  .phone-stat-lbl {
+    font-size: 0.58rem;
+    color: rgba(255,255,255,0.45);
+    margin-top: 0.2rem;
+    letter-spacing: 0.06em;
+  }
+
+  .phone-panchang {
+    background: rgba(212,168,83,0.1);
+    border: 1px solid rgba(212,168,83,0.2);
+    border-radius: 0.9rem;
+    padding: 0.8rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .phone-panchang-label {
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .phone-panchang-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: var(--gold);
+    text-align: right;
+  }
+
+  /* Floating elements */
+  .float-card {
+    position: absolute;
+    background: white;
+    border-radius: 1rem;
+    padding: 0.9rem 1.2rem;
+    box-shadow: 0 10px 40px rgba(26,18,8,0.18);
+    border: 1px solid rgba(198,114,27,0.15);
+  }
+
+  .float-card-1 {
+    left: -5rem;
+    top: 25%;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 180px;
+    animation: floatUp 4s ease-in-out infinite;
+  }
+
+  .float-card-2 {
+    right: -3rem;
+    bottom: 25%;
+    min-width: 160px;
+    animation: floatUp 5s ease-in-out infinite 1s;
+  }
+
+  @keyframes floatUp {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .float-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    background: var(--saffron-pale);
+    border-radius: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .float-title { font-size: 0.75rem; font-weight: 600; color: var(--ink); }
+  .float-sub { font-size: 0.65rem; color: var(--ink-soft); }
+
+  /* ── DIVIDER ── */
+  .ornament-divider {
+    text-align: center;
+    padding: 3rem 0;
+    color: var(--gold);
+    font-size: 1.4rem;
+    letter-spacing: 0.5em;
+    opacity: 0.6;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+
+  .section-title em { font-style: italic; color: var(--saffron-deep); }
+
+  .section-subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--ink-soft);
+    margin-top: 1rem;
+    max-width: 52ch;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  /* ── SERVICES STRIP ── */
+  .services-strip {
+    background: var(--ink);
+    padding: 1.5rem 5vw;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .strip-track {
+    display: flex;
+    gap: 4rem;
+    animation: marquee 25s linear infinite;
+    white-space: nowrap;
+  }
+
+  .strip-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    flex-shrink: 0;
+  }
+
+  .strip-item span { color: var(--gold); font-size: 1rem; }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── SERVICES GRID ── */
+  .services {
+    padding: 7rem 5vw;
+    background: var(--cream);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+    border: 1.5px solid var(--border);
+    border-radius: 1.5rem;
+    overflow: hidden;
+  }
+
+  .service-card {
+    background: var(--cream);
+    padding: 3rem 2.5rem;
+    position: relative;
+    transition: background 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .service-card:hover { background: white; }
+
+  .service-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: rgba(198,114,27,0.1);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s;
+  }
+
+  .service-card:hover .service-number { color: rgba(198,114,27,0.18); }
+
+  .service-icon-wrap {
+    width: 3rem;
+    height: 3rem;
+    background: var(--saffron-pale);
+    border-radius: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    font-size: 1.4rem;
+    transition: background 0.3s;
+  }
+
+  .service-card:hover .service-icon-wrap { background: rgba(198,114,27,0.15); }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.7rem;
+  }
+
+  .service-desc {
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 1.5rem;
+  }
+
+  .service-arrow {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  /* ── FEATURED PUJA ── */
+  .featured {
+    padding: 7rem 5vw;
+    background: white;
+  }
+
+  .featured-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .featured-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--saffron-pale);
+    color: var(--saffron-deep);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(198,114,27,0.2);
+    margin-bottom: 1.8rem;
+  }
+
+  .featured-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 1.2rem;
+  }
+
+  .featured-desc {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+  }
+
+  .featured-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .detail-item {
+    padding: 1rem;
+    background: var(--saffron-pale);
+    border-radius: 0.8rem;
+    border: 1px solid rgba(198,114,27,0.12);
+  }
+
+  .detail-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.3rem;
+  }
+
+  .detail-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .featured-visual {
+    position: relative;
+  }
+
+  .puja-card-visual {
+    background: linear-gradient(145deg, #2A1A06, #1A0C02);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(212,168,83,0.2);
+  }
+
+  .puja-card-visual::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle, rgba(198,114,27,0.15) 0%, transparent 70%);
+  }
+
+  .puja-card-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .puja-deity-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+
+  .puja-temple {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .puja-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .puja-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--saffron-light);
+  }
+
+  .puja-book-btn {
+    background: var(--saffron);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 2rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .puja-book-btn:hover {
+    background: var(--saffron-deep);
+    transform: scale(1.03);
+  }
+
+  .puja-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 1.5rem 0;
+  }
+
+  .puja-participants {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+    position: relative;
+  }
+
+  .puja-participants strong { color: var(--gold); }
+
+  /* ── TEMPLES ── */
+  .temples {
+    padding: 7rem 5vw;
+    background: var(--cream);
+  }
+
+  .temples-scroll {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .temple-card {
+    background: white;
+    border-radius: 1.2rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+
+  .temple-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(26,18,8,0.12);
+  }
+
+  .temple-img-wrap {
+    height: 180px;
+    background: linear-gradient(135deg, #3D2D12, #1A0C02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .temple-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26,18,8,0.6) 0%, transparent 60%);
+  }
+
+  .temple-city-badge {
+    position: absolute;
+    bottom: 0.8rem;
+    left: 0.8rem;
+    z-index: 2;
+    background: rgba(0,0,0,0.6);
+    color: var(--gold);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border-radius: 1rem;
+    backdrop-filter: blur(6px);
+  }
+
+  .temple-info {
+    padding: 1.2rem;
+  }
+
+  .temple-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .temple-desc {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* ── DIASPORA SECTION ── */
+  .diaspora {
+    padding: 7rem 5vw;
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diaspora::before {
+    content: 'ॐ';
+    position: absolute;
+    font-size: 40vw;
+    color: rgba(255,255,255,0.02);
+    font-family: serif;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .diaspora-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .diaspora-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: white;
+    margin-bottom: 1.5rem;
+  }
+
+  .diaspora-title em { font-style: italic; color: var(--gold); }
+
+  .diaspora-text {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 2.5rem;
+  }
+
+  .countries-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .country-chip {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0.7rem;
+    padding: 0.9rem;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .country-chip:hover {
+    background: rgba(198,114,27,0.15);
+    border-color: rgba(198,114,27,0.3);
+  }
+
+  .country-flag { font-size: 1.5rem; margin-bottom: 0.3rem; }
+
+  .country-name {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials {
+    padding: 7rem 5vw;
+    background: white;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .testimonial-card {
+    padding: 2rem;
+    background: var(--cream);
+    border-radius: 1.2rem;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    color: var(--saffron-light);
+    line-height: 0.8;
+    margin-bottom: 1rem;
+  }
+
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1.2rem;
+  }
+
+  .author-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--saffron);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .author-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .author-loc {
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .stars {
+    color: var(--gold);
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+  }
+
+  /* ── APP DOWNLOAD ── */
+  .download {
+    padding: 7rem 5vw;
+    background: linear-gradient(135deg, #2A1A06 0%, var(--ink) 100%);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .download::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 200%;
+    background: radial-gradient(ellipse, rgba(198,114,27,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .download-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    font-weight: 300;
+    color: white;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .download-title em { font-style: italic; color: var(--gold); }
+
+  .download-sub {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 3rem;
+    max-width: 48ch;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  .download-btns {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .store-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 0.9rem 1.8rem;
+    border-radius: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+  }
+
+  .store-btn:hover {
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.35);
+    transform: translateY(-2px);
+  }
+
+  .store-icon { font-size: 1.6rem; }
+
+  .store-label { text-align: left; }
+  .store-label-small { font-size: 0.62rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.08em; }
+  .store-label-big { font-size: 0.9rem; font-weight: 500; }
+
+  .download-trust {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    position: relative;
+  }
+
+  .dl-trust-item {
+    text-align: center;
+  }
+
+  .dl-trust-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .dl-trust-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.3rem;
+  }
+
+  .dl-trust-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.1);
+    align-self: stretch;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0F0A04;
+    padding: 4rem 5vw 2rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--saffron-light);
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1.5rem;
+    max-width: 28ch;
+  }
+
+  .footer-heading {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .footer-links a {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .footer-certifications {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .cert-badge {
+    padding: 0.25rem 0.7rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 0.3rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding-top: 6rem; }
+    .hero-visual { display: none; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .featured-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .temples-scroll { grid-template-columns: 1fr 1fr; }
+    .diaspora-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .temples-scroll { grid-template-columns: 1fr; }
+    .hero-trust { flex-wrap: wrap; gap: 1.5rem; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .download-trust { flex-wrap: wrap; gap: 1.5rem; }
+    .countries-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+  <link rel="stylesheet" href="assets/css/shared.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+   <a href="index.html" class="nav-logo">
+    <img src="assets/images/logo.jpeg" alt="MahaPoojan Logo" class="logo-img">
+    </a>
+  <ul class="nav-links">
+    <li><a href="puja.html">Puja Seva</a></li>
+    <li><a href="chadhava.html">Chadhava</a></li>
+    <li><a href="temples.html">Temples</a></li>
+    <li><a href="panchang.html">Panchang</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="puja-booking.html" class="nav-cta">Book Puja</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="hero-bg-mandala" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" fill="none">
+    <circle cx="200" cy="200" r="195" stroke="#C6721B" stroke-width="1"/>
+    <circle cx="200" cy="200" r="155" stroke="#C6721B" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="115" stroke="#C6721B" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="75" stroke="#C6721B" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="40" stroke="#C6721B" stroke-width="1"/>
+    <g stroke="#C6721B" stroke-width="0.5">
+      <line x1="200" y1="5" x2="200" y2="395"/>
+      <line x1="5" y1="200" x2="395" y2="200"/>
+      <line x1="62" y1="62" x2="338" y2="338"/>
+      <line x1="338" y1="62" x2="62" y2="338"/>
+      <line x1="5" y1="120" x2="395" y2="280"/>
+      <line x1="5" y1="280" x2="395" y2="120"/>
+      <line x1="120" y1="5" x2="280" y2="395"/>
+      <line x1="280" y1="5" x2="120" y2="395"/>
+    </g>
+    <g fill="#C6721B">
+      <polygon points="200,15 207,30 215,25 208,40 220,42 210,52 215,65 200,57 185,65 190,52 180,42 192,40 185,25 193,30"/>
+    </g>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">India's Largest Devotional Platform</div>
+    <h1 class="hero-title">
+      Your Temple.<br/><em>Wherever</em><br/>You Are.
+    </h1>
+    <p class="hero-subtitle">
+      Stay connected to your faith, your culture, and the sacred temples of India — through live darshan, personalised pujas, and divine guidance. For the 30 million devotees who call the world home.
+    </p>
+    <div class="hero-actions">
+      <a href="puja-booking.html" class="btn-primary">Book a Puja →</a>
+      <a href="temples.html" class="btn-secondary">Explore Temples</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">
+        <div class="trust-num">30M+</div>
+        <div class="trust-label">Devotees</div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <div class="trust-num">100+</div>
+        <div class="trust-label">Sacred Temples</div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <div class="trust-num">30+</div>
+        <div class="trust-label">Countries</div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <div class="trust-num">4.5★</div>
+        <div class="trust-label">Rated</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div style="position: relative; display: inline-block;">
+      <div class="hero-phone-mockup">
+        <div class="phone-inner">
+          <div class="phone-status">
+            <span>9:41</span><span>▲▲▲ ●●</span>
+          </div>
+          <div class="phone-greeting">Jay Shri Ram 🙏</div>
+          <div class="phone-date">Wednesday, 4 June 2026 · Jyeshtha Shukla Ashtami</div>
+          <div class="phone-darshan-card">
+            <div class="phone-darshan-label"><span class="phone-live-dot"></span> Live Darshan Now</div>
+            <div class="phone-darshan-title">Kashi Vishwanath</div>
+            <div class="phone-darshan-sub">Varanasi, Uttar Pradesh · Mangal Aarti</div>
+          </div>
+          <div class="phone-stats-row">
+            <div class="phone-stat">
+              <div class="phone-stat-val">3M+</div>
+              <div class="phone-stat-lbl">Pujas Done</div>
+            </div>
+            <div class="phone-stat">
+              <div class="phone-stat-val">1000+</div>
+              <div class="phone-stat-lbl">Temples</div>
+            </div>
+          </div>
+          <div class="phone-panchang">
+            <div>
+              <div class="phone-panchang-label">Today's Rahu Kaal</div>
+              <div style="font-size:0.65rem;color:rgba(255,255,255,0.35);">Avoid new beginnings</div>
+            </div>
+            <div class="phone-panchang-val">10:30 – 12:00</div>
+          </div>
+        </div>
+      </div>
+      <div class="float-card float-card-1">
+        <div class="float-icon">🕉️</div>
+        <div>
+          <div class="float-title">Puja Booked</div>
+          <div class="float-sub">Satyanarayan Puja · Today</div>
+        </div>
+      </div>
+      <div class="float-card float-card-2">
+        <div class="float-title" style="margin-bottom:0.2rem;">📦 Prasad Dispatched</div>
+        <div class="float-sub">From Tirupati · Tracking Live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="services-strip">
+  <div class="strip-track">
+    <div class="strip-item"><span>🔱</span> Online Puja Booking</div>
+    <div class="strip-item"><span>🪔</span> Live Temple Darshan</div>
+    <div class="strip-item"><span>📿</span> Chadhava Offerings</div>
+    <div class="strip-item"><span>⭐</span> Daily Horoscope</div>
+    <div class="strip-item"><span>🗓️</span> Panchang & Muhurat</div>
+    <div class="strip-item"><span>🎵</span> 5000+ Bhajans & Aartis</div>
+    <div class="strip-item"><span>🏛️</span> 100+ Sacred Temples</div>
+    <div class="strip-item"><span>📖</span> Hindu Library</div>
+    <div class="strip-item"><span>🌐</span> 30+ Countries Served</div>
+    <div class="strip-item"><span>🔱</span> Online Puja Booking</div>
+    <div class="strip-item"><span>🪔</span> Live Temple Darshan</div>
+    <div class="strip-item"><span>📿</span> Chadhava Offerings</div>
+    <div class="strip-item"><span>⭐</span> Daily Horoscope</div>
+    <div class="strip-item"><span>🗓️</span> Panchang & Muhurat</div>
+    <div class="strip-item"><span>🎵</span> 5000+ Bhajans & Aartis</div>
+    <div class="strip-item"><span>🏛️</span> 100+ Sacred Temples</div>
+    <div class="strip-item"><span>📖</span> Hindu Library</div>
+    <div class="strip-item"><span>🌐</span> 30+ Countries Served</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">Our Services</span>
+    <h2 class="section-title">Everything Your<br/><em>Devotion</em> Deserves</h2>
+    <p class="section-subtitle">From a personalised puja at a temple 10,000 km away, to the morning panchang with your first chai — MahaPoojan keeps you spiritually anchored.</p>
+  </div>
+
+  <div class="services-grid fade-up">
+    <a href="puja-booking.html" class="service-card">
+      <div class="service-number">01</div>
+      <div class="service-icon-wrap">🪔</div>
+      <div class="service-name">Puja Seva</div>
+      <p class="service-desc">Book personalised pujas performed by expert pandits at India's most sacred temples — in your name, your gotra, for your family.</p>
+      <div class="service-arrow">Book a Puja →</div>
+    </a>
+    <a href="chadhava.html" class="service-card">
+      <div class="service-number">02</div>
+      <div class="service-icon-wrap">📿</div>
+      <div class="service-name">Chadhava</div>
+      <p class="service-desc">Offer sacred items — flowers, sweets, coins, sindoor — directly at the deity's sanctum. Video proof of every offering delivered to you.</p>
+      <div class="service-arrow">Offer Chadhava →</div>
+    </a>
+    <a href="darshan.html" class="service-card">
+      <div class="service-number">03</div>
+      <div class="service-icon-wrap">👁️</div>
+      <div class="service-name">Live Darshan</div>
+      <p class="service-desc">Witness the morning aarti at Kashi Vishwanath or the evening darshan at Tirupati — live, from anywhere in the world.</p>
+      <div class="service-arrow">Watch Darshan →</div>
+    </a>
+    <a href="panchang.html" class="service-card">
+      <div class="service-number">04</div>
+      <div class="service-icon-wrap">🗓️</div>
+      <div class="service-name">Panchang</div>
+      <p class="service-desc">Accurate daily Panchang — tithi, nakshatra, rahu kaal, shubh muhurat — personalised to your timezone and regional tradition.</p>
+      <div class="service-arrow">View Panchang →</div>
+    </a>
+    <a href="horoscope.html" class="service-card">
+      <div class="service-number">05</div>
+      <div class="service-icon-wrap">⭐</div>
+      <div class="service-name">Jyotish & Astrology</div>
+      <p class="service-desc">Free daily horoscope, kundali matching, and access to learned Vedic astrologers for personal guidance on life's most important moments.</p>
+      <div class="service-arrow">Read Horoscope →</div>
+    </a>
+    <a href="library.html" class="service-card">
+      <div class="service-number">06</div>
+      <div class="service-icon-wrap">📖</div>
+      <div class="service-name">Sacred Library</div>
+      <p class="service-desc">5000+ bhajans, aartis, chalisas, mantras, and curated articles on Sanatan Dharma — beautifully organised, ad-free, always accessible.</p>
+      <div class="service-arrow">Explore Library →</div>
+    </a>
+  </div>
+</section>
+
+<!-- FEATURED PUJA -->
+<section class="featured">
+  <div class="featured-inner">
+    <div class="fade-up">
+      <div class="featured-badge">🔱 Special Event — Jyeshtha 2026</div>
+      <h2 class="featured-title">Jupiter Transit Puja<br/>at 3 Sacred Brihaspati Temples</h2>
+      <p class="featured-desc">A rare celestial alignment — Jupiter's transit occurs once every 12 years. Receive the complete blessings of Brihaspati from all four directions through 300 Kawach Path recitations and Haldi Abhishek at three powerful temples simultaneously.</p>
+      <div class="featured-details">
+        <div class="detail-item">
+          <div class="detail-label">Puja Date</div>
+          <div class="detail-value">2 June, Tuesday</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Temples</div>
+          <div class="detail-value">Kashi · Ujjain · Dabra</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Duration</div>
+          <div class="detail-value">Full Day Ritual</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Prasad</div>
+          <div class="detail-value">Shipped Worldwide</div>
+        </div>
+      </div>
+      <a href="puja-booking.html" class="btn-primary">Participate in this Puja →</a>
+    </div>
+    <div class="featured-visual fade-up">
+      <div class="puja-card-visual">
+        <div class="puja-card-label">Featured Puja · Live Booking</div>
+        <div class="puja-deity-name">Brihaspati<br/>Puja</div>
+        <div class="puja-temple">Navgraha Shani Temple, Kashi + 2 Temples</div>
+        <div class="puja-divider"></div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-bottom:1rem;">Inclusions</div>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;">
+          <div style="font-size:0.8rem;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:0.5rem;">✦ 300 Kawach Path recitations</div>
+          <div style="font-size:0.8rem;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:0.5rem;">✦ 300 Ltr Haldi Abhishek</div>
+          <div style="font-size:0.8rem;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:0.5rem;">✦ 31 Brahmin Yellow Vastra Daan</div>
+          <div style="font-size:0.8rem;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:0.5rem;">✦ Video of puja delivered to you</div>
+        </div>
+        <div class="puja-divider"></div>
+        <div class="puja-price-row">
+          <div>
+            <div style="font-size:0.62rem;color:rgba(255,255,255,0.35);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.2rem;">Starting From</div>
+            <div class="puja-price">₹1,100</div>
+          </div>
+          <button class="puja-book-btn" onclick="location.href='puja-booking.html'">Book Now →</button>
+        </div>
+        <div class="puja-participants" style="margin-top:1rem;">
+          <strong>2,847 devotees</strong> have already participated
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLES -->
+<section class="temples">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">Sacred Temples</span>
+    <h2 class="section-title">100+ Temples,<br/><em>One Connection</em></h2>
+    <p class="section-subtitle">Partner temples across India — from the Himalayas to the shores of Kanyakumari. Every puja is conducted by the temple's own priests.</p>
+  </div>
+
+  <div class="temples-scroll fade-up">
+    <div class="temple-card">
+      <div class="temple-img-wrap">
+        🔱
+        <div class="temple-city-badge">Varanasi</div>
+      </div>
+      <div class="temple-info">
+        <div class="temple-name">Kashi Vishwanath</div>
+        <p class="temple-desc">The most sacred of all Shiva temples, on the western bank of the Ganga in Varanasi.</p>
+      </div>
+    </div>
+    <div class="temple-card">
+      <div class="temple-img-wrap" style="background: linear-gradient(135deg, #1A0C02, #2A1A06);">
+        🌸
+        <div class="temple-city-badge">Tirupati</div>
+      </div>
+      <div class="temple-info">
+        <div class="temple-name">Tirumala Tirupati</div>
+        <p class="temple-desc">The richest and most-visited temple in the world, home to Lord Venkateswara.</p>
+      </div>
+    </div>
+    <div class="temple-card">
+      <div class="temple-img-wrap" style="background: linear-gradient(135deg, #0F1A0F, #1A2A0F);">
+        🪷
+        <div class="temple-city-badge">Ujjain</div>
+      </div>
+      <div class="temple-info">
+        <div class="temple-name">Mahakaleshwar</div>
+        <p class="temple-desc">One of the twelve Jyotirlingas, famous for the Bhasma Aarti performed at dawn.</p>
+      </div>
+    </div>
+    <div class="temple-card">
+      <div class="temple-img-wrap" style="background: linear-gradient(135deg, #1A0A1A, #2A0A2A);">
+        🔆
+        <div class="temple-city-badge">Puri</div>
+      </div>
+      <div class="temple-info">
+        <div class="temple-name">Jagannath Puri</div>
+        <p class="temple-desc">Sacred abode of Lord Jagannath, one of the Char Dhams and home of the great Rath Yatra.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIASPORA SECTION -->
+<section class="diaspora">
+  <div class="diaspora-inner">
+    <div class="fade-up">
+      <span class="section-eyebrow" style="color:var(--gold);">For Our Global Family</span>
+      <h2 class="diaspora-title">Faith Travels<br/>With <em>You</em></h2>
+      <p class="diaspora-text">Whether you're lighting a diya in Dubai or celebrating Navratri in New Jersey — MahaPoojan ensures the sacred rituals of India are never out of reach. Our NRI devotees in 30+ countries trust us to keep them spiritually connected to home.</p>
+      <a href="puja-booking.html" class="btn-primary" style="background: var(--gold); color: var(--ink-mid);">
+        Book a Puja →
+      </a>
+    </div>
+    <div class="countries-grid fade-up">
+      <div class="country-chip"><div class="country-flag">🇺🇸</div><div class="country-name">USA</div></div>
+      <div class="country-chip"><div class="country-flag">🇬🇧</div><div class="country-name">UK</div></div>
+      <div class="country-chip"><div class="country-flag">🇨🇦</div><div class="country-name">Canada</div></div>
+      <div class="country-chip"><div class="country-flag">🇦🇺</div><div class="country-name">Australia</div></div>
+      <div class="country-chip"><div class="country-flag">🇦🇪</div><div class="country-name">UAE</div></div>
+      <div class="country-chip"><div class="country-flag">🇸🇬</div><div class="country-name">Singapore</div></div>
+      <div class="country-chip"><div class="country-flag">🇩🇪</div><div class="country-name">Germany</div></div>
+      <div class="country-chip"><div class="country-flag">🇿🇦</div><div class="country-name">S. Africa</div></div>
+      <div class="country-chip"><div class="country-flag">🇳🇿</div><div class="country-name">New Zealand</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">Devotee Stories</span>
+    <h2 class="section-title">30 Million<br/><em>Faithful Voices</em></h2>
+  </div>
+
+  <div class="testimonials-grid fade-up">
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">Living in New Jersey, I never thought I could attend my mother's puja at our family temple in Kashi. MahaPoojan made it possible. I watched it live, and felt truly present.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">AN</div>
+        <div>
+          <div class="author-name">Achutam Nair</div>
+          <div class="author-loc">🇺🇸 New Jersey, USA</div>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">The Panchang is accurate to my city's timezone and I get reminders for every Ekadashi and festival. It's like having a pandit in my pocket here in London.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">PK</div>
+        <div>
+          <div class="author-name">Priya Kapoor</div>
+          <div class="author-loc">🇬🇧 London, UK</div>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">Booked a Satyanarayan Puja at Tirupati for my son's birthday from Sydney. Received the video and prasad within the week. The entire family in India felt honoured too.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">RS</div>
+        <div>
+          <div class="author-name">Ramesh Sharma</div>
+          <div class="author-loc">🇦🇺 Sydney, Australia</div>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section class="download">
+  <h2 class="download-title">Your Sacred Space,<br/><em>Always With You</em></h2>
+  <p class="download-sub">Download MahaPoojan and carry the blessings of India's most sacred temples in your pocket — wherever in the world life has taken you.</p>
+  <div class="download-btns">
+    <a href="puja-booking.html" class="store-btn">
+      <span class="store-icon">🪔</span>
+      <div class="store-label">
+        <div class="store-label-small">Book online</div>
+        <div class="store-label-big">Puja Seva</div>
+      </div>
+    </a>
+    <a href="darshan.html" class="store-btn">
+      <span class="store-icon">📿</span>
+      <div class="store-label">
+        <div class="store-label-small">Watch live</div>
+        <div class="store-label-big">Darshan</div>
+      </div>
+    </a>
+  </div>
+  <div class="download-trust">
+    <div class="dl-trust-item">
+      <div class="dl-trust-num">10M+</div>
+      <div class="dl-trust-label">Downloads</div>
+    </div>
+    <div class="dl-trust-divider"></div>
+    <div class="dl-trust-item">
+      <div class="dl-trust-num">4.5★</div>
+      <div class="dl-trust-label">Play Store Rating</div>
+    </div>
+    <div class="dl-trust-divider"></div>
+    <div class="dl-trust-item">
+      <div class="dl-trust-num">ISO</div>
+      <div class="dl-trust-label">27001 Certified</div>
+    </div>
+    <div class="dl-trust-divider"></div>
+    <div class="dl-trust-item">
+      <div class="dl-trust-num">100%</div>
+      <div class="dl-trust-label">Secure Payments</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">🪔 MahaPoojan</div>
+      <p class="footer-tagline">India's largest devotional platform, connecting 30 million Hindus worldwide to their faith, culture, and sacred temples.</p>
+      <div style="display:flex;gap:0.8rem;margin-top:1rem;">
+        <a href="#" style="color:rgba(255,255,255,0.4);font-size:1rem;transition:color 0.2s;" onmouseover="this.style.color='#D4A853'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">▶</a>
+        <a href="#" style="color:rgba(255,255,255,0.4);font-size:1rem;transition:color 0.2s;" onmouseover="this.style.color='#D4A853'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">𝕏</a>
+        <a href="#" style="color:rgba(255,255,255,0.4);font-size:1rem;transition:color 0.2s;" onmouseover="this.style.color='#D4A853'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">📷</a>
+        <a href="#" style="color:rgba(255,255,255,0.4);font-size:1rem;transition:color 0.2s;" onmouseover="this.style.color='#D4A853'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">💬</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-heading">Services</div>
+      <ul class="footer-links">
+        <li><a href="puja.html">Puja Seva</a></li>
+        <li><a href="chadhava.html">Chadhava</a></li>
+        <li><a href="darshan.html">Live Darshan</a></li>
+        <li><a href="panchang.html">Panchang</a></li>
+        <li><a href="horoscope.html">Horoscope</a></li>
+        <li><a href="horoscope.html">Astro Tools</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Explore</div>
+      <ul class="footer-links">
+        <li><a href="temples.html">Sacred Temples</a></li>
+        <li><a href="library.html">Library</a></li>
+        <li><a href="bhajans.html">Bhajans & Aartis</a></li>
+        <li><a href="bhajans.html">Fasts & Festivals</a></li>
+        <li><a href="bhajans.html">MahaPoojan Store</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Company</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="legal.html">Contact</a></li>
+        <li><a href="legal.html">Privacy Policy</a></li>
+        <li><a href="legal.html">Terms of Use</a></li>
+        <li><a href="legal.html">Help & Support</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 MahaPoojan · MahaPoojan Devotional Services, India</div>
+    <div class="footer-certifications">
+      <span class="cert-badge">Secure Checkout</span>
+      <span class="cert-badge">Temple Verified</span>
+      <span class="cert-badge">Demo Mode</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Fade up on scroll
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.style.boxShadow = '0 4px 30px rgba(26,18,8,0.12)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  });
+
+  // Trigger hero animations immediately
+  setTimeout(() => {
+    document.querySelectorAll('.hero .fade-up').forEach(el => el.classList.add('visible'));
+  }, 100);
+</script>
+  <script src="assets/js/shared.js"></script>
+</body>
+</html>
