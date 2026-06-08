@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MahaPoojan — Sacred Library</title>
+<title>MahaPoojan — Sacred Library | Bhajans, Aartis, Chalisas & Mantras</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
@@ -12,131 +12,133 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
-nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5vw;background:rgba(250,246,238,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
-.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--saffron-deep);text-decoration:none;}
-.nav-logo span{color:var(--gold);}
-.nav-links{display:flex;align-items:center;gap:2.2rem;list-style:none;}
-.nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s;}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5vw;background:rgba(250,246,238,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-logo img{height:55px;width:auto;}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
+.nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s;}
 .nav-links a:hover,.nav-links a.active{color:var(--saffron);}
-.nav-cta{background:var(--saffron);color:white!important;padding:.55rem 1.4rem;border-radius:2rem;}
+.nav-cta{background:var(--saffron);color:white!important;padding:.5rem 1.3rem;border-radius:2rem;}
 .nav-cta:hover{background:var(--saffron-deep)!important;}
 
-.page-hero{background:linear-gradient(135deg,#1A0C02 0%,#2A1A06 60%,#1A0A1A 100%);padding:5rem 5vw 4rem;position:relative;overflow:hidden;}
-.page-hero::before{content:'📖';position:absolute;font-size:20rem;opacity:.04;top:50%;right:-5vw;transform:translateY(-50%);pointer-events:none;}
+.page-hero{background:linear-gradient(135deg,#1A0C02 0%,#2A1A06 60%,#1A0A1A 100%);padding:4rem 5vw 3.5rem;position:relative;overflow:hidden;}
+.page-hero::before{content:'📖';position:absolute;font-size:18rem;opacity:.04;top:50%;right:-5vw;transform:translateY(-50%);pointer-events:none;}
 .hero-eyebrow{font-size:.7rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:block;}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;color:white;line-height:1.1;margin-bottom:1rem;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:300;color:white;line-height:1.1;margin-bottom:1rem;}
 .hero-title em{font-style:italic;color:var(--saffron-light);}
-.hero-sub{font-size:1rem;color:rgba(255,255,255,.6);max-width:55ch;margin-bottom:2.5rem;font-weight:300;line-height:1.7;}
-.hero-stats{display:flex;gap:3rem;flex-wrap:wrap;}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.6);max-width:55ch;margin-bottom:2rem;font-weight:300;line-height:1.6;}
+.hero-stats{display:flex;gap:2.5rem;flex-wrap:wrap;}
 .h-stat{text-align:center;}
-.h-stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--saffron-light);}
-.h-stat-lbl{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.h-stat-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--saffron-light);}
+.h-stat-lbl{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);}
 
-/* SEARCH BAR */
-.search-section{background:white;padding:2rem 5vw;border-bottom:1px solid var(--border);}
-.search-wrap{max-width:700px;margin:0 auto;position:relative;}
-.search-wrap input{width:100%;padding:1rem 1.5rem 1rem 3.5rem;border:2px solid var(--border);border-radius:3rem;font-family:'Jost',sans-serif;font-size:1rem;background:var(--cream);transition:border .2s;}
+.search-section{background:white;padding:1.5rem 5vw;border-bottom:1px solid var(--border);}
+.search-wrap{max-width:600px;margin:0 auto;position:relative;}
+.search-wrap input{width:100%;padding:.9rem 1.2rem .9rem 3rem;border:2px solid var(--border);border-radius:3rem;font-family:'Jost',sans-serif;font-size:.95rem;background:var(--cream);transition:border .2s;}
 .search-wrap input:focus{outline:none;border-color:var(--saffron);}
 .search-wrap::before{content:'🔍';position:absolute;left:1.2rem;top:50%;transform:translateY(-50%);font-size:1rem;}
 
-/* CATEGORY TABS */
 .category-tabs{background:white;padding:0 5vw;border-bottom:1px solid var(--border);display:flex;gap:0;overflow-x:auto;}
-.cat-tab{padding:1.1rem 1.8rem;border:none;background:none;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.cat-tab{padding:1rem 1.5rem;border:none;background:none;font-family:'Jost',sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
 .cat-tab.active,.cat-tab:hover{color:var(--saffron);border-bottom-color:var(--saffron);}
 
-/* FEATURED SECTION */
-.featured-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:1.5rem;padding:3rem 5vw;background:var(--cream);}
-.featured-big{background:linear-gradient(145deg,#2A1A06,#1A0C02);border-radius:1.5rem;padding:2.5rem;color:white;position:relative;overflow:hidden;cursor:pointer;transition:transform .25s;}
+.featured-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:1.5rem;padding:2.5rem 5vw;background:var(--cream);}
+.featured-big{background:linear-gradient(145deg,#2A1A06,#1A0C02);border-radius:1.5rem;padding:2rem;color:white;position:relative;overflow:hidden;cursor:pointer;transition:transform .25s;}
 .featured-big:hover{transform:translateY(-4px);}
-.featured-big::before{content:'';position:absolute;top:-30%;right:-20%;width:80%;height:80%;background:radial-gradient(circle,rgba(198,114,27,.2) 0%,transparent 70%);}
-.feat-category{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;}
-.feat-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin-bottom:.5rem;position:relative;}
-.feat-desc{font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:1.5rem;position:relative;}
-.feat-meta{display:flex;align-items:center;gap:1rem;position:relative;}
-.feat-duration{font-size:.72rem;color:rgba(255,255,255,.45);}
-.play-btn{background:var(--saffron);color:white;border:none;padding:.5rem 1.2rem;border-radius:2rem;font-size:.78rem;cursor:pointer;}
-.feat-icon{font-size:5rem;position:absolute;right:2rem;top:50%;transform:translateY(-50%);opacity:.2;}
+.feat-category{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;}
+.feat-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;margin-bottom:.5rem;position:relative;}
+.feat-desc{font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.5;margin-bottom:1.2rem;position:relative;}
+.feat-meta{display:flex;align-items:center;gap:1rem;position:relative;flex-wrap:wrap;}
+.play-btn{background:var(--saffron);color:white;border:none;padding:.4rem 1rem;border-radius:2rem;font-size:.7rem;cursor:pointer;}
 
-.featured-small{background:white;border-radius:1.2rem;border:1px solid var(--border);padding:1.5rem;cursor:pointer;transition:all .25s;}
+.featured-small{background:white;border-radius:1.2rem;border:1px solid var(--border);padding:1.2rem;cursor:pointer;transition:all .25s;}
 .featured-small:hover{box-shadow:0 10px 30px rgba(26,18,8,.1);transform:translateY(-3px);}
-.fs-icon{font-size:3rem;margin-bottom:1rem;}
-.fs-category{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--saffron);margin-bottom:.3rem;}
-.fs-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;margin-bottom:.5rem;}
-.fs-meta{font-size:.72rem;color:var(--ink-soft);}
+.fs-icon{font-size:2.5rem;margin-bottom:.8rem;}
+.fs-category{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--saffron);margin-bottom:.3rem;}
+.fs-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;margin-bottom:.3rem;}
+.fs-meta{font-size:.68rem;color:var(--ink-soft);}
 
-/* CONTENT GRID */
-.content-section{padding:3rem 5vw;}
-.section-header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;}
-.section-title-h{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;}
+.content-section{padding:2.5rem 5vw;}
+.section-header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;}
+.section-title-h{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;}
 .section-title-h em{font-style:italic;color:var(--saffron-deep);}
-.view-all{font-size:.78rem;font-weight:500;color:var(--saffron);text-decoration:none;letter-spacing:.05em;}
-.content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;}
-.content-card{background:white;border-radius:1rem;border:1px solid var(--border);padding:1.3rem;display:flex;gap:1rem;cursor:pointer;transition:all .2s;align-items:flex-start;}
+.view-all{font-size:.7rem;font-weight:500;color:var(--saffron);text-decoration:none;letter-spacing:.05em;cursor:pointer;}
+.content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;}
+.content-card{background:white;border-radius:1rem;border:1px solid var(--border);padding:1rem;display:flex;gap:1rem;cursor:pointer;transition:all .2s;align-items:flex-start;}
 .content-card:hover{box-shadow:0 8px 25px rgba(26,18,8,.08);transform:translateY(-2px);}
-.card-icon-box{width:3.2rem;height:3.2rem;border-radius:.8rem;background:var(--saffron-pale);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
+.card-icon-box{width:2.8rem;height:2.8rem;border-radius:.8rem;background:var(--saffron-pale);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
 .card-info{flex:1;}
-.card-category{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--saffron);margin-bottom:.2rem;}
-.card-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;margin-bottom:.2rem;line-height:1.3;}
-.card-deity{font-size:.75rem;color:var(--ink-soft);}
-.card-duration{font-size:.7rem;color:var(--ink-soft);margin-top:.3rem;}
-.play-icon{color:var(--saffron-light);font-size:.9rem;flex-shrink:0;margin-top:.2rem;}
+.card-category{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--saffron);margin-bottom:.2rem;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:500;margin-bottom:.2rem;}
+.card-deity{font-size:.7rem;color:var(--ink-soft);}
+.card-duration{font-size:.65rem;color:var(--ink-soft);margin-top:.2rem;}
 
-/* SCRIPTURES */
-.scriptures-section{padding:3rem 5vw;background:white;}
-.scripture-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.5rem;margin-top:2rem;}
-.scripture-card{border-radius:1.2rem;overflow:hidden;cursor:pointer;transition:all .25s;}
-.scripture-card:hover{transform:translateY(-5px);box-shadow:0 15px 40px rgba(26,18,8,.12);}
-.scripture-cover{height:180px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;}
-.scripture-badge{position:absolute;top:.7rem;right:.7rem;font-size:.6rem;font-weight:600;text-transform:uppercase;padding:.2rem .6rem;border-radius:1rem;background:var(--gold);color:var(--ink-mid);}
-.scripture-body{background:white;padding:1.2rem;border:1px solid var(--border);border-top:none;border-radius:0 0 1.2rem 1.2rem;}
-.scripture-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;margin-bottom:.3rem;}
-.scripture-desc{font-size:.75rem;color:var(--ink-soft);line-height:1.5;}
-.scripture-chapters{font-size:.7rem;color:var(--saffron);margin-top:.4rem;}
+.film-song-card{background:linear-gradient(135deg,var(--saffron-pale),var(--cream));border-radius:1rem;border:1px solid var(--border);padding:1rem;display:flex;gap:1rem;cursor:pointer;transition:all .25s;align-items:center;}
+.film-song-card:hover{transform:translateX(5px);box-shadow:0 8px 25px rgba(198,114,27,.15);border-color:var(--saffron);}
+.film-icon{width:2.5rem;height:2.5rem;background:var(--saffron);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:white;flex-shrink:0;}
+.film-info{flex:1;}
+.film-title{font-weight:600;font-size:.9rem;margin-bottom:.2rem;}
+.film-movie{font-size:.65rem;color:var(--saffron);margin-bottom:.2rem;}
+.film-deity{font-size:.65rem;color:var(--ink-soft);}
+.film-duration{font-size:.6rem;color:var(--ink-soft);margin-top:.2rem;}
 
-/* PLAYER */
-.player-bar{position:fixed;bottom:0;left:0;right:0;background:var(--ink);border-top:1px solid rgba(212,168,83,.2);padding:1rem 5vw;display:none;align-items:center;gap:1.5rem;z-index:200;}
-.player-bar.visible{display:flex;}
-.player-info{flex:1;}
-.player-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:white;}
-.player-deity{font-size:.72rem;color:rgba(255,255,255,.5);}
-.player-controls{display:flex;align-items:center;gap:1rem;}
-.player-btn{background:none;border:none;cursor:pointer;font-size:1.5rem;color:rgba(255,255,255,.7);transition:color .2s;}
-.player-btn:hover{color:var(--gold);}
-.player-play{background:var(--saffron);color:white;border:none;width:2.5rem;height:2.5rem;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;}
-.player-close{background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:1.2rem;margin-left:1rem;}
-.progress-bar{flex:2;height:3px;background:rgba(255,255,255,.15);border-radius:2px;position:relative;cursor:pointer;}
-.progress-fill{height:100%;background:var(--saffron);border-radius:2px;width:0%;transition:width .5s linear;}
+/* Updated Scripture Card with PDF Button */
+.scriptures-section{padding:2.5rem 5vw;background:white;}
+.scripture-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem;margin-top:1.5rem;}
+.scripture-card{border-radius:1rem;overflow:hidden;cursor:pointer;transition:all .25s;background:white;border:1px solid var(--border);}
+.scripture-card:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(26,18,8,.12);}
+.scripture-cover{height:150px;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;}
+.scripture-badge{position:absolute;top:.5rem;right:.5rem;font-size:.55rem;font-weight:600;text-transform:uppercase;padding:.15rem .5rem;border-radius:1rem;background:var(--gold);color:var(--ink-mid);}
+.scripture-body{background:white;padding:1rem;}
+.scripture-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;margin-bottom:.3rem;color:var(--ink);}
+.scripture-desc{font-size:.7rem;color:var(--ink-soft);line-height:1.45;margin-bottom:.5rem;}
+.scripture-chapters{font-size:.65rem;color:var(--saffron);margin-bottom:.8rem;}
+.scripture-actions{display:flex;gap:.8rem;margin-top:.5rem;}
+.pdf-btn{background:var(--saffron-pale);color:var(--saffron-deep);border:1px solid var(--border);padding:.4rem .8rem;border-radius:2rem;font-size:.65rem;font-weight:500;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;transition:all .2s;}
+.pdf-btn:hover{background:var(--saffron);color:white;border-color:var(--saffron);}
+.read-btn{background:none;color:var(--ink-soft);border:1px solid var(--border);padding:.4rem .8rem;border-radius:2rem;font-size:.65rem;cursor:pointer;transition:all .2s;}
+.read-btn:hover{background:var(--cream);color:var(--saffron);border-color:var(--saffron);}
 
-footer{background:var(--ink);padding:4rem 5vw 6rem;color:white;}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.08);}
-.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:.8rem;}
-.footer-tagline{font-size:.82rem;color:rgba(255,255,255,.45);line-height:1.7;}
-.footer-heading{font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1rem;}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
-.footer-links a{font-size:.85rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:1000;justify-content:center;align-items:center;}
+.modal-content{background:white;border-radius:1.5rem;max-width:500px;width:90%;padding:1.8rem;text-align:center;position:relative;}
+.modal-close{position:absolute;top:.8rem;right:1rem;font-size:1.5rem;cursor:pointer;color:var(--ink-soft);}
+.modal-close:hover{color:var(--saffron);}
+.modal-icon{font-size:3rem;margin-bottom:.8rem;}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:.3rem;}
+.modal-audio{margin:1.2rem 0;}
+audio{width:100%;border-radius:1rem;}
+.modal-read-btn{background:var(--saffron);color:white;border:none;padding:.6rem 1.2rem;border-radius:2rem;cursor:pointer;margin-top:.8rem;font-size:.8rem;}
+
+footer{background:var(--ink);padding:3rem 5vw 5rem;color:white;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.08);}
+.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:.6rem;}
+.footer-tagline{font-size:.75rem;color:rgba(255,255,255,.45);line-height:1.6;}
+.footer-heading{font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.8rem;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.footer-links a{font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;}
 .footer-links a:hover{color:var(--gold);}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:rgba(255,255,255,.25);padding-top:2rem;}
-.cert-badge{padding:.25rem .7rem;border:1px solid rgba(255,255,255,.12);border-radius:.3rem;font-size:.65rem;}
-.footer-certifications{display:flex;gap:1rem;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;color:rgba(255,255,255,.25);padding-top:1.5rem;flex-wrap:wrap;gap:1rem;}
+.cert-badge{padding:.2rem .6rem;border:1px solid rgba(255,255,255,.12);border-radius:.3rem;font-size:.6rem;}
 
-.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.fade-up{opacity:0;transform:translateY(25px);transition:opacity .6s ease,transform .6s ease;}
 .fade-up.visible{opacity:1;transform:translateY(0);}
 
 @media(max-width:900px){
   .featured-row{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr 1fr;}
+  .nav-links{display:none;}
 }
 @media(max-width:600px){
   .footer-grid{grid-template-columns:1fr;}
-  .player-bar{flex-wrap:wrap;}
+  .hero-stats{gap:1rem;}
+  .h-stat-num{font-size:1.3rem;}
+  .scripture-actions{flex-direction:column;}
 }
 </style>
-  <link rel="stylesheet" href="assets/css/shared.css"/>
 </head>
 <body>
 <nav>
    <a href="index.html" class="nav-logo">
-    <img src="assets/images/logo.jpeg" alt="MahaPoojan Logo" class="logo-img">
+    <img src="assets/images/logo.jpeg" alt="MahaPoojan Logo" style="height:50px;width:auto;">
     </a>
   <ul class="nav-links">
     <li><a href="puja.html">Puja Seva</a></li>
@@ -150,19 +152,20 @@ footer{background:var(--ink);padding:4rem 5vw 6rem;color:white;}
 
 <section class="page-hero">
   <span class="hero-eyebrow">Sacred Library</span>
-  <h1 class="hero-title">5000+ Bhajans,<br/>Aartis & <em>Scriptures</em></h1>
-  <p class="hero-sub">The complete collection of Hindu devotional music, prayers, and sacred texts — beautifully organised, ad-free, and always accessible.</p>
+  <h1 class="hero-title">Bhajans, Aartis,<br/><em>Chalisas & Mantras</em></h1>
+  <p class="hero-sub">Your complete collection of Hindu devotional music, film songs, prayers, and sacred texts — beautifully organised for daily worship.</p>
   <div class="hero-stats">
-    <div class="h-stat"><div class="h-stat-num">5,000+</div><div class="h-stat-lbl">Bhajans & Aartis</div></div>
-    <div class="h-stat"><div class="h-stat-num">200+</div><div class="h-stat-lbl">Chalisas</div></div>
-    <div class="h-stat"><div class="h-stat-num">50+</div><div class="h-stat-lbl">Sacred Texts</div></div>
-    <div class="h-stat"><div class="h-stat-num">Hindi + English</div><div class="h-stat-lbl">With Translations</div></div>
+    <div class="h-stat"><div class="h-stat-num"></div><div class="h-stat-lbl">Aartis & Bhajans</div></div>
+    <div class="h-stat"><div class="h-stat-num"></div><div class="h-stat-lbl">Film Devotionals</div></div>
+    <div class="h-stat"><div class="h-stat-num"></div><div class="h-stat-lbl">Chalisas</div></div>
+    <div class="h-stat"><div class="h-stat-num"></div><div class="h-stat-lbl">Mantras</div></div>
+    <div class="h-stat"><div class="h-stat-num"></div><div class="h-stat-lbl">Sacred Texts</div></div>
   </div>
 </section>
 
 <div class="search-section">
   <div class="search-wrap">
-    <input type="text" placeholder="Search bhajans, aartis, chalisas, mantras…" id="librarySearch"/>
+    <input type="text" id="librarySearch" placeholder="Search bhajans, aartis, chalisas, mantras, film songs…"/>
   </div>
 </div>
 
@@ -170,149 +173,280 @@ footer{background:var(--ink);padding:4rem 5vw 6rem;color:white;}
   <button class="cat-tab active" data-cat="all">All</button>
   <button class="cat-tab" data-cat="aarti">Aartis</button>
   <button class="cat-tab" data-cat="bhajan">Bhajans</button>
+  <button class="cat-tab" data-cat="filmsong">🎬 Film Songs</button>
   <button class="cat-tab" data-cat="chalisa">Chalisas</button>
   <button class="cat-tab" data-cat="mantra">Mantras</button>
-  <button class="cat-tab" data-cat="stotra">Stotras</button>
-  <button class="cat-tab" data-cat="katha">Kathas</button>
 </div>
 
-<div class="featured-row fade-up">
-  <div class="featured-big" onclick="playTrack('Jai Ganesh Aarti','Ganesh')">
-    <div class="feat-category">Featured · Morning Aarti</div>
-    <div class="feat-title">Jai Ganesh Aarti</div>
-    <div class="feat-desc">The most beloved morning prayer to Lord Ganesha. Begin your day with His divine blessings and remove all obstacles.</div>
-    <div class="feat-meta">
-      <span class="feat-duration">⏱ 4 min 32 sec</span>
-      <button class="play-btn" onclick="event.stopPropagation();playTrack('Jai Ganesh Aarti','Ganesh')">▶ Play Now</button>
-    </div>
-    <div class="feat-icon">🐘</div>
-  </div>
-  <div class="featured-small" onclick="playTrack('Hanuman Chalisa','Hanuman')">
-    <div class="fs-icon">🐒</div>
-    <div class="fs-category">Chalisa · Most Popular</div>
-    <div class="fs-title">Hanuman Chalisa</div>
-    <div class="fs-meta">40 verses · 8 min · Hindi + English</div>
-  </div>
-  <div class="featured-small" onclick="playTrack('Om Namah Shivaya','Shiva')">
-    <div class="fs-icon">🔱</div>
-    <div class="fs-category">Mantra · Trending</div>
-    <div class="fs-title">Om Namah Shivaya</div>
-    <div class="fs-meta">108 repetitions · 12 min</div>
-  </div>
-</div>
-
-<section class="content-section fade-up">
+<!-- FILM DEVOTIONAL SONGS SECTION -->
+<section class="content-section fade-up" style="background:linear-gradient(135deg,var(--cream),var(--saffron-pale));border-radius:1.5rem;margin:0 5vw 1rem 5vw;padding:1.8rem;">
   <div class="section-header-row">
-    <h2 class="section-title-h">Morning <em>Aartis</em></h2>
-    <a href="#" class="view-all">View All →</a>
+    <h2 class="section-title-h">🎬 <em>Devotional Film Songs</em></h2>
+    <a href="#" class="view-all" onclick="filterCategory('filmsong');return false;">View All →</a>
   </div>
-  <div class="content-grid">
-    <div class="content-card" onclick="playTrack('Jai Ambe Gauri','Durga')"><div class="card-icon-box">🌺</div><div class="card-info"><div class="card-category">Aarti</div><div class="card-title">Jai Ambe Gauri</div><div class="card-deity">Goddess Durga</div><div class="card-duration">⏱ 5 min 10 sec</div></div><div class="play-icon">▶</div></div>
-    <div class="content-card" onclick="playTrack('Om Jai Jagdish Hare','Vishnu')"><div class="card-icon-box">🌸</div><div class="card-info"><div class="card-category">Aarti</div><div class="card-title">Om Jai Jagdish Hare</div><div class="card-deity">Lord Vishnu</div><div class="card-duration">⏱ 6 min 22 sec</div></div><div class="play-icon">▶</div></div>
-    <div class="content-card" onclick="playTrack('Jai Shiv Omkara','Shiva')"><div class="card-icon-box">🔱</div><div class="card-info"><div class="card-category">Aarti</div><div class="card-title">Jai Shiv Omkara</div><div class="card-deity">Lord Shiva</div><div class="card-duration">⏱ 7 min 45 sec</div></div><div class="play-icon">▶</div></div>
-    <div class="content-card" onclick="playTrack('Lakshmi Aarti','Lakshmi')"><div class="card-icon-box">🌿</div><div class="card-info"><div class="card-category">Aarti</div><div class="card-title">Lakshmi Aarti</div><div class="card-deity">Goddess Lakshmi</div><div class="card-duration">⏱ 4 min 55 sec</div></div><div class="play-icon">▶</div></div>
-    <div class="content-card" onclick="playTrack('Saraswati Vandana','Saraswati')"><div class="card-icon-box">📚</div><div class="card-info"><div class="card-category">Aarti</div><div class="card-title">Saraswati Vandana</div><div class="card-deity">Goddess Saraswati</div><div class="card-duration">⏱ 3 min 40 sec</div></div><div class="play-icon">▶</div></div>
-    <div class="content-card" onclick="playTrack('Surya Aarti','Surya')"><div class="card-icon-box">☀️</div><div class="card-info"><div class="card-category">Aarti</div><div class="card-title">Surya Aarti</div><div class="card-deity">Lord Surya</div><div class="card-duration">⏱ 4 min 10 sec</div></div><div class="play-icon">▶</div></div>
-  </div>
+  <div id="filmSongGrid"></div>
 </section>
 
-<section class="content-section fade-up" style="background:white;padding:3rem 5vw;">
+<!-- AARTIS SECTION -->
+<section class="content-section fade-up" id="aartiSection">
   <div class="section-header-row">
-    <h2 class="section-title-h">Popular <em>Bhajans</em></h2>
-    <a href="#" class="view-all">View All →</a>
+    <h2 class="section-title-h">Sacred <em>Aartis</em></h2>
+    <a href="#" class="view-all" onclick="filterCategory('aarti');return false;">View All →</a>
   </div>
-  <div class="content-grid">
-    <div class="content-card" onclick="playTrack('Raghupati Raghava Raja Ram','Rama')"><div class="card-icon-box">🏹</div><div class="card-info"><div class="card-category">Bhajan</div><div class="card-title">Raghupati Raghava</div><div class="card-deity">Lord Rama</div><div class="card-duration">⏱ 8 min 20 sec</div></div><div class="play-icon">▶</div></div>
-    <div class="content-card" onclick="playTrack('He Ram He Ram','Rama')"><div class="card-icon-box">🕊️</div><div class="card-info"><div class="card-category">Bhajan</div><div class="card-title">He Ram He Ram</div><div class="card-deity">Lord Rama</div><div class="card-duration">⏱ 5 min 45 sec</div></div><div class="play-icon">▶</div></div>
-    <div class="content-card" onclick="playTrack('Govind Bolo Hari Gopal Bolo','Krishna')"><div class="card-icon-box">🪗</div><div class="card-info"><div class="card-category">Bhajan</div><div class="card-title">Govind Bolo Hari Gopal</div><div class="card-deity">Lord Krishna</div><div class="card-duration">⏱ 6 min 30 sec</div></div><div class="play-icon">▶</div></div>
-    <div class="content-card" onclick="playTrack('Maiya Ki Jai Jai Jai','Durga')"><div class="card-icon-box">🌺</div><div class="card-info"><div class="card-category">Bhajan</div><div class="card-title">Maiya Ki Jai Jai</div><div class="card-deity">Goddess Durga</div><div class="card-duration">⏱ 7 min 15 sec</div></div><div class="play-icon">▶</div></div>
-    <div class="content-card" onclick="playTrack('Mann Ka Ho To Acha','Hanuman')"><div class="card-icon-box">🐒</div><div class="card-info"><div class="card-category">Bhajan</div><div class="card-title">Sankat Mochan Naam</div><div class="card-deity">Lord Hanuman</div><div class="card-duration">⏱ 4 min 55 sec</div></div><div class="play-icon">▶</div></div>
-    <div class="content-card" onclick="playTrack('Shiv Tandav Stotram','Shiva')"><div class="card-icon-box">🔱</div><div class="card-info"><div class="card-category">Stotra</div><div class="card-title">Shiv Tandav Stotram</div><div class="card-deity">Lord Shiva</div><div class="card-duration">⏱ 9 min 12 sec</div></div><div class="play-icon">▶</div></div>
-  </div>
+  <div class="content-grid" id="aartiGrid"></div>
 </section>
 
+<!-- BHAJANS SECTION -->
+<section class="content-section fade-up" id="bhajanSection" style="background:white;">
+  <div class="section-header-row">
+    <h2 class="section-title-h">Devotional <em>Bhajans</em></h2>
+    <a href="#" class="view-all" onclick="filterCategory('bhajan');return false;">View All →</a>
+  </div>
+  <div class="content-grid" id="bhajanGrid"></div>
+</section>
+
+<!-- CHALISAS SECTION -->
+<section class="content-section fade-up" id="chalisaSection" style="background:var(--cream);">
+  <div class="section-header-row">
+    <h2 class="section-title-h">Powerful <em>Chalisas</em></h2>
+    <a href="#" class="view-all" onclick="filterCategory('chalisa');return false;">View All →</a>
+  </div>
+  <div class="content-grid" id="chalisaGrid"></div>
+</section>
+
+<!-- MANTRAS SECTION -->
+<section class="content-section fade-up" id="mantraSection" style="background:white;">
+  <div class="section-header-row">
+    <h2 class="section-title-h">Sacred <em>Mantras</em></h2>
+    <a href="#" class="view-all" onclick="filterCategory('mantra');return false;">View All →</a>
+  </div>
+  <div class="content-grid" id="mantraGrid"></div>
+</section>
+
+<!-- SCRIPTURES SECTION WITH PDF DOWNLOADS -->
 <section class="scriptures-section fade-up">
-  <div style="text-align:center;margin-bottom:.5rem;">
-    <span style="font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);">Sacred Texts</span>
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;line-height:1.15;margin-top:.5rem;">Holy <em style="font-style:italic;color:var(--saffron-deep);">Scriptures</em></h2>
+  <div style="text-align:center;margin-bottom:1rem;">
+    <span style="font-size:.65rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);">Sacred Texts</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:300;margin-top:.3rem;">Holy <em style="font-style:italic;color:var(--saffron-deep);">Scriptures</em></h2>
+    <p style="font-size:.8rem;color:var(--ink-soft);margin-top:.5rem;">Download PDF or Read Online</p>
   </div>
-  <div class="scripture-grid">
-    <div class="scripture-card"><div class="scripture-cover" style="background:linear-gradient(135deg,#2A1A06,#1A0C02);">📖<span class="scripture-badge">700 Verses</span></div><div class="scripture-body"><div class="scripture-name">Bhagavad Gita</div><div class="scripture-desc">The eternal dialogue between Krishna and Arjuna on the battlefield of Kurukshetra.</div><div class="scripture-chapters">18 Chapters · Sanskrit + Hindi + English</div></div></div>
-    <div class="scripture-card"><div class="scripture-cover" style="background:linear-gradient(135deg,#1A0A1A,#2A0A2A);">🌺<span class="scripture-badge">Shakti</span></div><div class="scripture-body"><div class="scripture-name">Devi Mahatmyam</div><div class="scripture-desc">700 verses describing the glory of Goddess Durga and her victory over evil.</div><div class="scripture-chapters">13 Chapters · Durga Saptashati</div></div></div>
-    <div class="scripture-card"><div class="scripture-cover" style="background:linear-gradient(135deg,#0F1A0F,#1A2A0F);">🏹</div><div class="scripture-body"><div class="scripture-name">Ramcharitmanas</div><div class="scripture-desc">Tulsidas's epic retelling of the Ramayana in Awadhi — the most beloved scripture of North India.</div><div class="scripture-chapters">7 Kandas · Tulsidas</div></div></div>
-    <div class="scripture-card"><div class="scripture-cover" style="background:linear-gradient(135deg,#1A0A00,#2A1A00);">🪗</div><div class="scripture-body"><div class="scripture-name">Srimad Bhagavatam</div><div class="scripture-desc">The 18,000-verse Purana narrating the stories of Vishnu's avatars and the life of Krishna.</div><div class="scripture-chapters">12 Skandhas · 18,000 Verses</div></div></div>
-    <div class="scripture-card"><div class="scripture-cover" style="background:linear-gradient(135deg,#0A0A1A,#1A1A2A);">📿<span class="scripture-badge">108 Names</span></div><div class="scripture-body"><div class="scripture-name">Vishnu Sahasranama</div><div class="scripture-desc">The 1,000 names of Lord Vishnu — chanting them grants liberation from the cycle of rebirth.</div><div class="scripture-chapters">From Mahabharata · Bhishma Parva</div></div></div>
-    <div class="scripture-card"><div class="scripture-cover" style="background:linear-gradient(135deg,#1A1A0A,#2A2A10);">🔱</div><div class="scripture-body"><div class="scripture-name">Shiva Purana</div><div class="scripture-desc">The complete scripture of Lord Shiva — his forms, manifestations, and the stories of devotees.</div><div class="scripture-chapters">24,000 Shlokas · 7 Samhitas</div></div></div>
-  </div>
+  <div class="scripture-grid" id="scriptureGrid"></div>
 </section>
+
+<!-- MODAL -->
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <div class="modal-icon" id="modalIcon">🎵</div>
+    <div class="modal-title" id="modalTitle">Track Title</div>
+    <div class="modal-deity" id="modalDeity" style="color:var(--saffron);margin-bottom:.8rem;font-size:.9rem;"></div>
+    <div class="modal-audio" id="modalAudio"></div>
+    <button class="modal-read-btn" id="modalReadBtn" style="display:none;">📖 Read Full Text</button>
+  </div>
+</div>
 
 <footer>
   <div class="footer-grid">
-    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p class="footer-tagline">India's largest devotional platform, connecting 30 million Hindus worldwide.</p></div>
-    <div><div class="footer-heading">Services</div><ul class="footer-links"><li><a href="puja.html">Puja Seva</a></li><li><a href="chadhava.html">Chadhava</a></li><li><a href="darshan.html">Live Darshan</a></li><li><a href="panchang.html">Panchang</a></li><li><a href="horoscope.html">Horoscope</a></li></ul></div>
-    <div><div class="footer-heading">Library</div><ul class="footer-links"><li><a href="library.html">Bhajans</a></li><li><a href="library.html">Aartis</a></li><li><a href="library.html">Chalisas</a></li><li><a href="library.html">Mantras</a></li><li><a href="library.html">Scriptures</a></li></ul></div>
+    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p class="footer-tagline">Connecting devotees to their faith through authentic pujas, sacred music, and spiritual wisdom.</p></div>
+    <div><div class="footer-heading">Services</div><ul class="footer-links"><li><a href="puja.html">Puja Seva</a></li><li><a href="chadhava.html">Chadhava</a></li><li><a href="darshan.html">Live Darshan</a></li><li><a href="panchang.html">Panchang</a></li></ul></div>
+    <div><div class="footer-heading">Library</div><ul class="footer-links"><li><a href="library.html">Aartis & Bhajans</a></li><li><a href="library.html">Chalisas</a></li><li><a href="library.html">Mantras</a></li><li><a href="library.html">Film Songs</a></li></ul></div>
     <div><div class="footer-heading">Company</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="legal.html">Contact</a></li><li><a href="legal.html">Privacy Policy</a></li></ul></div>
   </div>
-  <div class="footer-bottom"><div>© 2026 MahaPoojan, Inc. · Bengaluru</div><div class="footer-certifications"><span class="cert-badge">ISO 27001</span><span class="cert-badge">Digital India</span></div></div>
+  <div class="footer-bottom"><div>© 2026 MahaPoojan · Bengaluru</div><div class="footer-certifications"><span class="cert-badge">ISO 27001</span><span class="cert-badge">Digital India</span></div></div>
 </footer>
 
-<!-- PLAYER -->
-<div class="player-bar" id="playerBar">
-  <div class="player-info"><div class="player-title" id="playerTitle">—</div><div class="player-deity" id="playerDeity">—</div></div>
-  <div class="player-controls">
-    <button class="player-btn">⏮</button>
-    <button class="player-play" id="playPauseBtn" onclick="togglePlay()">▶</button>
-    <button class="player-btn">⏭</button>
-  </div>
-  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-  <button class="player-close" onclick="closePlayer()">✕</button>
-</div>
-
 <script>
-let playing = false, progress = 0, interval;
+// Film Devotional Songs
+const filmSongs = [
+  {title:'Deva Shree Ganesha',movie:'Agneepath',deity:'Ganesh',duration:'5:23',icon:'🐘',file:'./audio/Deva%20Shree%20Ganesha%20-%20Agneepath%20Full%20Song%20Ajay%20-%20Atul%20AjayAtul%20ajayatulonline%20(1).mp3'},
+  {title:'Namo Namo',movie:'Kedarnath',deity:'Shiva',duration:'4:15',icon:'🔱',file:'./audio/Namo%20Namo%20-%20Lyrical%20_%20Kedarnath%20_%20Sushant%20Rajput%20_%20Sara%20Ali%20Khan%20_%20Amit%20Trivedi%20_%20Amitabh%20B.mp3'},
+  {title:'Aasman Ko Chukar',movie:'Hanuman Returns',deity:'Hanuman',duration:'6:45',icon:'🐒',file:'./audio/Aasman%20Ko%20Chukar.mp3'},
+  {title:'Shirdiwale Sai Baba',movie:'Devotional',deity:'Sai Baba',duration:'4:30',icon:'🙏',file:'./audio/_%20Shirdiwale%20Sai%20Baba%20_%20Master%20Rana%20_%20Sai%20Baba%20Bhajan.mp3'},
+  {title:'Woh Kisna Hai',movie:'Kisna',deity:'Krishna',duration:'6:00',icon:'🪗',file:'./audio/Woh%20Kisna%20Hai%20_%20Krishna%20Janmashtami%20Special%20_%20Sukhwinder%20Singh%20_%20Kisna.mp3'},
+  {title:'Babam Bam',movie:'Paradox',deity:'Shiva',duration:'5:45',icon:'🔱',file:'./audio/BABAM%20BAM%20Full%20Song_%20Paradox%20_%20Aditya%20Pushkarna%20_%20Mtv%20Hustle%2020.mp3'},
+  {title:'Sai Ve',movie:'Satindar Sartaj',deity:'Sai',duration:'7:20',icon:'🙏',file:'./audio/Sai%20Ve.mp3'},
+  {title:'Aathma Raama',movie:'Brodha V',deity:'Rama',duration:'4:10',icon:'🏹',file:'./audio/Brodha%20V%20-%20Aathma%20Raama%20Music%20Video.mp3'}
+];
 
-function playTrack(title, deity) {
-  document.getElementById('playerTitle').textContent = title;
-  document.getElementById('playerDeity').textContent = deity;
-  document.getElementById('playerBar').classList.add('visible');
-  playing = true;
-  document.getElementById('playPauseBtn').textContent = '⏸';
-  clearInterval(interval);
-  progress = 0;
-  document.getElementById('progressFill').style.width = '0%';
-  interval = setInterval(() => {
-    progress += .5;
-    if (progress >= 100) { clearInterval(interval); playing = false; document.getElementById('playPauseBtn').textContent = '▶'; return; }
-    document.getElementById('progressFill').style.width = progress + '%';
-  }, 300);
+// Traditional Audio Library
+const audioLibrary = [
+  {title:'Jai Ganesh Aarti',deity:'Ganesh',category:'aarti',duration:'4:32',icon:'🐘', file:'audio/Jai%20Ganesh%20Jai%20Ganesh%20Deva%20%20%E0%A4%9C%E0%A4%AF%20%E0%A4%97%E0%A4%A3%E0%A5%87%E0%A4%B6%20%E0%A4%9C%E0%A4%AF%20%E0%A4%97%E0%A4%A3%E0%A5%87%E0%A4%B6%20%E0%A4%A6%E0%A5%87%E0%A4%B5%E0%A4%BE%20%20Ganeshji%20Ki%20Aarti%20%20Lord%20Ganesh%20Aarti%20-%20Shemaroo%20Bhakti.mp3'},
+  {title:'Jai Ambe Gauri',deity:'Durga',category:'aarti',duration:'5:10',icon:'🌺', file:'audio/%E0%A4%A8%E0%A4%B5%E0%A4%B0%E0%A4%BE%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A4%BF%20Special%20%E0%A4%9C%E0%A4%AF%20%E0%A4%85%E0%A4%AE%E0%A5%8D%E0%A4%AC%E0%A5%87%20%E0%A4%97%E0%A5%8C%E0%A4%B0%E0%A5%80%20Jai%20Ambe%20Gauri%20Aarti%20I%20Hindi%20English%20Lyrics%20I%20LAKHBIR%20SINGH%20LAKKHA%20-%20T-Series%20Bhakti%20Sagar.mp3'},
+  {title:'Om Jai Jagdish Hare',deity:'Vishnu',category:'aarti',duration:'6:22',icon:'🌸', file:'audio/%E0%A5%90%20%E0%A4%9C%E0%A4%AF%20%E0%A4%9C%E0%A4%97%E0%A4%A6%E0%A5%80%E0%A4%B6%20%E0%A4%B9%E0%A4%BE%E0%A4%B0%E0%A5%87%20%E0%A4%86%E0%A4%B0%E0%A4%A4%E0%A5%80%20Om%20Jai%20Jagdish%20Hare%20Aarti%20%20ANUP%20JALOTA%20%20Vishnu%20Ki%20Aarti%20%20Aarti%20Song%20-%20Sai%20Aashirwad.mp3'},
+  {title:'Jai Shiv Omkara',deity:'Shiva',category:'aarti',duration:'7:45',icon:'🔱', file:'audio/Om%20Jai%20Shiv%20Omkara%20-%20Shiv%20Aarti%20%20MOST%20PEACEFUL%20LORD%20SHIVA%20AARTI%20%20%20%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%9C%E0%A5%80%20%E0%A4%95%E0%A5%80%20%E0%A4%86%E0%A4%B0%E0%A4%A4%E0%A5%80%20%20Lyrical%20-%20Nitya%20Bhakti.mp3'},
+  {title:'Lakshmi Aarti',deity:'Lakshmi',category:'aarti',duration:'4:55',icon:'🌿', file:'audio/Om%20Jai%20Lakshmi%20Mata%20with%20Hindi%20English%20Lyrics%20I%20Lakhbir%20Singh%20Lakkha%20LYRICAL%20Video%20I%20%20Deepawali%202018%20-%20T-Series%20Bhakti%20Sagar.mp3'},
+  {title:'Saraswati Vandana',deity:'Saraswati',category:'aarti',duration:'3:40',icon:'📚', file:'audio/Saraswati%20Vandana%20%20Shreya%20Ghoshal%20-%20Shreya%20Ghoshal%20Official.mp3'},
+  {title:'Raghupati Raghava',deity:'Rama',category:'bhajan',duration:'8:20',icon:'🏹', file:'audio/Raghupathi%20Raghava%20Rajaram%20-%20Original%20Lyrics%20-%20Armonian.mp3'},
+  {title:'He Ram He Ram',deity:'Rama',category:'bhajan',duration:'5:45',icon:'🕊️', file:'audio/Hey%20Ram%20Hey%20Ram%20%20%E0%A4%B9%E0%A5%87%20%E0%A4%B0%E0%A4%BE%E0%A4%AE%20%E0%A4%B9%E0%A5%87%20%E0%A4%B0%E0%A4%BE%E0%A4%AE%20%20Jagjit%20Singh%20Full%20Devotional%20Song%20%20Tu%20hi%20mata%20tu%20hi%20pita%20hai%20-%20Ganpati%20Bappa.mp3'},
+  {title:'Govind Bolo',deity:'Krishna',category:'bhajan',duration:'6:30',icon:'🪗', file:'audio/Govind%20Bolo%20Hari%20Gopal%20Bolo%20%20Shree%20Krishna%20(Audio)%20Dhun%20%20Hindi%20Bhakti%20Geet%20-%20RDC%20Gujarati.mp3'},
+  {title:'Maiya Ki Jai',deity:'Durga',category:'bhajan',duration:'7:15',icon:'🌺', file:'audio/MAIYA%20TERI%20JAI%20JAIKAAR%20%20Lyrical%20%20Arijit%20Singh%20Jeet%20Gannguli%20Gurmeet%20ChoudharyNavratri%20Special%20Song%20-%20T-Series.mp3'},
+  {title:'Hanuman Chalisa',deity:'Hanuman',category:'chalisa',duration:'8:00',icon:'🐒', file:'audio/%E0%A4%B9%E0%A4%A8%E0%A5%81%E0%A4%AE%E0%A4%BE%E0%A4%A8%20%E0%A4%9A%E0%A4%BE%E0%A4%B2%E0%A5%80%E0%A4%B8%E0%A4%BE%20%20Hanuman%20Chalisa%20Full%20%20Shekhar%20Ravjiani%20%20Audio%20Version%20-%20Morning%20Mantra.mp3'},
+  {title:'Om Namah Shivaya',deity:'Shiva',category:'mantra',duration:'12:00',icon:'🔱', file:'audio/Om%20Namah%20Shivaya%20%20Gives%20Spiritual%20Growth%20%26%20Devotion%20%20Powerful%20Shiva%20Mantra%20%20Rajshri%20Soul%20-%20Rajshri%20Soul.mp3'}
+];
+
+// Scriptures with PDF links
+const scriptures = [
+  {name:'Bhagavad Gita',desc:'The eternal dialogue between Krishna and Arjuna.',chapters:'18 Chapters | 700 Verses',icon:'📖',badge:'700 Verses',content:'The Bhagavad Gita is a 700-verse Hindu scripture...',pdf:'pdfs/.pdf'},
+  {name:'Devi Mahatmyam',desc:'The glory of Goddess Durga and her victory over evil.',chapters:'13 Chapters | 700 Verses',icon:'🌺',badge:'Shakti',content:'Also known as Durga Saptashati...',pdf:'pdfs/DEVI-MAHATMYA-FULL.pdf'},
+  {name:'Ramcharitmanas',desc:"Tulsidas's epic retelling of the Ramayana.",chapters:'7 Kandas',icon:'🏹',badge:'Tulsidas',content:'Written by Goswami Tulsidas...',pdf:'pdfs/ramcharitmanas.pdf'},
+  {name:'Srimad Bhagavatam',desc:"The stories of Vishnu's avatars and Krishna's pastimes.",chapters:'12 Skandhas | 18,000 Verses',icon:'🪗',badge:'18,000 Verses',content:'One of the eighteen Mahapuranas...',pdf:'pdfs/Srimad_Bhagavatam_Kamala_Subramaniam.pdf'},
+  {name:'Vishnu Sahasranama',desc:'The 1,000 sacred names of Lord Vishnu.',chapters:'108 Names',icon:'📿',badge:'108 Names',content:'Found in the Mahabharata...',pdf:'pdfs/Sri_Vishnu_Sahasranama_Stotram.pdf'},
+  {name:'Shiva Purana',desc:'The complete scripture dedicated to Lord Shiva.',chapters:'7 Samhitas | 24,000 Shlokas',icon:'🔱',badge:'24,000 Shlokas',content:'One of the eighteen Mahapuranas...',pdf:'pdfs/Shiva-Purana-Vol.1-by-Bibek-Debroy.pdf'},
+  {name:'Hanuman Chalisa',desc:"40 verses praising Lord Hanuman's glory.",chapters:'40 Chaupais',icon:'🐒',badge:'40 Verses',content:'Composed by Tulsidas...',pdf:'pdfs/hanuman-chalisa.pdf'},
+  {name:'Shiv Tandav Stotram',desc:"The powerful hymn describing Shiva's cosmic dance.",chapters:'16 Verses',icon:'🔱',badge:'Ravana',content:'Composed by Ravana...',pdf:'pdfs/Shiva%20Tandava%20Stotram.pdf'}
+];
+function renderFilmSongs() {
+  const container = document.getElementById('filmSongGrid');
+  if(!container) return;
+  container.innerHTML = filmSongs.map(song => `
+    <div class="film-song-card" onclick="openAudioModal('${song.title.replace(/'/g, "\\'")}','${song.deity}','${song.file}','🎬 ${song.movie}')">
+      <div class="film-icon">🎬</div>
+      <div class="film-info">
+        <div class="film-title">${song.title}</div>
+        <div class="film-movie">${song.movie}</div>
+        <div class="film-deity">🙏 ${song.deity}</div>
+        <div class="film-duration">⏱ ${song.duration}</div>
+      </div>
+      <div style="color:var(--saffron);font-size:1rem;">▶</div>
+    </div>
+  `).join('');
 }
 
-function togglePlay() {
-  playing = !playing;
-  document.getElementById('playPauseBtn').textContent = playing ? '⏸' : '▶';
-  if (playing) {
-    interval = setInterval(() => {
-      progress += .5; if(progress>=100){clearInterval(interval);playing=false;document.getElementById('playPauseBtn').textContent='▶';}
-      document.getElementById('progressFill').style.width = progress + '%';
-    }, 300);
-  } else clearInterval(interval);
+function renderAudioGrid(category, containerId) {
+  const filtered = audioLibrary.filter(item => item.category === category);
+  const container = document.getElementById(containerId);
+  if(container && filtered.length > 0) {
+    container.innerHTML = filtered.map(item => `
+      <div class="content-card" onclick="openAudioModal('${item.title.replace(/'/g, "\\'")}','${item.deity}','${item.file}','${item.category.toUpperCase()}')">
+        <div class="card-icon-box">${item.icon}</div>
+        <div class="card-info">
+          <div class="card-category">${category.charAt(0).toUpperCase() + category.slice(1)}</div>
+          <div class="card-title">${item.title}</div>
+          <div class="card-deity">${item.deity}</div>
+          <div class="card-duration">⏱ ${item.duration}</div>
+        </div>
+        <div class="play-icon">▶</div>
+      </div>
+    `).join('');
+  } else if(container) {
+    container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--ink-soft);">✨ More content coming soon...</div>';
+  }
 }
 
-function closePlayer() {
-  clearInterval(interval); playing = false;
-  document.getElementById('playerBar').classList.remove('visible');
+function renderScriptures() {
+  const container = document.getElementById('scriptureGrid');
+  if(!container) return;
+  container.innerHTML = scriptures.map(script => `
+    <div class="scripture-card">
+      <div class="scripture-cover" style="background:linear-gradient(135deg,#2A1A06,#1A0C02);">${script.icon}<span class="scripture-badge">${script.badge}</span></div>
+      <div class="scripture-body">
+        <div class="scripture-name">${script.name}</div>
+        <div class="scripture-desc">${script.desc}</div>
+        <div class="scripture-chapters">📖 ${script.chapters}</div>
+        <div class="scripture-actions">
+          <a href="${script.pdf}" class="pdf-btn" download onclick="event.stopPropagation();">📄 Download PDF</a>
+          <button class="read-btn" onclick="event.stopPropagation();openScriptureModal('${script.name.replace(/'/g, "\\'")}','${script.icon}','${script.desc}','${script.chapters}','${script.content}')">📖 Read Online</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
 }
 
-document.querySelectorAll('.cat-tab').forEach(t => {
-  t.addEventListener('click', function() {
-    document.querySelectorAll('.cat-tab').forEach(x => x.classList.remove('active'));
-    this.classList.add('active');
+function openAudioModal(title, deity, audioFile, extraInfo = '') {
+  console.log('Playing:', title, 'File:', audioFile);
+  document.getElementById('modalIcon').textContent = '🎵';
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalDeity').innerHTML = extraInfo ? `${extraInfo}<br>🙏 ${deity}` : `🙏 ${deity}`;
+  document.getElementById('modalAudio').innerHTML = `<audio controls autoplay><source src="${audioFile}" type="audio/mpeg">Your browser does not support audio. <a href="${audioFile}">Download</a></audio>`;
+  document.getElementById('modalReadBtn').style.display = 'none';
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function openScriptureModal(name, icon, desc, chapters, content) {
+  document.getElementById('modalIcon').textContent = icon;
+  document.getElementById('modalTitle').textContent = name;
+  document.getElementById('modalDeity').innerHTML = desc;
+  document.getElementById('modalAudio').innerHTML = `<div style="text-align:left;max-height:280px;overflow-y:auto;padding:1rem;background:var(--cream);border-radius:1rem;font-size:.85rem;line-height:1.5;"><p>${content}</p><br><strong>📖 ${chapters}</strong><br><br><p>✨ For the complete text, please download the PDF using the button below.</p></div>`;
+  document.getElementById('modalReadBtn').style.display = 'inline-block';
+  const scripture = scriptures.find(s => s.name === name);
+  document.getElementById('modalReadBtn').onclick = () => {
+    if(scripture && scripture.pdf) {
+      window.open(scripture.pdf, '_blank');
+    } else {
+      alert(`📖 The complete "${name}" text will be available soon!`);
+    }
+  };
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+  const audioPlayer = document.querySelector('#modalAudio audio');
+  if(audioPlayer) audioPlayer.pause();
+}
+
+function filterCategory(cat) {
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  const tab = Array.from(document.querySelectorAll('.cat-tab')).find(t => t.dataset.cat === cat);
+  if(tab) tab.classList.add('active');
+  
+  const filmSection = document.querySelector('#filmSongGrid')?.parentElement?.parentElement;
+  const aartiSection = document.getElementById('aartiSection');
+  const bhajanSection = document.getElementById('bhajanSection');
+  const chalisaSection = document.getElementById('chalisaSection');
+  const mantraSection = document.getElementById('mantraSection');
+  
+  if(filmSection) filmSection.style.display = 'none';
+  if(aartiSection) aartiSection.style.display = 'none';
+  if(bhajanSection) bhajanSection.style.display = 'none';
+  if(chalisaSection) chalisaSection.style.display = 'none';
+  if(mantraSection) mantraSection.style.display = 'none';
+  
+  if(cat === 'filmsong' && filmSection) filmSection.style.display = 'block';
+  else if(cat === 'aarti' && aartiSection) aartiSection.style.display = 'block';
+  else if(cat === 'bhajan' && bhajanSection) bhajanSection.style.display = 'block';
+  else if(cat === 'chalisa' && chalisaSection) chalisaSection.style.display = 'block';
+  else if(cat === 'mantra' && mantraSection) mantraSection.style.display = 'block';
+  else if(cat === 'all') {
+    if(filmSection) filmSection.style.display = 'block';
+    if(aartiSection) aartiSection.style.display = 'block';
+    if(bhajanSection) bhajanSection.style.display = 'block';
+    if(chalisaSection) chalisaSection.style.display = 'block';
+    if(mantraSection) mantraSection.style.display = 'block';
+  }
+}
+
+// Search functionality
+document.getElementById('librarySearch').addEventListener('input', function(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  const allCards = document.querySelectorAll('.content-card, .film-song-card, .scripture-card');
+  allCards.forEach(card => {
+    if(card && card.parentElement) {
+      const text = card.textContent.toLowerCase();
+      card.style.display = text.includes(searchTerm) ? '' : 'none';
+    }
   });
 });
 
-const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:.1});
-document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+// Category tabs
+document.querySelectorAll('.cat-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    const cat = this.dataset.cat;
+    filterCategory(cat);
+  });
+});
+
+// Initial render
+renderFilmSongs();
+renderAudioGrid('aarti', 'aartiGrid');
+renderAudioGrid('bhajan', 'bhajanGrid');
+renderAudioGrid('chalisa', 'chalisaGrid');
+renderAudioGrid('mantra', 'mantraGrid');
+renderScriptures();
+
+// Fade up animation
+const observer = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:.1});
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
-  <script src="assets/js/shared.js"></script>
 </body>
 </html>

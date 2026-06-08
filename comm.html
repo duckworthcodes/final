@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MahaPoojan — Live Community | Join Our Spiritual Family</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --saffron: #C6721B;
+    --saffron-deep: #9E4F08;
+    --saffron-light: #F5C77E;
+    --saffron-pale: #FDF3E4;
+    --gold: #D4A853;
+    --cream: #FAF6EE;
+    --ink: #1A1208;
+    --ink-mid: #3D2D12;
+    --ink-soft: #7A6040;
+    --white: #FFFFFF;
+    --border: rgba(198,114,27,0.18);
+    --success: #2D7A4F;
+    --success-light: #E8F5E9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* Navigation */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 5vw;
+    background: rgba(250,246,238,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo img {
+    height: 55px;
+    width: auto;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--saffron); }
+  .nav-cta {
+    background: var(--saffron);
+    color: white !important;
+    padding: 0.5rem 1.3rem;
+    border-radius: 2rem;
+  }
+
+  /* Hero Section */
+  .community-hero {
+    background: linear-gradient(135deg, #1A0C02 0%, #2A1A06 50%, #1A0C02 100%);
+    padding: 5rem 5vw 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .community-hero::before {
+    content: '🕉️';
+    position: absolute;
+    font-size: 20rem;
+    opacity: 0.03;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--gold);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .hero-title em { font-style: italic; color: var(--saffron-light); }
+  .hero-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 55ch;
+    margin: 0 auto;
+  }
+
+  /* Live Counter Card */
+  .counter-card {
+    background: white;
+    border-radius: 2rem;
+    padding: 2.5rem;
+    margin: -3rem 5vw 3rem;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 10;
+    border: 1px solid var(--border);
+  }
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--success-light);
+    padding: 0.3rem 1rem;
+    border-radius: 2rem;
+    margin-bottom: 1rem;
+  }
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    background: #4CAF50;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+  .live-text {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--success);
+  }
+  .counter-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--saffron-deep);
+    line-height: 1;
+    margin: 0.5rem 0;
+  }
+  .counter-label {
+    font-size: 1rem;
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+  }
+  .last-join {
+    display: inline-block;
+    background: var(--saffron-pale);
+    padding: 0.5rem 1.2rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    color: var(--saffron-deep);
+    margin-top: 1rem;
+  }
+  .counter-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--saffron-light);
+    margin: 1.5rem auto;
+  }
+
+  /* Live Feed Section */
+  .live-feed {
+    padding: 2rem 5vw 4rem;
+    background: var(--cream);
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 300;
+  }
+  .section-title em { font-style: italic; color: var(--saffron-deep); }
+
+  .feed-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 1.5rem;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .feed-header {
+    background: var(--ink);
+    color: white;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .feed-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .feed-count {
+    font-size: 0.7rem;
+    background: rgba(255,255,255,0.2);
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+  }
+  .feed-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 0;
+  }
+  .feed-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+    animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .feed-item:hover {
+    background: var(--saffron-pale);
+  }
+  .feed-avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--saffron), var(--saffron-deep));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+    flex-shrink: 0;
+  }
+  .feed-content {
+    flex: 1;
+  }
+  .feed-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .feed-message {
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    margin-top: 0.2rem;
+  }
+  .feed-time {
+    font-size: 0.65rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .feed-badge {
+    background: var(--success-light);
+    color: var(--success);
+    font-size: 0.6rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    margin-left: 0.5rem;
+  }
+
+  /* Call to Action */
+  .cta-section {
+    background: linear-gradient(135deg, var(--ink), #2E2316);
+    padding: 4rem 5vw;
+    text-align: center;
+    color: white;
+  }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+  .cta-title em { color: var(--gold); font-style: italic; }
+  .cta-text {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 50ch;
+    margin: 0 auto 2rem;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--saffron);
+    color: white;
+    padding: 0.9rem 2rem;
+    border-radius: 3rem;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover {
+    background: var(--saffron-deep);
+    transform: translateY(-2px);
+  }
+
+  /* Milestone Section */
+  .milestones {
+    padding: 4rem 5vw;
+    background: white;
+  }
+  .milestone-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .milestone-card {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--cream);
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+  }
+  .milestone-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--saffron-deep);
+  }
+  .milestone-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 0.3rem;
+  }
+
+  /* Footer */
+  footer {
+    background: #0F0A04;
+    padding: 3rem 5vw 2rem;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--saffron-light);
+    margin-bottom: 0.5rem;
+  }
+  .footer-links {
+    list-style: none;
+  }
+  .footer-links li { margin-bottom: 0.5rem; }
+  .footer-links a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 0.75rem;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    text-align: center;
+    font-size: 0.7rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .milestone-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr; }
+    .counter-number { font-size: 3rem; }
+  }
+  @media (max-width: 600px) {
+    .milestone-grid { grid-template-columns: 1fr; }
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo.jpg" alt="MahaPoojan Logo" style="height: 55px; width: auto;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="puja.html">Puja Seva</a></li>
+    <li><a href="chadhava.html">Chadhava</a></li>
+    <li><a href="temples.html">Temples</a></li>
+    <li><a href="panchang.html">Panchang</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="community.html" class="active">Community</a></li>
+    <li><a href="puja-booking.html" class="nav-cta">Book Puja</a></li>
+  </ul>
+</nav>
+
+<section class="community-hero">
+  <div class="hero-eyebrow">Live Community</div>
+  <h1 class="hero-title">Join Our Growing <em>Spiritual Family</em></h1>
+  <p class="hero-sub">Every new devotee adds to our collective energy. Watch our community grow in real-time, one prayer at a time.</p>
+</section>
+
+<!-- Live Counter Card -->
+<div class="counter-card fade-up">
+  <div class="live-badge">
+    <span class="live-dot"></span>
+    <span class="live-text">LIVE COUNTER</span>
+  </div>
+  <div class="counter-number" id="memberCount">0</div>
+  <div class="counter-label">Devotees Joined</div>
+  <div class="counter-divider"></div>
+  <div class="last-join" id="lastJoinMessage">
+    🌟 Be the first devotee to join our spiritual family!
+  </div>
+</div>
+
+<!-- Live Feed Section -->
+<section class="live-feed fade-up">
+  <div class="section-header">
+    <div class="section-eyebrow">Real-time Activity</div>
+    <h2 class="section-title">Live <em>Join Feed</em></h2>
+  </div>
+  <div class="feed-container">
+    <div class="feed-header">
+      <span class="feed-title">🕉️ Recent Devotees</span>
+      <span class="feed-count" id="feedCount">0 members</span>
+    </div>
+    <div class="feed-list" id="feedList">
+      <div style="text-align: center; padding: 2rem; color: var(--ink-soft);">
+        No joins yet. Be the first! 🙏
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Milestones Section -->
+<section class="milestones fade-up">
+  <div class="section-header">
+    <div class="section-eyebrow">Community Goals</div>
+    <h2 class="section-title">Next <em>Milestones</em></h2>
+  </div>
+  <div class="milestone-grid">
+    <div class="milestone-card">
+      <div class="milestone-number" id="milestone1">10</div>
+      <div class="milestone-label">First 10 Devotees</div>
+    </div>
+    <div class="milestone-card">
+      <div class="milestone-number" id="milestone2">50</div>
+      <div class="milestone-label">First 50 Devotees</div>
+    </div>
+    <div class="milestone-card">
+      <div class="milestone-number" id="milestone3">100</div>
+      <div class="milestone-label">100 Devotees</div>
+    </div>
+    <div class="milestone-card">
+      <div class="milestone-number" id="milestone4">500</div>
+      <div class="milestone-label">500 Devotees</div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section fade-up">
+  <h2 class="cta-title">Be Part of <em>History</em></h2>
+  <p class="cta-text">Your name could be the first in our community feed. Every great spiritual community starts with one devoted soul.</p>
+  <a href="puja-booking.html" class="btn-primary">Book a Puja & Join →</a>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">🪔 MahaPoojan</div>
+      <p style="font-size:0.7rem;">A new sacred space — growing with every devotee who joins. 0 users today, but every journey starts with a first step.</p>
+    </div>
+    <div>
+      <div class="footer-heading" style="font-size:0.65rem; margin-bottom:0.8rem;">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="temples.html">Partner Temples</a></li>
+        <li><a href="legal.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading" style="font-size:0.65rem; margin-bottom:0.8rem;">Community</div>
+      <ul class="footer-links">
+        <li><a href="community.html">Live Counter</a></li>
+        <li><a href="#">Join Feed</a></li>
+        <li><a href="#">Milestones</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 MahaPoojan — Growing with Faith 🙏</p>
+  </div>
+</footer>
+
+<script>
+// ============================================
+// LIVE COMMUNITY COUNTER
+// ============================================
+
+// Initialize counter (start from 0 - honest!)
+let memberCount = 0;
+let joinHistory = [];
+
+// DOM Elements
+const counterElement = document.getElementById('memberCount');
+const lastJoinMessage = document.getElementById('lastJoinMessage');
+const feedList = document.getElementById('feedList');
+const feedCount = document.getElementById('feedCount');
+const milestoneElements = {
+  1: document.getElementById('milestone1'),
+  2: document.getElementById('milestone2'),
+  3: document.getElementById('milestone3'),
+  4: document.getElementById('milestone4')
+};
+
+// Devotee name generator (for demo when someone books)
+const devoteeNames = [
+  'Rajesh Sharma', 'Priya Patel', 'Amit Kumar', 'Sneha Reddy',
+  'Vikram Singh', 'Anjali Nair', 'Rohan Gupta', 'Divya Joshi',
+  'Arjun Mehta', 'Neha Kapoor', 'Karthik Iyer', 'Meera Menon',
+  'Sunil Verma', 'Pooja Mishra', 'Manish Agarwal', 'Swati Desai'
+];
+
+const joinMessages = [
+  'Joined the spiritual family 🙏',
+  'Booked their first puja 🪔',
+  'Became a devotee ✨',
+  'Started their spiritual journey 🌟',
+  'Connected with the divine 🕉️',
+  'Took the first step 📿',
+  'Joined our growing community 🤝'
+];
+
+// Get time ago string
+function timeAgo(timestamp) {
+  const seconds = Math.floor((Date.now() - timestamp) / 1000);
+  if (seconds < 60) return 'just now';
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} min ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  return `${Math.floor(hours / 24)} days ago`;
+}
+
+// Update milestone progress
+function updateMilestones(count) {
+  const milestones = [10, 50, 100, 500];
+  milestones.forEach((milestone, index) => {
+    const element = milestoneElements[index + 1];
+    if (element) {
+      const progress = Math.min(100, (count / milestone) * 100);
+      element.innerHTML = `${count >= milestone ? '✓' : ''} ${milestone}`;
+      element.style.color = count >= milestone ? 'var(--success)' : 'var(--saffron-deep)';
+    }
+  });
+}
+
+// Add a new join to the feed
+function addToFeed(name, message, timestamp = null) {
+  const joinTime = timestamp || Date.now();
+  const joinEntry = { name, message, timestamp: joinTime };
+  
+  // Add to history (keep last 50)
+  joinHistory.unshift(joinEntry);
+  if (joinHistory.length > 50) joinHistory.pop();
+  
+  // Save to localStorage
+  localStorage.setItem('mahaPoojan_joinHistory', JSON.stringify(joinHistory));
+  
+  // Update feed display
+  renderFeed();
+}
+
+// Render the live feed
+function renderFeed() {
+  if (!feedList) return;
+  
+  if (joinHistory.length === 0) {
+    feedList.innerHTML = `
+      <div style="text-align: center; padding: 2rem; color: var(--ink-soft);">
+        🌟 No joins yet. Be the first devotee! 🙏
+      </div>
+    `;
+    if (feedCount) feedCount.innerText = '0 members';
+    return;
+  }
+  
+  feedList.innerHTML = joinHistory.map(join => `
+    <div class="feed-item">
+      <div class="feed-avatar">
+        ${join.name.charAt(0).toUpperCase()}
+      </div>
+      <div class="feed-content">
+        <div class="feed-name">
+          ${join.name}
+          <span class="feed-badge">NEW</span>
+        </div>
+        <div class="feed-message">${join.message}</div>
+      </div>
+      <div class="feed-time">${timeAgo(join.timestamp)}</div>
+    </div>
+  `).join('');
+  
+  if (feedCount) feedCount.innerText = `${joinHistory.length} join${joinHistory.length !== 1 ? 's' : ''}`;
+}
+
+// Update counter display with animation
+function updateCounterDisplay(newCount) {
+  if (!counterElement) return;
+  
+  const startCount = parseInt(counterElement.innerText) || 0;
+  const duration = 500;
+  const stepTime = 20;
+  const steps = duration / stepTime;
+  const increment = (newCount - startCount) / steps;
+  let currentStep = 0;
+  
+  const timer = setInterval(() => {
+    currentStep++;
+    const nextValue = Math.floor(startCount + (increment * currentStep));
+    if (currentStep >= steps || nextValue >= newCount) {
+      counterElement.innerText = newCount;
+      clearInterval(timer);
+    } else {
+      counterElement.innerText = nextValue;
+    }
+  }, stepTime);
+  
+  updateMilestones(newCount);
+}
+
+// Add a new member
+function addNewMember(devoteeName = null) {
+  memberCount++;
+  
+  // Generate name and message
+  const name = devoteeName || devoteeNames[Math.floor(Math.random() * devoteeNames.length)];
+  const message = joinMessages[Math.floor(Math.random() * joinMessages.length)];
+  
+  // Save to localStorage
+  localStorage.setItem('mahaPoojan_memberCount', memberCount);
+  
+  // Add to feed
+  addToFeed(name, message);
+  
+  // Update display
+  updateCounterDisplay(memberCount);
+  
+  // Update last join message
+  if (lastJoinMessage) {
+    lastJoinMessage.innerHTML = `🕉️ ${name} ${message}`;
+    setTimeout(() => {
+      if (lastJoinMessage && memberCount > 0) {
+        lastJoinMessage.innerHTML = `✨ ${memberCount} devotee${memberCount !== 1 ? 's' : ''} and counting! Join the family 🙏`;
+      }
+    }, 4000);
+  }
+  
+  // Optional: Send to backend
+  fetch('/api/add-member', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, timestamp: Date.now(), total: memberCount })
+  }).catch(() => {});
+  
+  return { name, message };
+}
+
+// Load saved data from localStorage
+function loadSavedData() {
+  const savedCount = localStorage.getItem('mahaPoojan_memberCount');
+  const savedHistory = localStorage.getItem('mahaPoojan_joinHistory');
+  
+  if (savedCount !== null && parseInt(savedCount) > 0) {
+    memberCount = parseInt(savedCount);
+    if (counterElement) counterElement.innerText = memberCount;
+    updateMilestones(memberCount);
+  }
+  
+  if (savedHistory !== null) {
+    try {
+      joinHistory = JSON.parse(savedHistory);
+      renderFeed();
+    } catch(e) {}
+  }
+  
+  if (memberCount === 0 && lastJoinMessage) {
+    lastJoinMessage.innerHTML = '🌟 Be the first devotee to join our spiritual family!';
+  }
+}
+
+// ============================================
+// SIMULATE ACTIVITY FOR DEMO (REMOVE IN PRODUCTION)
+// ============================================
+// This simulates joins every few minutes to show activity
+// Comment out or remove when you have real users
+
+let simulationInterval = null;
+
+function startSimulation() {
+  // Only simulate if no real users yet
+  if (memberCount === 0) {
+    simulationInterval = setInterval(() => {
+      // 25% chance every 4 minutes
+      if (Math.random() < 0.25 && memberCount < 30) {
+        addNewMember();
+        console.log('🌟 Simulated devotee joined! Total:', memberCount);
+      }
+    }, 240000); // 4 minutes
+  }
+}
+
+// ============================================
+// EXPOSE FUNCTION FOR OTHER PAGES
+// ============================================
+window.MahaPoojanCommunity = {
+  addMember: addNewMember,
+  getCount: () => memberCount,
+  getHistory: () => joinHistory
+};
+
+// Initialize
+loadSavedData();
+
+// Start simulation (comment out for production)
+// startSimulation();
+
+// Auto-refresh from backend every 30 seconds
+setInterval(() => {
+  fetch('/api/community-stats')
+    .then(res => res.json())
+    .then(data => {
+      if (data.count && data.count > memberCount) {
+        memberCount = data.count;
+        updateCounterDisplay(memberCount);
+      }
+      if (data.history && data.history.length > joinHistory.length) {
+        joinHistory = data.history;
+        renderFeed();
+      }
+    })
+    .catch(() => {});
+}, 30000);
+
+// Fade-up animation
+const fadeEls = document.querySelectorAll('.fade-up');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+fadeEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

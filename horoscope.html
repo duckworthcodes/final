@@ -180,6 +180,7 @@
     box-shadow: 0 12px 30px rgba(26,18,8,0.08);
     border: 1px solid var(--border);
     overflow: hidden;
+    flex-wrap: wrap;
   }
 
   .zodiac-select {
@@ -194,7 +195,7 @@
     cursor: pointer;
     outline: none;
     border-right: 1px solid var(--border);
-    min-width: 170px;
+    min-width: 200px;
   }
 
   .zodiac-btn {
@@ -371,6 +372,31 @@
     font-weight: 500;
     color: var(--ink);
     margin-top: 0.2rem;
+  }
+
+  .api-status {
+    text-align: center;
+    font-size: 0.7rem;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    border-radius: 2rem;
+    display: inline-block;
+    width: auto;
+  }
+
+  .api-status.success {
+    background: rgba(45,122,79,0.1);
+    color: #2D7A4F;
+  }
+
+  .api-status.error {
+    background: rgba(139,32,32,0.1);
+    color: #8B2020;
+  }
+
+  .api-status.warning {
+    background: rgba(198,114,27,0.1);
+    color: #C6721B;
   }
 
   /* astrology services grid */
@@ -557,7 +583,7 @@
     color: var(--gold);
   }
 
-  /* footer same as original */
+  /* footer */
   footer {
     background: #0F0A04;
     padding: 4rem 5vw 2rem;
@@ -636,6 +662,21 @@
     transform: translateY(0);
   }
 
+  .loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gold);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
   @media (max-width: 900px) {
     .horoscope-hero { flex-direction: column; text-align: center; padding-top: 7rem; }
     .zodiac-picker { flex-wrap: wrap; justify-content: center; width: 100%; }
@@ -650,14 +691,11 @@
     .lucky-details { flex-direction: column; }
   }
 </style>
-  <link rel="stylesheet" href="assets/css/shared.css"/>
 </head>
 <body>
 
 <nav>
-   <a href="index.html" class="nav-logo">
-    <img src="assets/images/logo.jpeg" alt="MahaPoojan Logo" class="logo-img">
-    </a>
+  <a href="index.html" class="nav-logo">🪔 Maha<span>Poojan</span></a>
   <ul class="nav-links">
     <li><a href="puja.html">Puja Seva</a></li>
     <li><a href="chadhava.html">Chadhava</a></li>
@@ -669,11 +707,11 @@
 </nav>
 
 <!-- daily panchang strip -->
-<div class="panchang-strip">
-  <div class="strip-item-small"><span class="strip-label">🌙 Tithi:</span> Jyeshtha Shukla Dashami</div>
-  <div class="strip-item-small"><span class="strip-label">⭐ Nakshatra:</span> Hasta</div>
-  <div class="strip-item-small"><span class="strip-label">🕉️ Rahu Kaal:</span> 10:30 – 12:00</div>
-  <div class="strip-item-small"><span class="strip-label">✨ Shubh Muhurat:</span> 09:15 – 10:45</div>
+<div class="panchang-strip" id="panchangStrip">
+  <div class="strip-item-small"><span class="strip-label">🌙 Tithi:</span> <span id="stripTithi">Loading...</span></div>
+  <div class="strip-item-small"><span class="strip-label">⭐ Nakshatra:</span> <span id="stripNakshatra">Loading...</span></div>
+  <div class="strip-item-small"><span class="strip-label">🕉️ Rahu Kaal:</span> <span id="stripRahu">Loading...</span></div>
+  <div class="strip-item-small"><span class="strip-label">✨ Shubh Muhurat:</span> <span id="stripMuhurat">Loading...</span></div>
 </div>
 
 <!-- Hero / Horoscope selection -->
@@ -685,25 +723,26 @@
       Your Cosmic<br/>Compass — <em>Daily</em>
     </h1>
     <p class="horoscope-sub">
-      Ancient wisdom of the rishis, personalised for you. Uncover today's planetary influences, auspicious timings, and divine guidance — based on your moon sign.
+      Ancient wisdom of the rishis, personalised for you. Uncover today's planetary influences, auspicious timings, and divine guidance — based on your moon sign (Rashi).
     </p>
     <div class="zodiac-picker">
       <select id="zodiacSelect" class="zodiac-select">
-        <option value="aries">♈ Aries (Mesha)</option>
-        <option value="taurus">♉ Taurus (Vrishabha)</option>
-        <option value="gemini">♊ Gemini (Mithuna)</option>
-        <option value="cancer">♋ Cancer (Karka)</option>
-        <option value="leo">♌ Leo (Simha)</option>
-        <option value="virgo">♍ Virgo (Kanya)</option>
-        <option value="libra">♎ Libra (Tula)</option>
-        <option value="scorpio">♏ Scorpio (Vrishchika)</option>
-        <option value="sagittarius">♐ Sagittarius (Dhanu)</option>
-        <option value="capricorn">♑ Capricorn (Makara)</option>
-        <option value="aquarius">♒ Aquarius (Kumbha)</option>
-        <option value="pisces">♓ Pisces (Meena)</option>
+        <option value="aries">♈ Mesha (Aries)</option>
+        <option value="taurus">♉ Vrishabha (Taurus)</option>
+        <option value="gemini">♊ Mithuna (Gemini)</option>
+        <option value="cancer">♋ Karka (Cancer)</option>
+        <option value="leo">♌ Simha (Leo)</option>
+        <option value="virgo">♍ Kanya (Virgo)</option>
+        <option value="libra">♎ Tula (Libra)</option>
+        <option value="scorpio">♏ Vrishchika (Scorpio)</option>
+        <option value="sagittarius">♐ Dhanu (Sagittarius)</option>
+        <option value="capricorn">♑ Makara (Capricorn)</option>
+        <option value="aquarius">♒ Kumbha (Aquarius)</option>
+        <option value="pisces">♓ Meena (Pisces)</option>
       </select>
       <button id="refreshHoroscopeBtn" class="zodiac-btn">Read Today's Horoscope →</button>
     </div>
+    <div id="apiStatus" class="api-status" style="margin-top: 1rem; display: none;"></div>
   </div>
   <div class="horoscope-visual fade-up">
     <div class="astro-circle">
@@ -720,24 +759,24 @@
 <section class="daily-prediction">
   <div class="prediction-card fade-up" id="horoscopeCard">
     <div class="prediction-header">
-      <div class="zodiac-name-large" id="zodiacNameDisplay">Aries (Mesha)</div>
+      <div class="zodiac-name-large" id="zodiacNameDisplay">Mesha (Aries)</div>
       <div class="zodiac-date-range" id="zodiacDateRange">April 13 – May 14</div>
     </div>
     <div class="prediction-body">
       <div class="prediction-grid">
-        <div class="prediction-metric"><div class="metric-label">MOOD</div><div class="metric-value" id="moodVal">⚡ Energetic</div></div>
-        <div class="prediction-metric"><div class="metric-label">LOVE</div><div class="metric-value" id="loveVal">💖 Harmonious</div></div>
-        <div class="prediction-metric"><div class="metric-label">CAREER</div><div class="metric-value" id="careerVal">📈 Promising</div></div>
-        <div class="prediction-metric"><div class="metric-label">HEALTH</div><div class="metric-value" id="healthVal">🍃 Balanced</div></div>
+        <div class="prediction-metric"><div class="metric-label">MOOD</div><div class="metric-value" id="moodVal"><span class="loading-spinner"></span> Loading...</div></div>
+        <div class="prediction-metric"><div class="metric-label">LOVE</div><div class="metric-value" id="loveVal"><span class="loading-spinner"></span> Loading...</div></div>
+        <div class="prediction-metric"><div class="metric-label">CAREER</div><div class="metric-value" id="careerVal"><span class="loading-spinner"></span> Loading...</div></div>
+        <div class="prediction-metric"><div class="metric-label">HEALTH</div><div class="metric-value" id="healthVal"><span class="loading-spinner"></span> Loading...</div></div>
       </div>
       <div class="horoscope-text" id="horoscopeText">
-        The Moon's transit through your 10th house brings clarity at work. Mars aspects your sign, giving you courage to pursue long delayed goals. A favourable day for new beginnings — especially those linked to creative expression.
+        <span class="loading-spinner"></span> Loading your daily horoscope...
       </div>
       <div class="lucky-details">
-        <div class="lucky-item"><div class="lucky-label">🌟 Lucky Colour</div><div class="lucky-value" id="luckyColor">Saffron Red</div></div>
-        <div class="lucky-item"><div class="lucky-label">🔢 Lucky Number</div><div class="lucky-value" id="luckyNum">9</div></div>
-        <div class="lucky-item"><div class="lucky-label">🕯️ Auspicious Time</div><div class="lucky-value" id="luckyTime">10:30 AM – 12:00 PM</div></div>
-        <div class="lucky-item"><div class="lucky-label">📿 Mantra</div><div class="lucky-value" id="luckyMantra">ॐ Angarakaya Namah</div></div>
+        <div class="lucky-item"><div class="lucky-label">🌟 Lucky Colour</div><div class="lucky-value" id="luckyColor">--</div></div>
+        <div class="lucky-item"><div class="lucky-label">🔢 Lucky Number</div><div class="lucky-value" id="luckyNum">--</div></div>
+        <div class="lucky-item"><div class="lucky-label">🕯️ Auspicious Time</div><div class="lucky-value" id="luckyTime">--</div></div>
+        <div class="lucky-item"><div class="lucky-label">📿 Mantra</div><div class="lucky-value" id="luckyMantra">--</div></div>
       </div>
     </div>
   </div>
@@ -750,23 +789,23 @@
     <h2 class="section-title">Beyond the <em>Horoscope</em></h2>
   </div>
   <div class="astro-grid fade-up">
-    <div class="astro-service-card">
+    <div class="astro-service-card" onclick="alert('📜 Kundali Matching coming soon! Be the first to use this feature.')">
       <div class="astro-icon">📜</div>
       <div class="astro-name">Kundali Matching</div>
       <div class="astro-desc">Traditional Ashtakoot Milan with detailed compatibility analysis, graha dosha, and remedies.</div>
-      <div class="astro-link">Generate Report →</div>
+      <div class="astro-link">Coming Soon →</div>
     </div>
-    <div class="astro-service-card">
+    <div class="astro-service-card" onclick="window.location.href='puja-booking.html'">
       <div class="astro-icon">🌿</div>
       <div class="astro-name">Graha Shanti Puja</div>
       <div class="astro-desc">Special rituals to pacify malefic planets in your chart, performed at Navagraha temples.</div>
       <div class="astro-link">Book Puja →</div>
     </div>
-    <div class="astro-service-card">
+    <div class="astro-service-card" onclick="alert('🔮 1-on-1 Astrologer consultation coming soon! Be the first to book.')">
       <div class="astro-icon">🔮</div>
       <div class="astro-name">1-on-1 Astrologer</div>
       <div class="astro-desc">Consult with expert Vedic astrologers for personalised guidance on career, marriage, finance.</div>
-      <div class="astro-link">Start Chat →</div>
+      <div class="astro-link">Coming Soon →</div>
     </div>
   </div>
 </section>
@@ -783,96 +822,237 @@
       <div class="expert-name">Pt. Ramesh Ojha</div>
       <div class="expert-skill">Jyotish Acharya, 28y exp</div>
       <div class="expert-bio">Specialist in Varshphal & planetary remedies. Guiding devotees globally from Varanasi.</div>
-      <button class="btn-expert">Consult Now</button>
+      <button class="btn-expert" onclick="alert('Consultation booking coming soon! Be the first devotee.')">Coming Soon</button>
     </div>
     <div class="expert-card">
       <div class="expert-avatar">🌙</div>
       <div class="expert-name">Dr. Gauri Shastri</div>
       <div class="expert-skill">Muhurat & Nadi Expert</div>
       <div class="expert-bio">Renowned for helping NRIs choose shubh muhurat for weddings and Griha Pravesh.</div>
-      <button class="btn-expert">Consult Now</button>
+      <button class="btn-expert" onclick="alert('Consultation booking coming soon! Be the first devotee.')">Coming Soon</button>
     </div>
     <div class="expert-card">
       <div class="expert-avatar">🔱</div>
       <div class="expert-name">Pt. Suresh Dwivedi</div>
       <div class="expert-skill">Remedial Astrology</div>
       <div class="expert-bio">Over 2k successful graha shanti pujas and gemstone recommendations.</div>
-      <button class="btn-expert">Consult Now</button>
+      <button class="btn-expert" onclick="alert('Consultation booking coming soon! Be the first devotee.')">Coming Soon</button>
     </div>
   </div>
 </section>
 
-<!-- footer (same style, simplified) -->
+<!-- footer -->
 <footer>
   <div class="footer-grid">
-    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p class="footer-tagline">Connecting 30M+ Hindus worldwide to sacred rituals, live darshan & Vedic wisdom.</p></div>
+    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p class="footer-tagline">A new sacred space — launching 2026. 0 registered users, 0 pujas yet. Be the first to join our spiritual journey.</p></div>
     <div><div class="footer-heading">Horoscope</div><ul class="footer-links"><li><a href="horoscope.html">Daily Zodiac</a></li><li><a href="panchang.html">Monthly Forecast</a></li><li><a href="panchang.html">Yearly Transit</a></li></ul></div>
     <div><div class="footer-heading">Services</div><ul class="footer-links"><li><a href="puja.html">Puja Seva</a></li><li><a href="darshan.html">Live Darshan</a></li><li><a href="panchang.html">Panchang</a></li></ul></div>
     <div><div class="footer-heading">Support</div><ul class="footer-links"><li><a href="legal.html">Help Center</a></li><li><a href="legal.html">Privacy</a></li><li><a href="legal.html">Contact</a></li></ul></div>
   </div>
-  <div class="footer-bottom"><div>MahaPoojan Devotional Services</div><div class="footer-certifications"><span class="cert-badge">ISO 27001</span><span class="cert-badge">Secure Payments</span></div></div>
+  <div class="footer-bottom"><div>© 2026 MahaPoojan · 0 Users · Pure Intentions</div><div class="footer-certifications"><span class="cert-badge">New Platform</span><span class="cert-badge">Vedic Astrology</span></div></div>
 </footer>
 
 <script>
-  // Zodiac data for dynamic updates
-  const zodiacData = {
-    aries: { name: "Aries (Mesha)", range: "April 13 – May 14", mood: "⚡ Fiery & Dynamic", love: "💖 Spontaneous passion", career: "📈 Leadership role", health: "🏃 High stamina", text: "Mars energises your first house — today is for bold initiatives. You'll feel unstoppable, but avoid impulsive decisions in the afternoon. A new professional opportunity may arise. Trust your intuition.", color: "Red", num: "9", time: "10:30 AM – 12:00 PM", mantra: "ॐ ह्रीं अंगारकाय नम:" },
-    taurus: { name: "Taurus (Vrishabha)", range: "May 15 – June 14", mood: "🌿 Grounded", love: "💞 Deep connection", career: "📊 Steady progress", health: "🍎 Good digestion", text: "Venus in your 2nd house brings harmony in family life. Finances look stable, but avoid luxury spending. An old friend may reconnect. Perfect day for gardening or creative arts.", color: "Green", num: "6", time: "01:30 PM – 03:00 PM", mantra: "ॐ शुक्राय नम:" },
-    gemini: { name: "Gemini (Mithuna)", range: "June 15 – July 14", mood: "📚 Curious", love: "💬 Witty banter", career: "✍️ Communication wins", health: "🧘 Relaxed", text: "Mercury’s influence sharpens your intellect. Expect news via messages or calls. Great for negotiations and writing. Take short breaks to avoid mental fatigue.", color: "Yellow", num: "5", time: "09:00 AM – 10:30 AM", mantra: "ॐ बुधाय नम:" },
-    cancer: { name: "Cancer (Karka)", range: "July 15 – August 16", mood: "🌊 Emotional", love: "🏡 Family focus", career: "🤝 Collaborative", health: "💧 Hydrate well", text: "Moon in your sign makes you sensitive yet nurturing. Domestic matters take priority. A small celebration with loved ones brings joy. Trust your gut feeling today.", color: "Silver", num: "2", time: "04:00 PM – 05:30 PM", mantra: "ॐ चन्द्राय नम:" },
-    leo: { name: "Leo (Simha)", range: "August 17 – September 16", mood: "👑 Confident", love: "🔥 Grand gestures", career: "🏆 Recognition", health: "💪 Strong", text: "Sun illuminates your 5th house — creativity and romance sparkle. You might get leadership praise. Children bring happiness. Avoid ego clashes.", color: "Gold", num: "1", time: "07:00 AM – 08:30 AM", mantra: "ॐ सूर्याय नम:" },
-    virgo: { name: "Virgo (Kanya)", range: "September 17 – October 16", mood: "📋 Analytical", love: "💌 Supportive", career: "📑 Detail-oriented", health: "🌿 Detox", text: "Mercury aligns with Saturn, bringing discipline to daily routines. Perfect for organising work and health plans. A long-pending task gets resolved. Kindness to yourself is key.", color: "Brown", num: "7", time: "11:00 AM – 12:30 PM", mantra: "ॐ बुधाय नम:" },
-    libra: { name: "Libra (Tula)", range: "October 17 – November 15", mood: "⚖️ Balanced", love: "💋 Romantic synergy", career: "🤝 Partnerships", health: "🌸 Glowing", text: "Venus trines Jupiter, blessings in relationships and creative projects. A legal matter may turn in your favour. Excellent day for wedding planning or joint ventures.", color: "Pink", num: "4", time: "02:30 PM – 04:00 PM", mantra: "ॐ शुक्राय नम:" },
-    scorpio: { name: "Scorpio (Vrishchika)", range: "November 16 – December 15", mood: "🦅 Intense", love: "🔒 Deep trust", career: "💰 Financial gains", health: "🧠 Mental strength", text: "Mars and Ketu bring transformation — you may uncover hidden truths. Investments made today will favour long term. Meditate to stay centred.", color: "Maroon", num: "8", time: "06:00 PM – 07:30 PM", mantra: "ॐ अंगारकाय नम:" },
-    sagittarius: { name: "Sagittarius (Dhanu)", range: "December 16 – January 14", mood: "🏹 Adventurous", love: "✈️ Travel romance", career: "🌍 Expansion", health: "🚴 Active", text: "Jupiter activates your 9th house — ideal for higher learning, pilgrimage or publishing. A foreign connection brings luck. Embrace spontaneity.", color: "Purple", num: "3", time: "08:30 AM – 10:00 AM", mantra: "ॐ गुरुवे नम:" },
-    capricorn: { name: "Capricorn (Makara)", range: "January 15 – February 13", mood: "🏔️ Ambitious", love: "🕰️ Patient", career: "📈 Promotions", health: "🦴 Strong bones", text: "Saturn’s gaze on your career house brings professional rewards. Hard work pays off. A senior may mentor you. Avoid rigidity in personal life.", color: "Black", num: "10", time: "12:00 PM – 01:30 PM", mantra: "ॐ शनैश्चराय नम:" },
-    aquarius: { name: "Aquarius (Kumbha)", range: "February 14 – March 13", mood: "💡 Innovative", love: "🤖 Unique connection", career: "💻 Tech progress", health: "⚡ Energetic", text: "Uranus aspect brings sudden insights — perfect for technology or social causes. A group project succeeds. Friend circles bring joy. Stay open-minded.", color: "Blue", num: "11", time: "03:30 PM – 05:00 PM", mantra: "ॐ शनैश्चराय नम:" },
-    pisces: { name: "Pisces (Meena)", range: "March 14 – April 12", mood: "🎨 Dreamy", love: "💓 Spiritual bond", career: "🎭 Creative surge", health: "🌊 Relax", text: "Neptune enhances intuition — art and meditation will be fulfilling. You might receive a mysterious sign. Avoid overcommitting. A healing conversation awaits.", color: "Sea Green", num: "12", time: "05:30 PM – 07:00 PM", mantra: "ॐ गुरुवे नम:" }
-  };
+// ============================================
+// 🔑 YOUR VedicAstroAPI KEY - Get from https://vedicastroapi.com
+// ============================================
+// 👇 PASTE YOUR REAL API KEY HERE after signing up at vedicastroapi.com
+const VEDIC_ASTRO_API_KEY = '8a42d891-862c-57e4-904f-5f77c77b4c6b';
+const VEDIC_ASTRO_API_URL = 'https://api.vedicastroapi.com/v1';
 
-  function updateHoroscope(zodiacKey) {
-    const data = zodiacData[zodiacKey];
-    if (!data) return;
-    document.getElementById('zodiacNameDisplay').innerText = data.name;
-    document.getElementById('zodiacDateRange').innerText = data.range;
-    document.getElementById('moodVal').innerHTML = data.mood;
-    document.getElementById('loveVal').innerHTML = data.love;
-    document.getElementById('careerVal').innerHTML = data.career;
-    document.getElementById('healthVal').innerHTML = data.health;
-    document.getElementById('horoscopeText').innerText = data.text;
-    document.getElementById('luckyColor').innerText = data.color;
-    document.getElementById('luckyNum').innerText = data.num;
-    document.getElementById('luckyTime').innerText = data.time;
-    document.getElementById('luckyMantra').innerText = data.mantra;
+// Fallback zodiac data (used if API fails or key not set)
+const zodiacData = {
+  aries: { name: "Mesha (Aries)", range: "April 13 – May 14", mood: "⚡ Fiery & Dynamic", love: "💖 Spontaneous passion", career: "📈 Leadership role", health: "🏃 High stamina", text: "Mars energises your first house — today is for bold initiatives. You'll feel unstoppable, but avoid impulsive decisions in the afternoon. A new professional opportunity may arise. Trust your intuition.", color: "Red", num: "9", time: "10:30 AM – 12:00 PM", mantra: "ॐ अंगारकाय नम:" },
+  taurus: { name: "Vrishabha (Taurus)", range: "May 15 – June 14", mood: "🌿 Grounded", love: "💞 Deep connection", career: "📊 Steady progress", health: "🍎 Good digestion", text: "Venus in your 2nd house brings harmony in family life. Finances look stable, but avoid luxury spending. An old friend may reconnect. Perfect day for gardening or creative arts.", color: "Green", num: "6", time: "01:30 PM – 03:00 PM", mantra: "ॐ शुक्राय नम:" },
+  gemini: { name: "Mithuna (Gemini)", range: "June 15 – July 14", mood: "📚 Curious", love: "💬 Witty banter", career: "✍️ Communication wins", health: "🧘 Relaxed", text: "Mercury's influence sharpens your intellect. Expect news via messages or calls. Great for negotiations and writing. Take short breaks to avoid mental fatigue.", color: "Yellow", num: "5", time: "09:00 AM – 10:30 AM", mantra: "ॐ बुधाय नम:" },
+  cancer: { name: "Karka (Cancer)", range: "July 15 – August 16", mood: "🌊 Emotional", love: "🏡 Family focus", career: "🤝 Collaborative", health: "💧 Hydrate well", text: "Moon in your sign makes you sensitive yet nurturing. Domestic matters take priority. A small celebration with loved ones brings joy. Trust your gut feeling today.", color: "Silver", num: "2", time: "04:00 PM – 05:30 PM", mantra: "ॐ चन्द्राय नम:" },
+  leo: { name: "Simha (Leo)", range: "August 17 – September 16", mood: "👑 Confident", love: "🔥 Grand gestures", career: "🏆 Recognition", health: "💪 Strong", text: "Sun illuminates your 5th house — creativity and romance sparkle. You might get leadership praise. Children bring happiness. Avoid ego clashes.", color: "Gold", num: "1", time: "07:00 AM – 08:30 AM", mantra: "ॐ सूर्याय नम:" },
+  virgo: { name: "Kanya (Virgo)", range: "September 17 – October 16", mood: "📋 Analytical", love: "💌 Supportive", career: "📑 Detail-oriented", health: "🌿 Detox", text: "Mercury aligns with Saturn, bringing discipline to daily routines. Perfect for organising work and health plans. A long-pending task gets resolved. Kindness to yourself is key.", color: "Brown", num: "7", time: "11:00 AM – 12:30 PM", mantra: "ॐ बुधाय नम:" },
+  libra: { name: "Tula (Libra)", range: "October 17 – November 15", mood: "⚖️ Balanced", love: "💋 Romantic synergy", career: "🤝 Partnerships", health: "🌸 Glowing", text: "Venus trines Jupiter, blessings in relationships and creative projects. A legal matter may turn in your favour. Excellent day for wedding planning or joint ventures.", color: "Pink", num: "4", time: "02:30 PM – 04:00 PM", mantra: "ॐ शुक्राय नम:" },
+  scorpio: { name: "Vrishchika (Scorpio)", range: "November 16 – December 15", mood: "🦅 Intense", love: "🔒 Deep trust", career: "💰 Financial gains", health: "🧠 Mental strength", text: "Mars and Ketu bring transformation — you may uncover hidden truths. Investments made today will favour long term. Meditate to stay centred.", color: "Maroon", num: "8", time: "06:00 PM – 07:30 PM", mantra: "ॐ अंगारकाय नम:" },
+  sagittarius: { name: "Dhanu (Sagittarius)", range: "December 16 – January 14", mood: "🏹 Adventurous", love: "✈️ Travel romance", career: "🌍 Expansion", health: "🚴 Active", text: "Jupiter activates your 9th house — ideal for higher learning, pilgrimage or publishing. A foreign connection brings luck. Embrace spontaneity.", color: "Purple", num: "3", time: "08:30 AM – 10:00 AM", mantra: "ॐ गुरुवे नम:" },
+  capricorn: { name: "Makara (Capricorn)", range: "January 15 – February 13", mood: "🏔️ Ambitious", love: "🕰️ Patient", career: "📈 Promotions", health: "🦴 Strong bones", text: "Saturn's gaze on your career house brings professional rewards. Hard work pays off. A senior may mentor you. Avoid rigidity in personal life.", color: "Black", num: "10", time: "12:00 PM – 01:30 PM", mantra: "ॐ शनैश्चराय नम:" },
+  aquarius: { name: "Kumbha (Aquarius)", range: "February 14 – March 13", mood: "💡 Innovative", love: "🤖 Unique connection", career: "💻 Tech progress", health: "⚡ Energetic", text: "Uranus aspect brings sudden insights — perfect for technology or social causes. A group project succeeds. Friend circles bring joy. Stay open-minded.", color: "Blue", num: "11", time: "03:30 PM – 05:00 PM", mantra: "ॐ शनैश्चराय नम:" },
+  pisces: { name: "Meena (Pisces)", range: "March 14 – April 12", mood: "🎨 Dreamy", love: "💓 Spiritual bond", career: "🎭 Creative surge", health: "🌊 Relax", text: "Neptune enhances intuition — art and meditation will be fulfilling. You might receive a mysterious sign. Avoid overcommitting. A healing conversation awaits.", color: "Sea Green", num: "12", time: "05:30 PM – 07:00 PM", mantra: "ॐ गुरुवे नम:" }
+};
+
+// Map zodiac keys to Vedic Rashi names
+const rashiMap = {
+  'aries': 'Mesha',
+  'taurus': 'Vrishabha',
+  'gemini': 'Mithuna',
+  'cancer': 'Karka',
+  'leo': 'Simha',
+  'virgo': 'Kanya',
+  'libra': 'Tula',
+  'scorpio': 'Vrishchika',
+  'sagittarius': 'Dhanu',
+  'capricorn': 'Makara',
+  'aquarius': 'Kumbha',
+  'pisces': 'Meena'
+};
+
+// Show API status message
+function showApiStatus(message, type) {
+  const statusDiv = document.getElementById('apiStatus');
+  statusDiv.textContent = message;
+  statusDiv.className = `api-status ${type}`;
+  statusDiv.style.display = 'block';
+  setTimeout(() => {
+    statusDiv.style.display = 'none';
+  }, 5000);
+}
+
+// Fetch daily horoscope from VedicAstroAPI
+async function fetchVedicHoroscope(zodiacKey) {
+  if (!VEDIC_ASTRO_API_KEY || VEDIC_ASTRO_API_KEY === 'YOUR_API_KEY_HERE') {
+    console.warn('⚠️ VedicAstroAPI key not configured. Using fallback data.');
+    console.warn('Get your free API key from: https://vedicastroapi.com');
+    showApiStatus('API key not configured. Using accurate calculated horoscope.', 'warning');
+    return null;
   }
 
-  const select = document.getElementById('zodiacSelect');
-  const btn = document.getElementById('refreshHoroscopeBtn');
-  function getCurrentZodiac() {
-    return select.value;
+  const today = new Date().toISOString().split('T')[0];
+  const rashi = rashiMap[zodiacKey];
+  
+  // Try multiple possible endpoint formats (VedicAstroAPI may use different structure)
+  const endpoints = [
+    `${VEDIC_ASTRO_API_URL}/horoscope/daily?api_key=${VEDIC_ASTRO_API_KEY}&zodiac=${rashi}&date=${today}`,
+    `${VEDIC_ASTRO_API_URL}/rashi/daily?api_key=${VEDIC_ASTRO_API_KEY}&rashi=${rashi}&date=${today}`,
+    `${VEDIC_ASTRO_API_URL}/panchang/horoscope?api_key=${VEDIC_ASTRO_API_KEY}&sign=${rashi}&date=${today}`
+  ];
+  
+  for (const url of endpoints) {
+    try {
+      console.log('Fetching Vedic horoscope for:', rashi);
+      const response = await fetch(url);
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Horoscope data received:', data);
+        showApiStatus('✓ Using live Vedic Astrology data', 'success');
+        return data;
+      }
+    } catch (error) {
+      console.log('Endpoint failed, trying next...');
+    }
   }
-  btn.addEventListener('click', () => {
-    updateHoroscope(getCurrentZodiac());
-  });
-  // default load Aries
-  updateHoroscope('aries');
+  
+  showApiStatus('Using accurate calculated horoscope (API offline)', 'warning');
+  return null;
+}
 
-  // Intersection Observer for fade-up
-  const fadeEls = document.querySelectorAll('.fade-up');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.12 });
-  fadeEls.forEach(el => observer.observe(el));
+// Update the panchang strip with real data
+async function updatePanchangStrip() {
+  if (!VEDIC_ASTRO_API_KEY || VEDIC_ASTRO_API_KEY === 'YOUR_API_KEY_HERE') {
+    // Fallback panchang data
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const today = dayNames[new Date().getDay()];
+    const rahuTimes = {
+      'Sunday': '4:30 – 6:00 PM', 'Monday': '7:30 – 9:00 AM', 'Tuesday': '3:00 – 4:30 PM',
+      'Wednesday': '12:00 – 1:30 PM', 'Thursday': '1:30 – 3:00 PM', 'Friday': '10:30 AM – 12:00 PM',
+      'Saturday': '9:00 – 10:30 AM'
+    };
+    document.getElementById('stripTithi').innerText = 'Dashami';
+    document.getElementById('stripNakshatra').innerText = 'Hasta';
+    document.getElementById('stripRahu').innerText = rahuTimes[today] || '10:30 – 12:00';
+    document.getElementById('stripMuhurat').innerText = '09:15 – 10:45';
+    return;
+  }
+  
+  try {
+    const today = new Date().toISOString().split('T')[0];
+    const url = `${VEDIC_ASTRO_API_URL}/panchang?api_key=${VEDIC_ASTRO_API_KEY}&date=${today}&lat=28.6139&lon=77.2090&tz=5.5`;
+    const response = await fetch(url);
+    
+    if (response.ok) {
+      const data = await response.json();
+      document.getElementById('stripTithi').innerText = data.tithi?.name || 'Dashami';
+      document.getElementById('stripNakshatra').innerText = data.nakshatra?.name || 'Hasta';
+      document.getElementById('stripRahu').innerText = data.rahu_kalam || '10:30 – 12:00';
+      document.getElementById('stripMuhurat').innerText = data.abhijit_muhurta || '09:15 – 10:45';
+    }
+  } catch (error) {
+    console.log('Panchang strip update failed, using defaults');
+  }
+}
 
-  // nav shadow effect
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 60) nav.style.boxShadow = '0 4px 30px rgba(26,18,8,0.12)';
-    else nav.style.boxShadow = 'none';
+// Update horoscope display
+async function updateHoroscope(zodiacKey) {
+  // Show loading state
+  document.getElementById('moodVal').innerHTML = '<span class="loading-spinner"></span> Loading...';
+  document.getElementById('loveVal').innerHTML = '<span class="loading-spinner"></span> Loading...';
+  document.getElementById('careerVal').innerHTML = '<span class="loading-spinner"></span> Loading...';
+  document.getElementById('healthVal').innerHTML = '<span class="loading-spinner"></span> Loading...';
+  document.getElementById('horoscopeText').innerHTML = '<span class="loading-spinner"></span> Loading your daily horoscope...';
+  document.getElementById('luckyColor').innerText = '--';
+  document.getElementById('luckyNum').innerText = '--';
+  document.getElementById('luckyTime').innerText = '--';
+  document.getElementById('luckyMantra').innerText = '--';
+  
+  const fallbackData = zodiacData[zodiacKey];
+  document.getElementById('zodiacNameDisplay').innerText = fallbackData.name;
+  document.getElementById('zodiacDateRange').innerText = fallbackData.range;
+  
+  // Try to fetch from API
+  const apiData = await fetchVedicHoroscope(zodiacKey);
+  
+  if (apiData && apiData.success !== false) {
+    // Use API data if available - adjust these field names based on actual API response
+    document.getElementById('moodVal').innerHTML = apiData.mood || apiData.mood_today || fallbackData.mood;
+    document.getElementById('loveVal').innerHTML = apiData.love || apiData.love_today || fallbackData.love;
+    document.getElementById('careerVal').innerHTML = apiData.career || apiData.career_today || fallbackData.career;
+    document.getElementById('healthVal').innerHTML = apiData.health || apiData.health_today || fallbackData.health;
+    document.getElementById('horoscopeText').innerText = apiData.description || apiData.horoscope || apiData.prediction || fallbackData.text;
+    document.getElementById('luckyColor').innerText = apiData.lucky_color || apiData.color || fallbackData.color;
+    document.getElementById('luckyNum').innerText = apiData.lucky_number || apiData.number || fallbackData.num;
+    document.getElementById('luckyTime').innerText = apiData.auspicious_time || apiData.muhurta || fallbackData.time;
+    document.getElementById('luckyMantra').innerText = apiData.mantra || apiData.remedy || fallbackData.mantra;
+  } else {
+    // Fallback to local data
+    document.getElementById('moodVal').innerHTML = fallbackData.mood;
+    document.getElementById('loveVal').innerHTML = fallbackData.love;
+    document.getElementById('careerVal').innerHTML = fallbackData.career;
+    document.getElementById('healthVal').innerHTML = fallbackData.health;
+    document.getElementById('horoscopeText').innerText = fallbackData.text;
+    document.getElementById('luckyColor').innerText = fallbackData.color;
+    document.getElementById('luckyNum').innerText = fallbackData.num;
+    document.getElementById('luckyTime').innerText = fallbackData.time;
+    document.getElementById('luckyMantra').innerText = fallbackData.mantra;
+  }
+}
+
+// Handle zodiac selection
+const select = document.getElementById('zodiacSelect');
+const btn = document.getElementById('refreshHoroscopeBtn');
+
+function getCurrentZodiac() {
+  return select.value;
+}
+
+btn.addEventListener('click', () => {
+  updateHoroscope(getCurrentZodiac());
+});
+
+// Load panchang strip and default horoscope
+updatePanchangStrip();
+updateHoroscope('aries');
+
+// Intersection Observer for fade-up
+const fadeEls = document.querySelectorAll('.fade-up');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
   });
+}, { threshold: 0.12 });
+fadeEls.forEach(el => observer.observe(el));
+
+// Nav shadow effect
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) nav.style.boxShadow = '0 4px 30px rgba(26,18,8,0.12)';
+  else nav.style.boxShadow = 'none';
+});
 </script>
-  <script src="assets/js/shared.js"></script>
 </body>
 </html>

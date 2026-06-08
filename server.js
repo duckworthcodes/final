@@ -2,6 +2,7 @@ const express = require('express');
 const Razorpay = require('razorpay');
 const cors = require('cors');
 const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const app = express();
@@ -19,107 +20,161 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Initialize Razorpay with your credentials
+// ============================================
+// 🔑 YOUR CORRECT RAZORPAY TEST KEYS
+// ============================================
+const RAZORPAY_KEY_ID = 'rzp_test_SyzFJuJdfn85Le';
+const RAZORPAY_KEY_SECRET = 'Mw0FJ1jJoqOe3ta1LgUaiRyk';
+
+// Initialize Razorpay with your correct keys
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID || 'rzp_test_SxqJrDZrBdDhj7',
-  key_secret: process.env.RAZORPAY_KEY_SECRET || 'oKZIFVNTYBAdGltbQ3O8IFXU'
+  key_id: RAZORPAY_KEY_ID,
+  key_secret: RAZORPAY_KEY_SECRET
+});
+
+console.log('✅ Razorpay initialized with Key ID:', RAZORPAY_KEY_ID);
+console.log('✅ Key Secret (first 10 chars):', RAZORPAY_KEY_SECRET.substring(0, 10) + '...');
+
+// ============================================
+// EMAIL CONFIGURATION (Optional - won't affect payment)
+// ============================================
+const emailTransporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER || 'your-email@gmail.com',
+    pass: process.env.EMAIL_PASS || 'your-app-password'
+  }
 });
 
 // ============================================
+// SEND CONFIRMATION EMAIL FUNCTION
+// ============================================
+async function sendBookingConfirmation(bookingData, paymentId) {
+  const { devoteeName, email, phone, gotra, pujaName, temple, pujaDate, sankalp, amount } = bookingData;
+  
+  const devoteeMailOptions = {
+    from: `"MahaPoojan" <${process.env.EMAIL_USER || 'puja@mahapoojan.com'}>`,
+    to: email,
+    subject: `🙏 Puja Confirmed - ${pujaName} at ${temple}`,
+    html: `
+      <div style="font-family: 'Georgia', serif; max-width: 600px; margin: 0 auto; background: #FAF6EE; border-radius: 20px; overflow: hidden;">
+        <div style="background: linear-gradient(135deg, #1A1208, #2E2316); padding: 30px; text-align: center;">
+          <h1 style="color: #D4A853; margin: 0; font-size: 28px;">🪔 MahaPoojan</h1>
+          <p style="color: #F5C77E; margin: 5px 0 0;">Your spiritual connection to the divine</p>
+        </div>
+        <div style="padding: 30px;">
+          <h2 style="color: #C6721B;">✨ Puja Booking Confirmed!</h2>
+          <p>Dear <strong>${devoteeName}</strong>,</p>
+          <p>Your puja has been successfully booked. Payment ID: <strong>${paymentId}</strong></p>
+          <div style="background: #FDF3E4; padding: 15px; border-radius: 10px; margin: 15px 0;">
+            <p><strong>📿 Puja:</strong> ${pujaName}</p>
+            <p><strong>🏛️ Temple:</strong> ${temple}</p>
+            <p><strong>📅 Date:</strong> ${pujaDate || 'Will be scheduled'}</p>
+            <p><strong>💰 Amount:</strong> ₹${amount}</p>
+          </div>
+          <p>We will send you the live darshan link and video proof within 24 hours.</p>
+          <p>🙏 Har Har Mahadev<br>Team MahaPoojan</p>
+        </div>
+      </div>
+    `
+  };
+  
+  try {
+    await emailTransporter.sendMail(devoteeMailOptions);
+    console.log(`✅ Email sent to ${email}`);
+    return { success: true };
+  } catch (error) {
+    console.error('❌ Email failed:', error.message);
+    return { success: false };
+  }
+}
+
+// ============================================
 // ENDPOINT 1: Create Order
-// POST /api/create-order
 // ============================================
 app.post('/api/create-order', async (req, res) => {
   try {
     const { amount, currency = 'INR', receipt } = req.body;
     
-    // Validate amount - minimum 100 paise (₹1)
+    console.log('📝 Creating order for amount:', amount);
+    
     if (!amount || amount < 100) {
-      return res.status(400).json({ 
-        error: 'Invalid amount. Minimum amount is ₹1 (100 paise)' 
-      });
+      return res.status(400).json({ error: 'Invalid amount. Minimum ₹1' });
     }
     
     const options = {
-      amount: amount,        // Amount in paise
+      amount: amount,
       currency: currency,
       receipt: receipt || 'receipt_' + Date.now(),
-      payment_capture: 1     // Auto-capture payments
+      payment_capture: 1
     };
     
+    console.log('Order options:', options);
     const order = await razorpay.orders.create(options);
+    console.log('✅ Order created:', order.id);
     
     res.json({
       success: true,
       order_id: order.id,
       amount: order.amount,
-      currency: order.currency,
-      receipt: order.receipt
+      currency: order.currency
     });
     
   } catch (error) {
-    console.error('Error creating order:', error);
+    console.error('❌ Error creating order:', error.error?.description || error.message);
     res.status(500).json({ 
-      error: 'Failed to create order',
-      details: error.error?.description || error.message
+      error: error.error?.description || 'Failed to create order'
     });
   }
 });
 
 // ============================================
-// ENDPOINT 2: Verify Payment Signature
-// POST /api/verify-payment
+// ENDPOINT 2: Verify Payment
 // ============================================
-app.post('/api/verify-payment', (req, res) => {
+app.post('/api/verify-payment', async (req, res) => {
   try {
-    const { order_id, payment_id, signature } = req.body;
+    const { order_id, payment_id, signature, bookingDetails } = req.body;
     
-    // Check for missing fields
-    if (!order_id || !payment_id || !signature) {
-      return res.status(400).json({ 
-        error: 'Missing required fields: order_id, payment_id, signature' 
-      });
-    }
+    console.log('Verifying payment:', { order_id, payment_id });
     
-    // Generate signature using HMAC-SHA256
+    // Verify signature using your correct secret
     const generatedSignature = crypto
-      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET || 'oKZIFVNTYBAdGltbQ3O8IFXU')
+      .createHmac('sha256', RAZORPAY_KEY_SECRET)
       .update(order_id + '|' + payment_id)
       .digest('hex');
     
-    // Compare signatures
-    if (generatedSignature === signature) {
-      res.json({ 
-        success: true, 
-        message: 'Payment verified successfully',
-        payment_id: payment_id,
-        order_id: order_id
-      });
-    } else {
-      res.status(400).json({ 
-        success: false, 
-        error: 'Invalid signature - payment may have been tampered'
-      });
+    if (generatedSignature !== signature) {
+      console.error('Signature mismatch!');
+      return res.status(400).json({ success: false, error: 'Invalid signature' });
     }
     
-  } catch (error) {
-    console.error('Error verifying payment:', error);
-    res.status(500).json({ 
-      error: 'Failed to verify payment',
-      details: error.message
+    console.log('✅ Signature verified successfully!');
+    
+    let emailStatus = { success: false };
+    if (bookingDetails) {
+      emailStatus = await sendBookingConfirmation(bookingDetails, payment_id);
+    }
+    
+    res.json({
+      success: true,
+      payment_id: payment_id,
+      email_sent: emailStatus.success
     });
+    
+  } catch (error) {
+    console.error('Verification error:', error);
+    res.status(500).json({ error: 'Verification failed' });
   }
 });
 
 // ============================================
-// TEST ENDPOINT: Check if server is running
-// GET /test
+// TEST ENDPOINT
 // ============================================
 app.get('/test', (req, res) => {
   res.json({ 
-    message: '✅ MahaPoojan Server is running!',
-    razorpay_configured: !!razorpay,
-    timestamp: new Date().toISOString()
+    message: '✅ Server running!',
+    razorpay_configured: true,
+    razorpay_key_id: RAZORPAY_KEY_ID
   });
 });
 
@@ -128,8 +183,6 @@ app.get('/test', (req, res) => {
 // ============================================
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 MahaPoojan Server running on http://localhost:${PORT}`);
-  console.log(`✅ Test endpoint: http://localhost:${PORT}/test`);
-  console.log(`✅ Create order: POST http://localhost:${PORT}/api/create-order`);
-  console.log(`✅ Verify payment: POST http://localhost:${PORT}/api/verify-payment`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🔑 Using Razorpay Key: ${RAZORPAY_KEY_ID}`);
 });
