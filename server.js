@@ -198,8 +198,8 @@ app.post('/api/panchang', async (req, res) => {
     console.log(`📅 Fetching Panchang for ${cityName || 'unknown'} (${lat}, ${lon}) on ${dateStr}`);
     
     // Step 1: Get Access Token
-    const tokenResponse = await axios.post(
-      'https://auth.prokerala.com/token',
+  const tokenResponse = await axios.post(
+    'https://api.prokerala.com/token',
       new URLSearchParams({
         grant_type: 'client_credentials',
         client_id: PROKERALA_CLIENT_ID,

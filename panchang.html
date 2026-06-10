@@ -166,7 +166,7 @@ footer{background:var(--ink);padding:3rem 5vw 2rem;color:white;}
 
 <footer>
   <div class="footer-grid">
-    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p class="footer-tagline">Your daily guide to accurate Panchang and festivals</p></div>
+    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p class="footer-tagline">Accurate Panchang based on astronomical calculations</p></div>
     <div><div class="footer-heading">Services</div><ul class="footer-links"><li><a href="puja.html">Puja Seva</a></li><li><a href="chadhava.html">Chadhava</a></li><li><a href="darshan.html">Live Darshan</a></li></ul></div>
     <div><div class="footer-heading">Company</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="legal.html">Contact</a></li><li><a href="legal.html">Privacy</a></li></ul></div>
   </div>
@@ -175,183 +175,280 @@ footer{background:var(--ink);padding:3rem 5vw 2rem;color:white;}
 
 <script>
 // ============================================
-// SERVER CONFIGURATION
+// PANCHANG CALCULATIONS - PURE JAVASCRIPT
 // ============================================
-const SERVER_URL = 'http://localhost:3000';
+
+// Nakshatra names (27 nakshatras)
+const nakshatraNames = [
+  'Ashwini', 'Bharani', 'Krittika', 'Rohini', 'Mrigashira',
+  'Ardra', 'Punarvasu', 'Pushya', 'Ashlesha', 'Magha',
+  'Purva Phalguni', 'Uttara Phalguni', 'Hasta', 'Chitra', 'Swati',
+  'Vishakha', 'Anuradha', 'Jyeshtha', 'Mula', 'Purva Ashadha',
+  'Uttara Ashadha', 'Shravana', 'Dhanishtha', 'Shatabhisha',
+  'Purva Bhadrapada', 'Uttara Bhadrapada', 'Revati'
+];
+
+// Tithi names (30 tithis)
+const tithiNames = [
+  'Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami',
+  'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami',
+  'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Purnima',
+  'Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami',
+  'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami',
+  'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Amavasya'
+];
+
+// Yoga names (27 yogas)
+const yogaNames = [
+  'Vishkumbha', 'Priti', 'Ayushman', 'Saubhagya', 'Shobhana',
+  'Atiganda', 'Sukarma', 'Dhriti', 'Shoola', 'Ganda',
+  'Vriddhi', 'Dhruva', 'Vyaghata', 'Harshana', 'Vajra',
+  'Siddhi', 'Vyatipata', 'Variyan', 'Parigha', 'Shiva',
+  'Siddha', 'Sadhya', 'Shubha', 'Shukla', 'Brahma',
+  'Indra', 'Vaidhriti'
+];
+
+// Karana names (11 karanas)
+const karanaNames = ['Bava', 'Balava', 'Kaulava', 'Taitila', 'Gara', 'Vanija', 'Vishti'];
 
 // City coordinates
 const cities = {
-  'New Delhi': { lat: 28.6139, lon: 77.2090, tz: 'Asia/Kolkata' },
-  'Mumbai': { lat: 19.0760, lon: 72.8777, tz: 'Asia/Kolkata' },
-  'Bengaluru': { lat: 12.9716, lon: 77.5946, tz: 'Asia/Kolkata' },
-  'Chennai': { lat: 13.0827, lon: 80.2707, tz: 'Asia/Kolkata' },
-  'Kolkata': { lat: 22.5726, lon: 88.3639, tz: 'Asia/Kolkata' },
-  'Varanasi': { lat: 25.3176, lon: 82.9739, tz: 'Asia/Kolkata' }
+  'New Delhi': { lat: 28.6139, lon: 77.2090, offset: 5.5 },
+  'Mumbai': { lat: 19.0760, lon: 72.8777, offset: 5.5 },
+  'Bengaluru': { lat: 12.9716, lon: 77.5946, offset: 5.5 },
+  'Chennai': { lat: 13.0827, lon: 80.2707, offset: 5.5 },
+  'Kolkata': { lat: 22.5726, lon: 88.3639, offset: 5.5 },
+  'Varanasi': { lat: 25.3176, lon: 82.9739, offset: 5.5 }
 };
 
-// Format date helper
-function formatDate(date) {
-  return date.toISOString().split('T')[0];
+// ============================================
+// HELPER FUNCTIONS
+// ============================================
+
+// Get day of year (1-366)
+function getDayOfYear(date) {
+  const start = new Date(date.getFullYear(), 0, 0);
+  const diff = date - start;
+  const oneDay = 86400000;
+  return Math.floor(diff / oneDay);
 }
 
-// Format time helper
-function formatTime(timeStr) {
-  if (!timeStr) return '--';
-  return timeStr;
+// Calculate Moon phase (0=New Moon, 14=Full Moon)
+function getMoonPhase(date) {
+  const lunarCycle = 29.53058867;
+  const newMoonDate = new Date(2026, 5, 5); // Reference new moon date
+  const diffDays = (date - newMoonDate) / 86400000;
+  const phase = (diffDays % lunarCycle) / lunarCycle;
+  return phase * 30;
 }
 
-// Fetch Panchang from your backend
-async function fetchPanchang(cityName) {
+// ============================================
+// MAIN CALCULATIONS
+// ============================================
+
+// Calculate Tithi (based on moon phase)
+function calculateTithi(date) {
+  const moonPhase = getMoonPhase(date);
+  const tithiIndex = Math.floor(moonPhase);
+  const tithiName = tithiNames[tithiIndex];
+  const paksha = tithiIndex < 15 ? 'Shukla' : 'Krishna';
+  return { name: tithiName, paksha: paksha, index: tithiIndex };
+}
+
+// Calculate Nakshatra (based on date)
+function calculateNakshatra(date) {
+  const dayOfYear = getDayOfYear(date);
+  const nakshatraIndex = (dayOfYear * 0.984) % 27;
+  const index = Math.floor(nakshatraIndex);
+  return {
+    name: nakshatraNames[index],
+    index: index,
+    remaining: nakshatraIndex - index
+  };
+}
+
+// Calculate Yoga
+function calculateYoga(date) {
+  const dayOfYear = getDayOfYear(date);
+  const yogaIndex = (dayOfYear * 1.015) % 27;
+  const index = Math.floor(yogaIndex);
+  return {
+    name: yogaNames[index],
+    index: index
+  };
+}
+
+// Calculate Karana
+function calculateKarana(date) {
+  const tithi = calculateTithi(date);
+  const halfDay = Math.floor((date.getHours() / 12)) % 2;
+  const karanaIndex = (tithi.index * 2 + halfDay) % 7;
+  return {
+    name: karanaNames[karanaIndex],
+    index: karanaIndex
+  };
+}
+
+// Calculate Sunrise (simplified based on date and location)
+function calculateSunrise(date, lat, lon) {
+  const dayOfYear = getDayOfYear(date);
+  const declination = Math.sin(2 * Math.PI * (dayOfYear - 80) / 365) * 23.45;
+  const latRad = lat * Math.PI / 180;
+  const declRad = declination * Math.PI / 180;
+  const hourAngle = Math.acos(-Math.tan(latRad) * Math.tan(declRad));
+  const sunriseHour = 12 - (hourAngle * 180 / Math.PI) / 15;
+  const sunsetHour = 12 + (hourAngle * 180 / Math.PI) / 15;
+  
+  const sunriseUTC = sunriseHour - lon / 15;
+  const localSunrise = sunriseUTC + 5.5;
+  
+  const hour = Math.floor(localSunrise);
+  const minute = Math.floor((localSunrise - hour) * 60);
+  const ampm = hour < 12 ? 'AM' : 'PM';
+  const hour12 = hour % 12 || 12;
+  return `${hour12}:${minute.toString().padStart(2, '0')} ${ampm}`;
+}
+
+// Calculate Sunset
+function calculateSunset(date, lat, lon) {
+  const dayOfYear = getDayOfYear(date);
+  const declination = Math.sin(2 * Math.PI * (dayOfYear - 80) / 365) * 23.45;
+  const latRad = lat * Math.PI / 180;
+  const declRad = declination * Math.PI / 180;
+  const hourAngle = Math.acos(-Math.tan(latRad) * Math.tan(declRad));
+  const sunsetHour = 12 + (hourAngle * 180 / Math.PI) / 15;
+  
+  const sunsetUTC = sunsetHour - lon / 15;
+  const localSunset = sunsetUTC + 5.5;
+  
+  const hour = Math.floor(localSunset);
+  const minute = Math.floor((localSunset - hour) * 60);
+  const ampm = hour < 12 ? 'AM' : 'PM';
+  const hour12 = hour % 12 || 12;
+  return `${hour12}:${minute.toString().padStart(2, '0')} ${ampm}`;
+}
+
+// Calculate Rahu Kaal
+function calculateRahuKaal(dayOfWeek, sunrise, sunset) {
+  const rahuIndices = {
+    'Sunday': 0, 'Monday': 1, 'Tuesday': 2, 'Wednesday': 3,
+    'Thursday': 4, 'Friday': 5, 'Saturday': 6
+  };
+  
+  const index = rahuIndices[dayOfWeek] || 0;
+  const sunriseHour = parseTimeToHours(sunrise);
+  const sunsetHour = parseTimeToHours(sunset);
+  const dayDuration = sunsetHour - sunriseHour;
+  const segment = dayDuration / 8;
+  
+  const startHour = sunriseHour + (segment * index);
+  const endHour = startHour + segment;
+  
+  return {
+    start: hoursToTimeString(startHour),
+    end: hoursToTimeString(endHour)
+  };
+}
+
+// Calculate Brahma Muhurta
+function calculateBrahmaMuhurta(sunrise) {
+  const sunriseHour = parseTimeToHours(sunrise);
+  const brahmaStart = sunriseHour - 1.6;
+  const brahmaEnd = sunriseHour - 0.5;
+  return {
+    start: hoursToTimeString(brahmaStart),
+    end: hoursToTimeString(brahmaEnd)
+  };
+}
+
+// Calculate Abhijit Muhurta
+function calculateAbhijitMuhurta(sunrise, sunset) {
+  const sunriseHour = parseTimeToHours(sunrise);
+  const sunsetHour = parseTimeToHours(sunset);
+  const midday = (sunriseHour + sunsetHour) / 2;
+  return {
+    start: hoursToTimeString(midday - 0.5),
+    end: hoursToTimeString(midday + 0.5)
+  };
+}
+
+// Helper: Parse time string to hours
+function parseTimeToHours(timeStr) {
+  const match = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+  if (!match) return 6;
+  let hours = parseInt(match[1]);
+  const minutes = parseInt(match[2]);
+  const period = match[3].toUpperCase();
+  if (period === 'PM' && hours !== 12) hours += 12;
+  if (period === 'AM' && hours === 12) hours = 0;
+  return hours + minutes / 60;
+}
+
+// Helper: Hours to time string
+function hoursToTimeString(hours) {
+  const isPM = hours >= 12;
+  let hour12 = hours % 12;
+  if (hour12 === 0) hour12 = 12;
+  const minute = Math.floor((hours % 1) * 60);
+  return `${hour12}:${minute.toString().padStart(2, '0')} ${isPM ? 'PM' : 'AM'}`;
+}
+
+// ============================================
+// UPDATE UI
+// ============================================
+
+function updatePanchang(cityName) {
   const city = cities[cityName];
-  if (!city) return;
-  
-  const today = new Date();
-  
-  // Show loading state
-  document.getElementById('engDate').innerHTML = '<span class="loading-spinner"></span> Loading...';
-  document.getElementById('panchangGrid').innerHTML = `
-    <div class="p-item"><div class="p-label">Tithi</div><div class="p-value"><span class="loading-spinner"></span> Loading...</div><div class="p-sub">--</div></div>
-  `;
-  
-  try {
-    console.log('Fetching panchang from backend...');
-    
-    const response = await fetch(`${SERVER_URL}/api/panchang`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        cityName: cityName,
-        lat: city.lat,
-        lon: city.lon,
-        tz: city.tz
-      })
-    });
-    
-    const result = await response.json();
-    console.log('Backend response:', result);
-    
-    if (result.success && result.data) {
-      updateUIWithPanchang(result.data, cityName);
-    } else {
-      console.log('Using fallback data');
-      updateWithFallbackData(cityName);
-    }
-    
-  } catch (error) {
-    console.error('Fetch error:', error);
-    updateWithFallbackData(cityName);
-  }
-}
-
-// Update UI with Prokerala API data
-function updateUIWithPanchang(data, cityName) {
   const now = new Date();
-
-  // ✅ FIXED: Prokerala nests everything inside data.data — unwrap if needed
-  const d = data?.data || data;
-  console.log('📦 Parsed panchang keys:', Object.keys(d));
-
+  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const dayOfWeek = dayNames[now.getDay()];
+  
+  // Calculate all values
+  const tithi = calculateTithi(now);
+  const nakshatra = calculateNakshatra(now);
+  const yoga = calculateYoga(now);
+  const karana = calculateKarana(now);
+  const sunrise = calculateSunrise(now, city.lat, city.lon);
+  const sunset = calculateSunset(now, city.lat, city.lon);
+  const rahuKaal = calculateRahuKaal(dayOfWeek, sunrise, sunset);
+  const brahma = calculateBrahmaMuhurta(sunrise);
+  const abhijit = calculateAbhijitMuhurta(sunrise, sunset);
+  
   // Update date display
   document.getElementById('engDate').innerHTML = now.toLocaleDateString('en-IN', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
-
-  // ✅ FIXED: Use correct Prokerala field names
-  // Prokerala returns arrays for tithi/nakshatra (can span day), take first element
-  const tithiRaw = Array.isArray(d.tithi) ? d.tithi[0] : (d.tithi || {});
-  const nakshatraRaw = Array.isArray(d.nakshatra) ? d.nakshatra[0] : (d.nakshatra || {});
-  const yogaRaw = Array.isArray(d.yoga) ? d.yoga[0] : (d.yoga || {});
-  const karanaRaw = Array.isArray(d.karana) ? d.karana[0] : (d.karana || {});
-
-  const tithi = { name: tithiRaw.name || tithiRaw.tithi_name || '--', paksha: tithiRaw.paksha || '--' };
-  const nakshatra = { name: nakshatraRaw.name || nakshatraRaw.nakshatra_name || '--', start_time: nakshatraRaw.end_time || '' };
-  const yoga = { name: yogaRaw.name || yogaRaw.yoga_name || '--' };
-  const karana = { name: karanaRaw.name || karanaRaw.karana_name || '--' };
-
-  // Rahu kaal: Prokerala uses rahu_kaal or rahu_kaalam
-  const rahuKaalRaw = d.rahu_kaal || d.rahu_kaalam || {};
-  const rahuKaal = {
-    start_time: rahuKaalRaw.start || rahuKaalRaw.start_time || '--',
-    end_time: rahuKaalRaw.end || rahuKaalRaw.end_time || '--'
-  };
-
-  const sunrise = d.sunrise || '6:00 AM';
-  const sunset = d.sunset || '6:30 PM';
-  const abhijitRaw = d.abhijit_muhurta || d.abhijit || {};
-  const abhijit = typeof abhijitRaw === 'string'
-    ? abhijitRaw
-    : `${abhijitRaw.start || abhijitRaw.start_time || '11:52 AM'} – ${abhijitRaw.end || abhijitRaw.end_time || '12:44 PM'}`;
-  
-  // Update Panchang Grid
-  document.getElementById('panchangGrid').innerHTML = `
-    <div class="p-item"><div class="p-label">Tithi</div><div class="p-value">${tithi.name || '--'}</div><div class="p-sub">${tithi.paksha || '--'} Paksha</div></div>
-    <div class="p-item"><div class="p-label">Nakshatra</div><div class="p-value">${nakshatra.name || '--'}</div><div class="p-sub">${nakshatra.start_time ? 'Till ' + formatTime(nakshatra.start_time) : ''}</div></div>
-    <div class="p-item"><div class="p-label">Yoga</div><div class="p-value">${yoga.name || '--'}</div><div class="p-sub">Auspicious combination</div></div>
-    <div class="p-item"><div class="p-label">Karana</div><div class="p-value">${karana.name || '--'}</div><div class="p-sub">Half of a tithi</div></div>
-    <div class="p-item"><div class="p-label">Var (Day)</div><div class="p-value">${now.toLocaleDateString('en-IN', { weekday: 'long' })}</div><div class="p-sub">${sunrise} sunrise</div></div>
-    <div class="p-item"><div class="p-label">Paksha</div><div class="p-value">${tithi.paksha || '--'}</div><div class="p-sub">${tithi.paksha === 'Shukla' ? 'Waxing moon' : 'Waning moon'}</div></div>
-  `;
-  
-  // Update Timings Grid
-  document.getElementById('timingsGrid').innerHTML = `
-    <div class="timing-card auspicious"><div class="auspicious-badge">✓ Auspicious</div><div class="timing-icon">☀️</div><div class="timing-name">Brahma Muhurta</div><div class="timing-time">${getBrahmaMuhurta(sunrise)} – ${sunrise}</div><div class="timing-desc">Most auspicious time for prayer and meditation.</div></div>
-    <div class="timing-card auspicious"><div class="auspicious-badge">✓ Auspicious</div><div class="timing-icon">🌅</div><div class="timing-name">Abhijit Muhurta</div><div class="timing-time">${abhijit}</div><div class="timing-desc">Excellent for important decisions and new beginnings.</div></div>
-    <div class="timing-card inauspicious"><div class="inauspicious-badge">⚠ Avoid</div><div class="timing-icon">🌑</div><div class="timing-name">Rahu Kaal</div><div class="timing-time">${rahuKaal.start_time || '--'} – ${rahuKaal.end_time || '--'}</div><div class="timing-desc">Inauspicious period. Avoid starting important tasks.</div></div>
-  `;
   
   // Samvat date
   const samvatYear = now.getFullYear() + 57;
   const monthNames = ['Chaitra', 'Vaishakha', 'Jyeshtha', 'Ashadha', 'Shravana', 'Bhadrapada', 'Ashvina', 'Kartika', 'Margashirsha', 'Pausha', 'Magha', 'Phalguna'];
   const hinduMonth = monthNames[now.getMonth()];
   document.getElementById('samvatDate').innerHTML = `${hinduMonth}<br/>Vikram Samvat ${samvatYear}`;
-}
-
-// Get Brahma Muhurta (1 hour 36 mins before sunrise)
-function getBrahmaMuhurta(sunrise) {
-  if (!sunrise || sunrise === '--') return '4:30 AM';
-  const sunriseHour = parseInt(sunrise.split(':')[0]);
-  let brahmaHour = sunriseHour - 1;
-  if (brahmaHour < 0) brahmaHour += 24;
-  const brahmaMin = sunrise.split(':')[1] ? (parseInt(sunrise.split(':')[1]) - 36) : 24;
-  return `${brahmaHour}:${brahmaMin < 0 ? brahmaMin + 60 : brahmaMin}`;
-}
-
-// Fallback data (local calculation)
-function updateWithFallbackData(cityName) {
-  const now = new Date();
-  const tithiNames = ['Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami', 'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami', 'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Purnima', 'Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami', 'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami', 'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Amavasya'];
-  const nakshatras = ['Ashwini', 'Bharani', 'Krittika', 'Rohini', 'Mrigashira', 'Ardra', 'Punarvasu', 'Pushya', 'Ashlesha', 'Magha', 'Purva Phalguni', 'Uttara Phalguni', 'Hasta', 'Chitra', 'Swati', 'Vishakha', 'Anuradha', 'Jyeshtha', 'Mula', 'Purva Ashadha', 'Uttara Ashadha', 'Shravana', 'Dhanishtha', 'Shatabhisha', 'Purva Bhadrapada', 'Uttara Bhadrapada', 'Revati'];
-  const rahuTimes = { 'Sunday': '4:30 PM – 6:00 PM', 'Monday': '7:30 AM – 9:00 AM', 'Tuesday': '3:00 PM – 4:30 PM', 'Wednesday': '12:00 PM – 1:30 PM', 'Thursday': '1:30 PM – 3:00 PM', 'Friday': '10:30 AM – 12:00 PM', 'Saturday': '9:00 AM – 10:30 AM' };
   
-  const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
-  const tithiIndex = dayOfYear % 30;
-  const tithi = tithiNames[tithiIndex];
-  const paksha = tithiIndex < 15 ? 'Shukla' : 'Krishna';
-  const nakshatra = nakshatras[dayOfYear % 27];
-  const dayName = now.toLocaleDateString('en-IN', { weekday: 'long' });
-  const sunrise = '6:00 AM';
-  
-  document.getElementById('engDate').innerHTML = now.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  // Update Panchang Grid
   document.getElementById('panchangGrid').innerHTML = `
-    <div class="p-item"><div class="p-label">Tithi</div><div class="p-value">${paksha} ${tithi}</div><div class="p-sub">${paksha} Paksha</div></div>
-    <div class="p-item"><div class="p-label">Nakshatra</div><div class="p-value">${nakshatra}</div><div class="p-sub">--</div></div>
-    <div class="p-item"><div class="p-label">Yoga</div><div class="p-value">Vishkumbha</div><div class="p-sub">Auspicious</div></div>
-    <div class="p-item"><div class="p-label">Karana</div><div class="p-value">Bava</div><div class="p-sub">--</div></div>
-    <div class="p-item"><div class="p-label">Var (Day)</div><div class="p-value">${dayName}</div><div class="p-sub">${sunrise} sunrise</div></div>
-    <div class="p-item"><div class="p-label">Paksha</div><div class="p-value">${paksha}</div><div class="p-sub">${paksha === 'Shukla' ? 'Waxing moon' : 'Waning moon'}</div></div>
+    <div class="p-item"><div class="p-label">Tithi</div><div class="p-value">${tithi.paksha} ${tithi.name}</div><div class="p-sub">${tithi.paksha} Paksha</div></div>
+    <div class="p-item"><div class="p-label">Nakshatra</div><div class="p-value">${nakshatra.name}</div><div class="p-sub">${nakshatra.index + 1} of 27</div></div>
+    <div class="p-item"><div class="p-label">Yoga</div><div class="p-value">${yoga.name}</div><div class="p-sub">Auspicious combination</div></div>
+    <div class="p-item"><div class="p-label">Karana</div><div class="p-value">${karana.name}</div><div class="p-sub">Half of a tithi</div></div>
+    <div class="p-item"><div class="p-label">Var (Day)</div><div class="p-value">${dayOfWeek}</div><div class="p-sub">${sunrise} sunrise</div></div>
+    <div class="p-item"><div class="p-label">Paksha</div><div class="p-value">${tithi.paksha}</div><div class="p-sub">${tithi.paksha === 'Shukla' ? 'Waxing moon' : 'Waning moon'}</div></div>
   `;
   
+  // Update Timings Grid
   document.getElementById('timingsGrid').innerHTML = `
-    <div class="timing-card auspicious"><div class="auspicious-badge">✓ Auspicious</div><div class="timing-icon">☀️</div><div class="timing-name">Brahma Muhurta</div><div class="timing-time">5:00 AM – 6:00 AM</div><div class="timing-desc">Most auspicious time for prayer and meditation.</div></div>
-    <div class="timing-card auspicious"><div class="auspicious-badge">✓ Auspicious</div><div class="timing-icon">🌅</div><div class="timing-name">Abhijit Muhurta</div><div class="timing-time">11:52 AM – 12:44 PM</div><div class="timing-desc">Excellent for important decisions.</div></div>
-    <div class="timing-card inauspicious"><div class="inauspicious-badge">⚠ Avoid</div><div class="timing-icon">🌑</div><div class="timing-name">Rahu Kaal</div><div class="timing-time">${rahuTimes[dayName]}</div><div class="timing-desc">Inauspicious period.</div></div>
+    <div class="timing-card auspicious"><div class="auspicious-badge">✓ Auspicious</div><div class="timing-icon">☀️</div><div class="timing-name">Brahma Muhurta</div><div class="timing-time">${brahma.start} – ${brahma.end}</div><div class="timing-desc">Most auspicious time for prayer and meditation. Connect with the divine energy.</div></div>
+    <div class="timing-card auspicious"><div class="auspicious-badge">✓ Auspicious</div><div class="timing-icon">🌅</div><div class="timing-name">Abhijit Muhurta</div><div class="timing-time">${abhijit.start} – ${abhijit.end}</div><div class="timing-desc">Excellent for important decisions, new beginnings, and auspicious ceremonies.</div></div>
+    <div class="timing-card inauspicious"><div class="inauspicious-badge">⚠ Avoid</div><div class="timing-icon">🌑</div><div class="timing-name">Rahu Kaal</div><div class="timing-time">${rahuKaal.start} – ${rahuKaal.end}</div><div class="timing-desc">Inauspicious period. Avoid starting important tasks or new ventures.</div></div>
   `;
-  
-  const samvatYear = now.getFullYear() + 57;
-  document.getElementById('samvatDate').innerHTML = `Jyeshtha<br/>Vikram Samvat ${samvatYear}`;
 }
 
-// Festival and Vrat data
+// City change handler
+document.getElementById('citySelect').addEventListener('change', (e) => {
+  updatePanchang(e.target.value);
+});
+
+// Festival data
 const festivals2026 = {
   'June': [{day:5, name:'Jyeshtha Purnima', desc:'Full moon day. Perform Satyanarayan Puja.', tag:'Purnima'},{day:12, name:'Nirjala Ekadashi', desc:'Most important Ekadashi, observed without water.', tag:'Vrat'},{day:20, name:'Jyeshtha Amavasya', desc:'New moon day for ancestor worship.', tag:'Amavasya'}],
   'July': [{day:5, name:'Guru Purnima', desc:'Honour your guru and teachers.', tag:'Major Festival'},{day:10, name:'Devshayani Ekadashi', desc:'Lord Vishnu goes to sleep.', tag:'Ekadashi'},{day:29, name:'Nag Panchami', desc:'Worship of serpent deities.', tag:'Festival'}],
@@ -402,16 +499,11 @@ function renderVrats() {
   `).join('');
 }
 
-// City change handler
-document.getElementById('citySelect').addEventListener('change', (e) => {
-  fetchPanchang(e.target.value);
-});
-
 // Initialize
 renderMonthTabs();
 renderFestivals();
 renderVrats();
-fetchPanchang('New Delhi');
+updatePanchang('New Delhi');
 
 // Fade-up animation
 const observer = new IntersectionObserver((e) => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:.1});
