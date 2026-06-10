@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MahaPoojan - Login</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1A1208 0%, #2E2316 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .auth-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .logo { text-align: center; font-size: 48px; margin-bottom: 20px; }
+        h1 { text-align: center; color: #C6721B; font-size: 28px; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: #7A6040; margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #3D2D12; font-weight: 500; }
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #E0D5C0;
+            border-radius: 12px;
+            font-size: 16px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #C6721B;
+            box-shadow: 0 0 0 3px rgba(198,114,27,0.1);
+        }
+        button {
+            width: 100%;
+            background: #C6721B;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        button:hover { background: #9E4F08; transform: translateY(-2px); }
+        .google-btn {
+            background: white;
+            color: #3D2D12;
+            border: 1px solid #E0D5C0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .google-btn:hover { background: #FAF6EE; }
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #E0D5C0;
+        }
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            position: relative;
+            color: #7A6040;
+        }
+        .register-link { text-align: center; margin-top: 20px; color: #7A6040; }
+        .register-link a { color: #C6721B; text-decoration: none; font-weight: 600; }
+        .forgot-link { text-align: center; margin-top: 10px; }
+        .forgot-link a { color: #7A6040; text-decoration: none; font-size: 14px; }
+        .error {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+            color: #C6721B;
+        }
+    </style>
+    <script type="module">
+        import { loginWithEmail, loginWithGoogle, onAuthStateChanged, auth } from './firebase-config.js';
+        
+        // Check if already logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                window.location.href = 'dashboard.html';
+            }
+        });
+        
+        document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            
+            const result = await loginWithEmail(email, password);
+            
+            if (result.success) {
+                window.location.href = 'dashboard.html';
+            } else {
+                showError(result.error);
+            }
+            
+            document.getElementById('loading').style.display = 'none';
+        });
+        
+        window.googleLogin = async () => {
+            document.getElementById('loading').style.display = 'block';
+            const result = await loginWithGoogle();
+            if (result.success) {
+                window.location.href = 'dashboard.html';
+            } else {
+                showError(result.error);
+            }
+            document.getElementById('loading').style.display = 'none';
+        };
+        
+        window.forgotPassword = () => {
+            const email = document.getElementById('email').value;
+            if (email && email.includes('@')) {
+                import('./firebase-config.js').then(({ resetPassword }) => {
+                    resetPassword(email).then(result => {
+                        if (result.success) {
+                            showError('✅ Password reset email sent! Check your inbox.');
+                        } else {
+                            showError(result.error);
+                        }
+                    });
+                });
+            } else {
+                showError('Please enter your email address first');
+            }
+        };
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => errorDiv.style.display = 'none', 5000);
+        }
+    </script>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="logo">🪔</div>
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Login to your account</p>
+        
+        <div id="errorMsg" class="error"></div>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" id="email" required placeholder="devotee@example.com">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" required placeholder="Enter your password">
+            </div>
+            <button type="submit">Login with Email</button>
+        </form>
+        
+        <div class="divider"><span>OR</span></div>
+        
+        <button class="google-btn" onclick="googleLogin()">
+            🔐 Continue with Google
+        </button>
+        
+        <div id="loading" class="loading">⏳ Logging in...</div>
+        
+        <div class="forgot-link">
+            <a href="#" onclick="forgotPassword()">Forgot password?</a>
+        </div>
+        
+        <div class="register-link">
+            Don't have an account? <a href="register.html">Register here</a>
+        </div>
+    </div>
+</body>
+</html>

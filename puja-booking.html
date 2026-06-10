@@ -621,6 +621,7 @@
 </footer>
 
 <script>
+import { auth } from './firebase-config.js';
 // ============================================
 // CONFIGURATION
 // ============================================
@@ -961,6 +962,7 @@ bookingForm.addEventListener('submit', async function(e) {
       console.log('Payment success:', response);
       showLoading("Verifying payment & sending confirmation...");
       
+      
       try {
         const verification = await verifyPayment(
           response.razorpay_order_id,
@@ -984,6 +986,26 @@ bookingForm.addEventListener('submit', async function(e) {
         alert(`Payment received but verification failed. Please contact support with your payment ID: ${response.razorpay_payment_id}`);
         bookBtn.disabled = false;
       }
+      // After successful payment, save booking
+      
+
+      const user = auth.currentUser;
+      if (user) {
+      const booking = {
+        userId: user.uid,
+        pujaName: selectedPujaName,
+        temple: selectedPujaTemple,
+        amount: totalAmount,
+        paymentId: response.razorpay_payment_id,
+        date: new Date().toISOString(),
+        status: 'pending'
+    };
+    
+    // Save to localStorage (or your backend)
+    const existing = JSON.parse(localStorage.getItem(`bookings_${user.uid}`) || '[]');
+    existing.push(booking);
+    localStorage.setItem(`bookings_${user.uid}`, JSON.stringify(existing));
+}
     });
     
     razorpay.open();
