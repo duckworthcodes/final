@@ -12,15 +12,22 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
-nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5vw;background:rgba(250,246,238,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
-.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--saffron-deep);text-decoration:none;}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5vw;background:rgba(250,246,238,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:10px;}
+.nav-logo a{text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--saffron-deep);}
 .nav-logo span{color:var(--gold);}
-.nav-links{display:flex;align-items:center;gap:2.2rem;list-style:none;}
-.nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s;}
+.nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none;flex-wrap:wrap;}
+.nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s;}
 .nav-links a:hover,.nav-links a.active{color:var(--saffron);}
-.nav-cta{background:var(--saffron);color:white!important;padding:.55rem 1.4rem;border-radius:2rem;}
-.panchang-hero{background:linear-gradient(145deg,#1A0C02 0%,#2A1206 50%,#1A0A00 100%);padding:4rem 5vw 3rem;position:relative;overflow:hidden;}
-.panchang-hero::before{content:'ॐ';position:absolute;right:-2vw;top:50%;transform:translateY(-50%);font-size:28rem;color:rgba(255,255,255,.03);font-family:serif;pointer-events:none;}
+.nav-cta{background:var(--saffron);color:white!important;padding:.5rem 1.3rem;border-radius:2rem;}
+.nav-cta:hover{background:var(--saffron-deep);}
+.auth-buttons{display:flex;align-items:center;gap:.5rem;}
+.login-icon,.register-icon{display:flex;align-items:center;gap:.3rem;padding:.5rem 1rem;border-radius:2rem;text-decoration:none;font-size:.75rem;font-weight:500;transition:all .3s;}
+.login-icon{background:transparent;color:var(--saffron);border:1px solid var(--saffron);}
+.register-icon{background:var(--saffron);color:white;}
+@media (max-width:900px){.nav-links{display:none;}.auth-buttons{margin-left:auto;}.login-icon .text,.register-icon .text{display:none;}}
+
+.panchang-hero{background:linear-gradient(145deg,#1A0C02 0%,#2A1206 50%,#1A0A00 100%);padding:4rem 5vw 3rem;position:relative;}
+.panchang-hero::before{content:'ॐ';position:absolute;right:-2vw;top:50%;transform:translateY(-50%);font-size:28rem;color:rgba(255,255,255,.02);font-family:serif;pointer-events:none;}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
 .hero-left .eyebrow{font-size:.7rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:block;}
 .hero-left h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:300;color:white;line-height:1.1;margin-bottom:1rem;}
@@ -46,7 +53,6 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .timing-card{border-radius:1.2rem;padding:1.5rem;border:1px solid var(--border);}
 .timing-card.auspicious{background:linear-gradient(135deg,rgba(45,122,79,.08),rgba(45,122,79,.03));border-color:rgba(45,122,79,.2);}
 .timing-card.inauspicious{background:linear-gradient(135deg,rgba(139,32,32,.08),rgba(139,32,32,.03));border-color:rgba(139,32,32,.2);}
-.timing-card.neutral{background:var(--cream);}
 .timing-icon{font-size:1.8rem;margin-bottom:.7rem;}
 .timing-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;margin-bottom:.3rem;}
 .timing-time{font-weight:600;color:var(--saffron-deep);font-family:'Cormorant Garamond',serif;font-size:1.4rem;}
@@ -64,50 +70,51 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .festival-month-lbl{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
 .festival-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;}
 .festival-desc{font-size:.78rem;color:var(--ink-soft);margin-top:.2rem;}
-.festival-tag{font-size:.62rem;background:var(--saffron-pale);color:var(--saffron-deep);padding:.2rem .7rem;border-radius:1rem;border:1px solid rgba(198,114,27,.15);}
+.festival-tag{font-size:.62rem;background:var(--saffron-pale);color:var(--saffron-deep);padding:.2rem .7rem;border-radius:1rem;}
 .vrat-section{padding:4rem 5vw;background:white;}
 .vrat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.2rem;margin-top:2rem;}
 .vrat-card{background:var(--cream);border-radius:1rem;padding:1.5rem;text-align:center;border:1px solid var(--border);}
 .vrat-icon{font-size:2.5rem;margin-bottom:.7rem;}
-.vrat-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;margin-bottom:.3rem;}
-.vrat-freq{font-size:.72rem;color:var(--saffron);letter-spacing:.08em;}
+.vrat-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;}
+.vrat-freq{font-size:.72rem;color:var(--saffron);}
 .vrat-date{font-size:.78rem;color:var(--ink-soft);margin-top:.3rem;}
-footer{background:var(--ink);padding:4rem 5vw 2rem;color:white;}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.08);}
-.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:.8rem;}
-.footer-tagline{font-size:.82rem;color:rgba(255,255,255,.45);line-height:1.7;}
-.footer-heading{font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1rem;}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
-.footer-links a{font-size:.85rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;}
-.footer-links a:hover{color:var(--gold);}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:rgba(255,255,255,.25);padding-top:2rem;}
+footer{background:var(--ink);padding:3rem 5vw 2rem;color:white;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;}
+.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;margin-bottom:.5rem;}
+.footer-tagline{font-size:.75rem;color:rgba(255,255,255,.4);}
+.footer-heading{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1rem;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.footer-links a{font-size:.75rem;color:rgba(255,255,255,.5);text-decoration:none;}
+.footer-bottom{text-align:center;font-size:.7rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.08);margin-top:2rem;}
 .fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
 .fade-up.visible{opacity:1;transform:translateY(0);}
 .loading-spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--gold);border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;margin-right:8px;}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr;}
-  .timings-grid{grid-template-columns:1fr 1fr;}
+  .timings-grid{grid-template-columns:1fr;}
   .festival-item{grid-template-columns:60px 1fr;}
   .festival-tag{display:none;}
-  .footer-grid{grid-template-columns:1fr 1fr;}
-}
-@media(max-width:600px){
-  .timings-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 <nav>
-  <a href="index.html" class="nav-logo">🪔 Maha<span>Poojan</span></a>
+  <div class="nav-logo"><a href="index.html">🪔 Maha<span>Poojan</span></a></div>
   <ul class="nav-links">
     <li><a href="puja.html">Puja Seva</a></li>
     <li><a href="chadhava.html">Chadhava</a></li>
     <li><a href="temples.html">Temples</a></li>
     <li><a href="panchang.html" class="active">Panchang</a></li>
     <li><a href="library.html">Library</a></li>
+    <li><a href="about.html">About</a></li>
     <li><a href="puja-booking.html" class="nav-cta">Book Puja</a></li>
   </ul>
+  <div class="auth-buttons">
+    <a href="login.html" class="login-icon"><span>👤</span><span class="text">Login</span></a>
+    <a href="register.html" class="register-icon"><span>🙏</span><span class="text">Register</span></a>
+  </div>
 </nav>
 
 <section class="panchang-hero">
@@ -115,14 +122,12 @@ footer{background:var(--ink);padding:4rem 5vw 2rem;color:white;}
     <div class="hero-left">
       <span class="eyebrow">Daily Hindu Calendar</span>
       <h1>Today's <em>Panchang</em></h1>
-      <p>Your complete daily guide — tithi, nakshatra, yoga, karana, and all auspicious and inauspicious timings for today.</p>
+      <p>Your complete daily guide — tithi, nakshatra, yoga, karana, and all auspicious timings.</p>
       <div class="location-selector">
         <span class="loc-label">📍 Location:</span>
         <select class="loc-select" id="citySelect">
           <option>New Delhi</option><option>Mumbai</option><option>Bengaluru</option>
           <option>Chennai</option><option>Kolkata</option><option>Varanasi</option>
-          <option>London, UK</option><option>New York, USA</option>
-          <option>Dubai, UAE</option><option>Singapore</option>
         </select>
       </div>
     </div>
@@ -131,13 +136,8 @@ footer{background:var(--ink);padding:4rem 5vw 2rem;color:white;}
         <div class="panchang-main-date" id="engDate">Loading...</div>
         <div class="panchang-sam-date" id="samvatDate"></div>
       </div>
-      <div class="panchang-grid">
-        <div class="p-item"><div class="p-label">Tithi</div><div class="p-value" id="tithi">--</div><div class="p-sub" id="tithiEnd">--</div></div>
-        <div class="p-item"><div class="p-label">Nakshatra</div><div class="p-value" id="nakshatra">--</div><div class="p-sub" id="nakshatraEnd">--</div></div>
-        <div class="p-item"><div class="p-label">Yoga</div><div class="p-value" id="yoga">--</div><div class="p-sub" id="yogaSub">--</div></div>
-        <div class="p-item"><div class="p-label">Karana</div><div class="p-value" id="karana">--</div><div class="p-sub" id="karanaEnd">--</div></div>
-        <div class="p-item"><div class="p-label">Var (Day)</div><div class="p-value" id="day">--</div><div class="p-sub">--</div></div>
-        <div class="p-item"><div class="p-label">Paksha</div><div class="p-value" id="paksha">--</div><div class="p-sub">--</div></div>
+      <div class="panchang-grid" id="panchangGrid">
+        <div class="p-item"><div class="p-label">Tithi</div><div class="p-value"><span class="loading-spinner"></span> Loading...</div><div class="p-sub">--</div></div>
       </div>
     </div>
   </div>
@@ -147,10 +147,7 @@ footer{background:var(--ink);padding:4rem 5vw 2rem;color:white;}
   <span class="section-eyebrow">Daily Timings</span>
   <h2 class="section-title-sm">Auspicious & Inauspicious <em>Timings</em></h2>
   <div class="timings-grid" id="timingsGrid">
-    <div class="timing-card auspicious"><div class="auspicious-badge">✓ Auspicious</div><div class="timing-icon">☀️</div><div class="timing-name">Brahma Muhurta</div><div class="timing-time" id="brahmaTime">Loading...</div><div class="timing-desc">Most auspicious time for prayer and meditation.</div></div>
-    <div class="timing-card auspicious"><div class="auspicious-badge">✓ Auspicious</div><div class="timing-icon">🌅</div><div class="timing-name">Abhijit Muhurta</div><div class="timing-time" id="abhijitTime">Loading...</div><div class="timing-desc">Excellent for important decisions and new beginnings.</div></div>
-    <div class="timing-card inauspicious"><div class="inauspicious-badge">⚠ Avoid</div><div class="timing-icon">🌑</div><div class="timing-name">Rahu Kaal</div><div class="timing-time" id="rahuTime">Loading...</div><div class="timing-desc">Inauspicious period. Avoid starting important tasks.</div></div>
-    <div class="timing-card neutral"><div class="timing-icon">🌟</div><div class="timing-name">Sunrise / Sunset</div><div class="timing-time" id="sunTime">Loading...</div><div class="timing-desc">Golden hours for Surya Namaskar and prayer.</div></div>
+    <div class="timing-card"><div class="timing-icon">⏳</div><div class="timing-name">Loading...</div><div class="timing-time">--</div></div>
   </div>
 </section>
 
@@ -169,210 +166,192 @@ footer{background:var(--ink);padding:4rem 5vw 2rem;color:white;}
 
 <footer>
   <div class="footer-grid">
-    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p class="footer-tagline">A brand new sacred space — launching 2026. Your daily guide to accurate Panchang and festivals.</p></div>
+    <div><div class="footer-brand-name">🪔 MahaPoojan</div><p class="footer-tagline">Your daily guide to accurate Panchang and festivals</p></div>
     <div><div class="footer-heading">Services</div><ul class="footer-links"><li><a href="puja.html">Puja Seva</a></li><li><a href="chadhava.html">Chadhava</a></li><li><a href="darshan.html">Live Darshan</a></li></ul></div>
-    <div><div class="footer-heading">Company</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="legal.html">Contact</a></li><li><a href="legal.html">Privacy Policy</a></li></ul></div>
+    <div><div class="footer-heading">Company</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="legal.html">Contact</a></li><li><a href="legal.html">Privacy</a></li></ul></div>
   </div>
-  <div class="footer-bottom"><div>© 2026 MahaPoojan, Inc. · Bengaluru</div><div class="footer-certifications"><span class="cert-badge">New Platform</span><span class="cert-badge">FreeAstroAPI</span></div></div>
+  <div class="footer-bottom"><div>© 2026 MahaPoojan · 🙏 Har Har Mahadev</div></div>
 </footer>
 
 <script>
 // ============================================
-// 🔑 YOUR FreeAstroAPI KEY - Get from https://www.freeastroapi.com/dashboard
+// SERVER CONFIGURATION
 // ============================================
-// 👇 PASTE YOUR REAL API KEY HERE (get it after signing up at freeastroapi.com)
-const FREE_ASTRO_API_KEY = '96cc8be3fd08868a6321a37314349d487c26352ec805e72ce3e80d646c642089';
+const SERVER_URL = 'http://localhost:3000';
 
-// City coordinates database
+// City coordinates
 const cities = {
-  'New Delhi': { lat: 28.6139, lon: 77.2090, tz: 5.5 },
-  'Mumbai': { lat: 19.0760, lon: 72.8777, tz: 5.5 },
-  'Bengaluru': { lat: 12.9716, lon: 77.5946, tz: 5.5 },
-  'Chennai': { lat: 13.0827, lon: 80.2707, tz: 5.5 },
-  'Kolkata': { lat: 22.5726, lon: 88.3639, tz: 5.5 },
-  'Varanasi': { lat: 25.3176, lon: 82.9739, tz: 5.5 },
-  'London, UK': { lat: 51.5074, lon: -0.1278, tz: 0 },
-  'New York, USA': { lat: 40.7128, lon: -74.0060, tz: -5 },
-  'Dubai, UAE': { lat: 25.2048, lon: 55.2708, tz: 4 },
-  'Singapore': { lat: 1.3521, lon: 103.8198, tz: 8 }
+  'New Delhi': { lat: 28.6139, lon: 77.2090, tz: 'Asia/Kolkata' },
+  'Mumbai': { lat: 19.0760, lon: 72.8777, tz: 'Asia/Kolkata' },
+  'Bengaluru': { lat: 12.9716, lon: 77.5946, tz: 'Asia/Kolkata' },
+  'Chennai': { lat: 13.0827, lon: 80.2707, tz: 'Asia/Kolkata' },
+  'Kolkata': { lat: 22.5726, lon: 88.3639, tz: 'Asia/Kolkata' },
+  'Varanasi': { lat: 25.3176, lon: 82.9739, tz: 'Asia/Kolkata' }
 };
 
-// Format date as YYYY-MM-DD
+// Format date helper
 function formatDate(date) {
   return date.toISOString().split('T')[0];
 }
 
-// Helper: Format time from ISO string
-function formatTimeFromISO(isoString) {
-  if (!isoString) return '--';
-  const time = isoString.split('T')[1];
-  if (!time) return '--';
-  return time.substring(0,5);
+// Format time helper
+function formatTime(timeStr) {
+  if (!timeStr) return '--';
+  return timeStr;
 }
 
-// Helper: Pad zero for hours/minutes
-function padZero(num) {
-  return num.toString().padStart(2, '0');
-}
-
-// Fetch real panchang from FreeAstroAPI
+// Fetch Panchang from your backend
 async function fetchPanchang(cityName) {
   const city = cities[cityName];
   if (!city) return;
-
-  const now = new Date();
-  const dateStr = formatDate(now);
-
-  // Show loading indicator
-  document.getElementById('tithi').innerHTML = '<span class="loading-spinner"></span> Loading...';
-
-  // Build the API URL for FreeAstroAPI
-  const url = `https://api.freeastroapi.com/v1/panchang?api_key=${FREE_ASTRO_API_KEY}&date=${dateStr}&lat=${city.lat}&lon=${city.lon}&tz=${city.tz}`;
-
+  
+  const today = new Date();
+  
+  // Show loading state
+  document.getElementById('engDate').innerHTML = '<span class="loading-spinner"></span> Loading...';
+  document.getElementById('panchangGrid').innerHTML = `
+    <div class="p-item"><div class="p-label">Tithi</div><div class="p-value"><span class="loading-spinner"></span> Loading...</div><div class="p-sub">--</div></div>
+  `;
+  
   try {
-    console.log('Fetching panchang for:', cityName);
-    console.log('API URL:', url.replace(FREE_ASTRO_API_KEY, 'HIDDEN'));
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log('Panchang data received:', data);
+    console.log('Fetching panchang from backend...');
     
-    if (data.error) {
-      console.error('API returned error:', data.error);
-      showFallbackData(cityName);
+    const response = await fetch(`${SERVER_URL}/api/panchang`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cityName: cityName,
+        lat: city.lat,
+        lon: city.lon,
+        tz: city.tz
+      })
+    });
+    
+    const result = await response.json();
+    console.log('Backend response:', result);
+    
+    if (result.success && result.data) {
+      updateUIWithPanchang(result.data, cityName);
     } else {
-      updateUIWithRealData(data, cityName);
+      console.log('Using fallback data');
+      updateWithFallbackData(cityName);
     }
-
+    
   } catch (error) {
-    console.error('API Error:', error);
-    document.getElementById('tithi').innerHTML = '⚠️ API Error';
-    showFallbackData(cityName);
+    console.error('Fetch error:', error);
+    updateWithFallbackData(cityName);
   }
 }
 
-// Update UI with real data from FreeAstroAPI
-function updateUIWithRealData(data, cityName) {
-  // Update date display
+// Update UI with Prokerala API data
+function updateUIWithPanchang(data, cityName) {
   const now = new Date();
-  document.getElementById('engDate').textContent = now.toLocaleDateString('en-IN', {
+
+  // ✅ FIXED: Prokerala nests everything inside data.data — unwrap if needed
+  const d = data?.data || data;
+  console.log('📦 Parsed panchang keys:', Object.keys(d));
+
+  // Update date display
+  document.getElementById('engDate').innerHTML = now.toLocaleDateString('en-IN', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
 
-  // Extract data from response - adjust these field names based on actual API response
-  // After first successful call, check console.log(data) and update these paths
+  // ✅ FIXED: Use correct Prokerala field names
+  // Prokerala returns arrays for tithi/nakshatra (can span day), take first element
+  const tithiRaw = Array.isArray(d.tithi) ? d.tithi[0] : (d.tithi || {});
+  const nakshatraRaw = Array.isArray(d.nakshatra) ? d.nakshatra[0] : (d.nakshatra || {});
+  const yogaRaw = Array.isArray(d.yoga) ? d.yoga[0] : (d.yoga || {});
+  const karanaRaw = Array.isArray(d.karana) ? d.karana[0] : (d.karana || {});
+
+  const tithi = { name: tithiRaw.name || tithiRaw.tithi_name || '--', paksha: tithiRaw.paksha || '--' };
+  const nakshatra = { name: nakshatraRaw.name || nakshatraRaw.nakshatra_name || '--', start_time: nakshatraRaw.end_time || '' };
+  const yoga = { name: yogaRaw.name || yogaRaw.yoga_name || '--' };
+  const karana = { name: karanaRaw.name || karanaRaw.karana_name || '--' };
+
+  // Rahu kaal: Prokerala uses rahu_kaal or rahu_kaalam
+  const rahuKaalRaw = d.rahu_kaal || d.rahu_kaalam || {};
+  const rahuKaal = {
+    start_time: rahuKaalRaw.start || rahuKaalRaw.start_time || '--',
+    end_time: rahuKaalRaw.end || rahuKaalRaw.end_time || '--'
+  };
+
+  const sunrise = d.sunrise || '6:00 AM';
+  const sunset = d.sunset || '6:30 PM';
+  const abhijitRaw = d.abhijit_muhurta || d.abhijit || {};
+  const abhijit = typeof abhijitRaw === 'string'
+    ? abhijitRaw
+    : `${abhijitRaw.start || abhijitRaw.start_time || '11:52 AM'} – ${abhijitRaw.end || abhijitRaw.end_time || '12:44 PM'}`;
   
-  // Tithi
-  if (data.tithi) {
-    const tithiName = data.tithi.name || data.tithi;
-    document.getElementById('tithi').innerHTML = tithiName;
-    if (data.tithi.end_time) {
-      document.getElementById('tithiEnd').innerHTML = `till ${formatTimeFromISO(data.tithi.end_time)}`;
-    }
-  }
+  // Update Panchang Grid
+  document.getElementById('panchangGrid').innerHTML = `
+    <div class="p-item"><div class="p-label">Tithi</div><div class="p-value">${tithi.name || '--'}</div><div class="p-sub">${tithi.paksha || '--'} Paksha</div></div>
+    <div class="p-item"><div class="p-label">Nakshatra</div><div class="p-value">${nakshatra.name || '--'}</div><div class="p-sub">${nakshatra.start_time ? 'Till ' + formatTime(nakshatra.start_time) : ''}</div></div>
+    <div class="p-item"><div class="p-label">Yoga</div><div class="p-value">${yoga.name || '--'}</div><div class="p-sub">Auspicious combination</div></div>
+    <div class="p-item"><div class="p-label">Karana</div><div class="p-value">${karana.name || '--'}</div><div class="p-sub">Half of a tithi</div></div>
+    <div class="p-item"><div class="p-label">Var (Day)</div><div class="p-value">${now.toLocaleDateString('en-IN', { weekday: 'long' })}</div><div class="p-sub">${sunrise} sunrise</div></div>
+    <div class="p-item"><div class="p-label">Paksha</div><div class="p-value">${tithi.paksha || '--'}</div><div class="p-sub">${tithi.paksha === 'Shukla' ? 'Waxing moon' : 'Waning moon'}</div></div>
+  `;
   
-  // Nakshatra
-  if (data.nakshatra) {
-    const nakshatraName = data.nakshatra.name || data.nakshatra;
-    document.getElementById('nakshatra').innerHTML = nakshatraName;
-    if (data.nakshatra.end_time) {
-      document.getElementById('nakshatraEnd').innerHTML = `till ${formatTimeFromISO(data.nakshatra.end_time)}`;
-    }
-  }
-  
-  // Yoga
-  if (data.yoga) {
-    document.getElementById('yoga').innerHTML = data.yoga.name || data.yoga;
-  }
-  
-  // Karana
-  if (data.karana) {
-    document.getElementById('karana').innerHTML = data.karana.name || data.karana;
-  }
-  
-  // Day
-  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  document.getElementById('day').innerHTML = data.weekday || dayNames[new Date().getDay()];
-  
-  // Paksha
-  if (data.paksha) {
-    document.getElementById('paksha').innerHTML = data.paksha;
-  }
+  // Update Timings Grid
+  document.getElementById('timingsGrid').innerHTML = `
+    <div class="timing-card auspicious"><div class="auspicious-badge">✓ Auspicious</div><div class="timing-icon">☀️</div><div class="timing-name">Brahma Muhurta</div><div class="timing-time">${getBrahmaMuhurta(sunrise)} – ${sunrise}</div><div class="timing-desc">Most auspicious time for prayer and meditation.</div></div>
+    <div class="timing-card auspicious"><div class="auspicious-badge">✓ Auspicious</div><div class="timing-icon">🌅</div><div class="timing-name">Abhijit Muhurta</div><div class="timing-time">${abhijit}</div><div class="timing-desc">Excellent for important decisions and new beginnings.</div></div>
+    <div class="timing-card inauspicious"><div class="inauspicious-badge">⚠ Avoid</div><div class="timing-icon">🌑</div><div class="timing-name">Rahu Kaal</div><div class="timing-time">${rahuKaal.start_time || '--'} – ${rahuKaal.end_time || '--'}</div><div class="timing-desc">Inauspicious period. Avoid starting important tasks.</div></div>
+  `;
   
   // Samvat date
-  if (data.vikram_samvat_year) {
-    document.getElementById('samvatDate').innerHTML = `${data.hindu_month_name || ''} ${data.paksha || ''}<br/>Vikram Samvat ${data.vikram_samvat_year}`;
-  }
-  
-  // Sunrise/Sunset
-  if (data.sunrise) {
-    const sunrise = formatTimeFromISO(data.sunrise);
-    const sunset = formatTimeFromISO(data.sunset);
-    document.getElementById('sunTime').innerHTML = `${sunrise} / ${sunset}`;
-    
-    // Brahma Muhurta (1 hour 36 minutes before sunrise)
-    if (data.sunrise) {
-      const sunriseHour = parseInt(sunrise.split(':')[0]);
-      const sunriseMin = parseInt(sunrise.split(':')[1]);
-      let brahmaEndHour = sunriseHour;
-      let brahmaEndMin = sunriseMin;
-      let brahmaStartHour = sunriseHour - 1;
-      let brahmaStartMin = sunriseMin - 36;
-      if (brahmaStartMin < 0) {
-        brahmaStartMin += 60;
-        brahmaStartHour--;
-      }
-      document.getElementById('brahmaTime').innerHTML = `${padZero(brahmaStartHour)}:${padZero(brahmaStartMin)} – ${padZero(brahmaEndHour)}:${padZero(brahmaEndMin)} AM`;
-    }
-  }
-  
-  // Rahu Kaal
-  if (data.rahu_kalam) {
-    document.getElementById('rahuTime').innerHTML = data.rahu_kalam;
-  }
-  
-  // Abhijit Muhurta
-  if (data.abhijit_muhurta) {
-    document.getElementById('abhijitTime').innerHTML = data.abhijit_muhurta;
-  }
+  const samvatYear = now.getFullYear() + 57;
+  const monthNames = ['Chaitra', 'Vaishakha', 'Jyeshtha', 'Ashadha', 'Shravana', 'Bhadrapada', 'Ashvina', 'Kartika', 'Margashirsha', 'Pausha', 'Magha', 'Phalguna'];
+  const hinduMonth = monthNames[now.getMonth()];
+  document.getElementById('samvatDate').innerHTML = `${hinduMonth}<br/>Vikram Samvat ${samvatYear}`;
 }
 
-// Fallback data if API fails (uses calculations based on date)
-function showFallbackData(cityName) {
+// Get Brahma Muhurta (1 hour 36 mins before sunrise)
+function getBrahmaMuhurta(sunrise) {
+  if (!sunrise || sunrise === '--') return '4:30 AM';
+  const sunriseHour = parseInt(sunrise.split(':')[0]);
+  let brahmaHour = sunriseHour - 1;
+  if (brahmaHour < 0) brahmaHour += 24;
+  const brahmaMin = sunrise.split(':')[1] ? (parseInt(sunrise.split(':')[1]) - 36) : 24;
+  return `${brahmaHour}:${brahmaMin < 0 ? brahmaMin + 60 : brahmaMin}`;
+}
+
+// Fallback data (local calculation)
+function updateWithFallbackData(cityName) {
   const now = new Date();
-  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const tithis = ['Shukla Pratipada', 'Shukla Dwitiya', 'Shukla Tritiya', 'Shukla Chaturthi', 'Shukla Panchami', 'Shukla Shashthi', 'Shukla Saptami', 'Shukla Ashtami', 'Shukla Navami', 'Shukla Dashami', 'Shukla Ekadashi', 'Shukla Dwadashi', 'Shukla Trayodashi', 'Shukla Chaturdashi', 'Purnima', 'Krishna Pratipada', 'Krishna Dwitiya', 'Krishna Tritiya', 'Krishna Chaturthi', 'Krishna Panchami', 'Krishna Shashthi', 'Krishna Saptami', 'Krishna Ashtami', 'Krishna Navami', 'Krishna Dashami', 'Krishna Ekadashi', 'Krishna Dwadashi', 'Krishna Trayodashi', 'Krishna Chaturdashi', 'Amavasya'];
+  const tithiNames = ['Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami', 'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami', 'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Purnima', 'Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami', 'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami', 'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Amavasya'];
   const nakshatras = ['Ashwini', 'Bharani', 'Krittika', 'Rohini', 'Mrigashira', 'Ardra', 'Punarvasu', 'Pushya', 'Ashlesha', 'Magha', 'Purva Phalguni', 'Uttara Phalguni', 'Hasta', 'Chitra', 'Swati', 'Vishakha', 'Anuradha', 'Jyeshtha', 'Mula', 'Purva Ashadha', 'Uttara Ashadha', 'Shravana', 'Dhanishtha', 'Shatabhisha', 'Purva Bhadrapada', 'Uttara Bhadrapada', 'Revati'];
+  const rahuTimes = { 'Sunday': '4:30 PM – 6:00 PM', 'Monday': '7:30 AM – 9:00 AM', 'Tuesday': '3:00 PM – 4:30 PM', 'Wednesday': '12:00 PM – 1:30 PM', 'Thursday': '1:30 PM – 3:00 PM', 'Friday': '10:30 AM – 12:00 PM', 'Saturday': '9:00 AM – 10:30 AM' };
   
-  const tithiIndex = (now.getDate() + now.getMonth()) % tithis.length;
-  const nakshatraIndex = (now.getDate() + now.getMonth() + now.getFullYear()) % nakshatras.length;
+  const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+  const tithiIndex = dayOfYear % 30;
+  const tithi = tithiNames[tithiIndex];
+  const paksha = tithiIndex < 15 ? 'Shukla' : 'Krishna';
+  const nakshatra = nakshatras[dayOfYear % 27];
+  const dayName = now.toLocaleDateString('en-IN', { weekday: 'long' });
+  const sunrise = '6:00 AM';
   
-  const rahuTimes = {
-    'Sunday': '4:30 – 6:00 PM', 'Monday': '7:30 – 9:00 AM', 'Tuesday': '3:00 – 4:30 PM',
-    'Wednesday': '12:00 – 1:30 PM', 'Thursday': '1:30 – 3:00 PM', 'Friday': '10:30 AM – 12:00 PM',
-    'Saturday': '9:00 – 10:30 AM'
-  };
+  document.getElementById('engDate').innerHTML = now.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById('panchangGrid').innerHTML = `
+    <div class="p-item"><div class="p-label">Tithi</div><div class="p-value">${paksha} ${tithi}</div><div class="p-sub">${paksha} Paksha</div></div>
+    <div class="p-item"><div class="p-label">Nakshatra</div><div class="p-value">${nakshatra}</div><div class="p-sub">--</div></div>
+    <div class="p-item"><div class="p-label">Yoga</div><div class="p-value">Vishkumbha</div><div class="p-sub">Auspicious</div></div>
+    <div class="p-item"><div class="p-label">Karana</div><div class="p-value">Bava</div><div class="p-sub">--</div></div>
+    <div class="p-item"><div class="p-label">Var (Day)</div><div class="p-value">${dayName}</div><div class="p-sub">${sunrise} sunrise</div></div>
+    <div class="p-item"><div class="p-label">Paksha</div><div class="p-value">${paksha}</div><div class="p-sub">${paksha === 'Shukla' ? 'Waxing moon' : 'Waning moon'}</div></div>
+  `;
   
-  document.getElementById('engDate').textContent = now.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  document.getElementById('tithi').innerHTML = tithis[tithiIndex];
-  document.getElementById('nakshatra').innerHTML = nakshatras[nakshatraIndex];
-  document.getElementById('yoga').innerHTML = ['Vishkumbha', 'Priti', 'Ayushman', 'Saubhagya', 'Shobhana'][now.getDate() % 5];
-  document.getElementById('karana').innerHTML = ['Bava', 'Balava', 'Kaulava', 'Taitila', 'Gara', 'Vanija', 'Vishti'][now.getDate() % 7];
-  document.getElementById('day').innerHTML = dayNames[now.getDay()];
-  document.getElementById('paksha').innerHTML = now.getDate() < 15 ? 'Shukla Paksha' : 'Krishna Paksha';
-  document.getElementById('rahuTime').innerHTML = rahuTimes[dayNames[now.getDay()]];
-  document.getElementById('sunTime').innerHTML = '6:00 AM / 6:30 PM';
-  document.getElementById('brahmaTime').innerHTML = '4:11 – 5:00 AM';
-  document.getElementById('abhijitTime').innerHTML = '11:52 AM – 12:44 PM';
-  document.getElementById('samvatDate').innerHTML = `Jyeshtha<br/>Vikram Samvat 2082`;
+  document.getElementById('timingsGrid').innerHTML = `
+    <div class="timing-card auspicious"><div class="auspicious-badge">✓ Auspicious</div><div class="timing-icon">☀️</div><div class="timing-name">Brahma Muhurta</div><div class="timing-time">5:00 AM – 6:00 AM</div><div class="timing-desc">Most auspicious time for prayer and meditation.</div></div>
+    <div class="timing-card auspicious"><div class="auspicious-badge">✓ Auspicious</div><div class="timing-icon">🌅</div><div class="timing-name">Abhijit Muhurta</div><div class="timing-time">11:52 AM – 12:44 PM</div><div class="timing-desc">Excellent for important decisions.</div></div>
+    <div class="timing-card inauspicious"><div class="inauspicious-badge">⚠ Avoid</div><div class="timing-icon">🌑</div><div class="timing-name">Rahu Kaal</div><div class="timing-time">${rahuTimes[dayName]}</div><div class="timing-desc">Inauspicious period.</div></div>
+  `;
+  
+  const samvatYear = now.getFullYear() + 57;
+  document.getElementById('samvatDate').innerHTML = `Jyeshtha<br/>Vikram Samvat ${samvatYear}`;
 }
 
-// Festival data (accurate for 2026)
+// Festival and Vrat data
 const festivals2026 = {
   'June': [{day:5, name:'Jyeshtha Purnima', desc:'Full moon day. Perform Satyanarayan Puja.', tag:'Purnima'},{day:12, name:'Nirjala Ekadashi', desc:'Most important Ekadashi, observed without water.', tag:'Vrat'},{day:20, name:'Jyeshtha Amavasya', desc:'New moon day for ancestor worship.', tag:'Amavasya'}],
   'July': [{day:5, name:'Guru Purnima', desc:'Honour your guru and teachers.', tag:'Major Festival'},{day:10, name:'Devshayani Ekadashi', desc:'Lord Vishnu goes to sleep.', tag:'Ekadashi'},{day:29, name:'Nag Panchami', desc:'Worship of serpent deities.', tag:'Festival'}],
@@ -382,7 +361,6 @@ const festivals2026 = {
   'November': [{day:1, name:'Dhanteras', desc:'Worship of Goddess Lakshmi.', tag:'Diwali Week'},{day:3, name:'Diwali', desc:'Festival of Lights.', tag:'Major Festival'},{day:5, name:'Bhai Dooj', desc:'Brothers and sisters celebrate.', tag:'Diwali Week'}]
 };
 
-// Vrat data
 const vratData = [
   {icon:'🌙', name:'Ekadashi', freq:'Twice Monthly', date:'Next: 5 June'},
   {icon:'🔱', name:'Pradosh Vrat', freq:'Twice Monthly', date:'Next: 13 June'},
@@ -392,20 +370,20 @@ const vratData = [
   {icon:'💛', name:'Solah Somvar', freq:'16 Mondays', date:'Starts: Next Monday'}
 ];
 
-// Initialize page
 let currentMonth = 'June';
 
 function renderMonthTabs() {
-  document.getElementById('monthTabs').innerHTML = Object.keys(festivals2026).map(m => 
-    `<button class="month-tab ${m===currentMonth?'active':''}" onclick="switchMonth('${m}')">${m}</button>`
+  const months = Object.keys(festivals2026);
+  document.getElementById('monthTabs').innerHTML = months.map(m => 
+    `<button class="month-tab ${m === currentMonth ? 'active' : ''}" onclick="switchMonth('${m}')">${m}</button>`
   ).join('');
 }
 
-function switchMonth(m) {
+window.switchMonth = function(m) {
   currentMonth = m;
   renderMonthTabs();
   renderFestivals();
-}
+};
 
 function renderFestivals() {
   const list = festivals2026[currentMonth] || [];
@@ -429,20 +407,11 @@ document.getElementById('citySelect').addEventListener('change', (e) => {
   fetchPanchang(e.target.value);
 });
 
-// Initialize everything
+// Initialize
 renderMonthTabs();
 renderFestivals();
 renderVrats();
-
-// Check if API key is set
-if (FREE_ASTRO_API_KEY === 'YOUR_API_KEY_HERE') {
-  console.warn('⚠️ Please set your FreeAstroAPI key in the FREE_ASTRO_API_KEY variable');
-  console.warn('Get your free API key from: https://www.freeastroapi.com/dashboard');
-  document.getElementById('tithi').innerHTML = '⚠️ API Key Required';
-  showFallbackData('New Delhi');
-} else {
-  fetchPanchang('New Delhi');
-}
+fetchPanchang('New Delhi');
 
 // Fade-up animation
 const observer = new IntersectionObserver((e) => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:.1});

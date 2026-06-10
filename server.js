@@ -3,40 +3,56 @@ const Razorpay = require('razorpay');
 const cors = require('cors');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const axios = require('axios'); // ✅ FIXED: Moved to top
 require('dotenv').config();
 
 const app = express();
 
-// Middleware
+// ============================================
+// MIDDLEWARE
+// ============================================
+// ✅ FIXED: Added file:// origin + wildcard for local dev
 app.use(cors({
-  origin: [
-    'http://localhost:5500',
-    'http://127.0.0.1:5500',
-    'http://localhost:3000',
-    'http://127.0.0.1:3000'
-  ],
+  origin: function(origin, callback) {
+    // Allow requests with no origin (file://, Postman, curl)
+    if (!origin) return callback(null, true);
+    const allowed = [
+      'http://localhost:5500',
+      'http://127.0.0.1:5500',
+      'http://localhost:3000',
+      'http://127.0.0.1:3000',
+      'http://localhost:8080',
+      'http://127.0.0.1:8080',
+    ];
+    if (allowed.includes(origin)) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ============================================
-// 🔑 YOUR CORRECT RAZORPAY TEST KEYS
+// 🔑 RAZORPAY KEYS
 // ============================================
 const RAZORPAY_KEY_ID = 'rzp_test_SyzFJuJdfn85Le';
 const RAZORPAY_KEY_SECRET = 'Mw0FJ1jJoqOe3ta1LgUaiRyk';
 
-// Initialize Razorpay with your correct keys
 const razorpay = new Razorpay({
   key_id: RAZORPAY_KEY_ID,
   key_secret: RAZORPAY_KEY_SECRET
 });
 
 console.log('✅ Razorpay initialized with Key ID:', RAZORPAY_KEY_ID);
-console.log('✅ Key Secret (first 10 chars):', RAZORPAY_KEY_SECRET.substring(0, 10) + '...');
 
 // ============================================
-// EMAIL CONFIGURATION (Optional - won't affect payment)
+// 🔑 PROKERALA CREDENTIALS
+// ============================================
+const PROKERALA_CLIENT_ID = '8852a862-411f-46a2-8c6d-35f7d742cad3';
+const PROKERALA_CLIENT_SECRET = 'RqdTliDE0gsnEd5405f82mASo3O4wEoGid6XVrRf';
+
+// ============================================
+// EMAIL CONFIGURATION
 // ============================================
 const emailTransporter = nodemailer.createTransport({
   service: 'gmail',
@@ -47,10 +63,10 @@ const emailTransporter = nodemailer.createTransport({
 });
 
 // ============================================
-// SEND CONFIRMATION EMAIL FUNCTION
+// SEND CONFIRMATION EMAIL
 // ============================================
 async function sendBookingConfirmation(bookingData, paymentId) {
-  const { devoteeName, email, phone, gotra, pujaName, temple, pujaDate, sankalp, amount } = bookingData;
+  const { devoteeName, email, pujaName, temple, pujaDate, amount } = bookingData;
   
   const devoteeMailOptions = {
     from: `"MahaPoojan" <${process.env.EMAIL_USER || 'puja@mahapoojan.com'}>`,
@@ -90,7 +106,7 @@ async function sendBookingConfirmation(bookingData, paymentId) {
 }
 
 // ============================================
-// ENDPOINT 1: Create Order
+// ENDPOINT 1: Create Razorpay Order
 // ============================================
 app.post('/api/create-order', async (req, res) => {
   try {
@@ -109,7 +125,6 @@ app.post('/api/create-order', async (req, res) => {
       payment_capture: 1
     };
     
-    console.log('Order options:', options);
     const order = await razorpay.orders.create(options);
     console.log('✅ Order created:', order.id);
     
@@ -137,7 +152,6 @@ app.post('/api/verify-payment', async (req, res) => {
     
     console.log('Verifying payment:', { order_id, payment_id });
     
-    // Verify signature using your correct secret
     const generatedSignature = crypto
       .createHmac('sha256', RAZORPAY_KEY_SECRET)
       .update(order_id + '|' + payment_id)
@@ -148,7 +162,7 @@ app.post('/api/verify-payment', async (req, res) => {
       return res.status(400).json({ success: false, error: 'Invalid signature' });
     }
     
-    console.log('✅ Signature verified successfully!');
+    console.log('✅ Signature verified!');
     
     let emailStatus = { success: false };
     if (bookingDetails) {
@@ -168,13 +182,95 @@ app.post('/api/verify-payment', async (req, res) => {
 });
 
 // ============================================
-// TEST ENDPOINT
+// ENDPOINT 3: Panchang (Prokerala Proxy)
+// ============================================
+app.post('/api/panchang', async (req, res) => {
+  try {
+    const { lat, lon, tz, cityName } = req.body;
+    
+    if (!lat || !lon) {
+      return res.status(400).json({ success: false, error: 'Missing coordinates' });
+    }
+    
+    const today = new Date();
+    const dateStr = today.toISOString().split('T')[0];
+    
+    console.log(`📅 Fetching Panchang for ${cityName || 'unknown'} (${lat}, ${lon}) on ${dateStr}`);
+    
+    // Step 1: Get Access Token
+    const tokenResponse = await axios.post(
+      'https://auth.prokerala.com/token',
+      new URLSearchParams({
+        grant_type: 'client_credentials',
+        client_id: PROKERALA_CLIENT_ID,
+        client_secret: PROKERALA_CLIENT_SECRET
+      }),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+    );
+    
+    const accessToken = tokenResponse.data.access_token;
+    console.log('✅ Access token obtained');
+    
+    // Step 2: Get Panchang Data
+    const panchangResponse = await axios.get(
+      'https://api.prokerala.com/v2/astro/panchang',
+      {
+        params: {
+          ayanamsa: 1,
+          datetime: `${dateStr}T00:00:00+05:30`,
+          coordinates: `${lat},${lon}`,
+          tz: tz || 'Asia/Kolkata'
+        },
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Accept': 'application/json'
+        }
+      }
+    );
+    
+    console.log('✅ Panchang data received');
+    console.log('📦 Raw Prokerala response keys:', Object.keys(panchangResponse.data));
+
+    // ✅ FIXED: Prokerala wraps data under .data key
+    const rawData = panchangResponse.data?.data || panchangResponse.data;
+    
+    res.json({
+      success: true,
+      data: rawData,
+      city: cityName,
+      date: dateStr
+    });
+    
+  } catch (error) {
+    // ✅ FIXED: Log the full error detail so you can debug
+    const errDetail = error.response?.data || error.message;
+    console.error('❌ Panchang API Error:', JSON.stringify(errDetail, null, 2));
+    
+    res.json({
+      success: false,
+      error: typeof errDetail === 'object' ? JSON.stringify(errDetail) : errDetail,
+      useFallback: true
+    });
+  }
+});
+
+// ============================================
+// TEST ENDPOINTS
 // ============================================
 app.get('/test', (req, res) => {
   res.json({ 
     message: '✅ Server running!',
     razorpay_configured: true,
+    prokerala_configured: true,
     razorpay_key_id: RAZORPAY_KEY_ID
+  });
+});
+
+app.get('/test-panchang', (req, res) => {
+  res.json({
+    message: 'Panchang API is ready!',
+    endpoint: 'POST /api/panchang',
+    example_body: { lat: 28.6139, lon: 77.2090, tz: 'Asia/Kolkata', cityName: 'New Delhi' }
   });
 });
 
