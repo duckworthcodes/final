@@ -212,10 +212,43 @@
                     <label>Full Name *</label>
                     <input type="text" id="name" required placeholder="Rajesh Sharma">
                 </div>
-                <div class="input-group">
-                    <label>Gotra (Optional)</label>
-                    <input type="text" id="gotra" placeholder="Vashistha">
-                </div>
+              <div class="input-group">
+  <label>Gotra (Optional)</label>
+  <input type="text" id="gotra" placeholder="Type to search gotra..." autocomplete="off" oninput="filterGotra(this.value)" onfocus="showGotraList()" onblur="setTimeout(hideGotraList, 150)">
+  <ul id="gotra-list" style="display:none; position:absolute; background:#1a1a1a; border:1px solid #444; border-radius:8px; list-style:none; max-height:180px; overflow-y:auto; width:100%; z-index:99; margin-top:4px; padding:4px 0;">
+  </ul>
+    </div>
+
+    <script>
+    const GOTRAS = [
+  "Atri","Bharadvaja","Gautama","Jamadagni","Kashyapa",
+  "Vashistha","Vishwamitra","Agastya","Angirasa","Bhrigu",
+  "Garga","Kaushika","Mandavya","Parashar","Pulastya",
+  "Sandilya","Shaunaka","Upamanyu","Vatsa","Kaundinya"
+];
+
+function showGotraList() {
+  renderGotra(GOTRAS);
+  document.getElementById("gotra-list").style.display = "block";
+}
+function hideGotraList() {
+  document.getElementById("gotra-list").style.display = "none";
+}
+function filterGotra(val) {
+  const filtered = GOTRAS.filter(g => g.toLowerCase().startsWith(val.toLowerCase()));
+  renderGotra(filtered.length ? filtered : GOTRAS.filter(g => g.toLowerCase().includes(val.toLowerCase())));
+  document.getElementById("gotra-list").style.display = "block";
+}
+function renderGotra(list) {
+  document.getElementById("gotra-list").innerHTML = list.map(g =>
+    `<li onclick="selectGotra('${g}')" style="padding:8px 14px; cursor:pointer; font-size:0.85rem;" onmouseover="this.style.background='#333'" onmouseout="this.style.background='transparent'">${g}</li>`
+  ).join("");
+}
+function selectGotra(val) {
+  document.getElementById("gotra").value = val;
+  hideGotraList();
+}
+</script>
             </div>
             <div class="input-group">
                 <label>Email Address *</label>
