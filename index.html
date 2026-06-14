@@ -1340,52 +1340,52 @@
     </div>
   </div>
 
-  <div class="hero-visual">
-    <div style="position: relative; display: inline-block;">
-      <div class="hero-phone-mockup">
-        <div class="phone-inner">
-          <div class="phone-status">
-            <span>9:41</span><span>▲▲▲ ●●</span>
+<div class="hero-visual">
+  <div style="position: relative; display: inline-block;">
+    <div class="hero-phone-mockup">
+      <div class="phone-inner">
+        <div class="phone-status">
+          <span id="currentTime">9:41</span><span>▲▲▲ ●●</span>
+        </div>
+        <div class="phone-greeting" id="dailyGreeting">Jay Shri Ram 🙏</div>
+        <div class="phone-date" id="phoneDate">Loading...</div>
+        <div class="phone-darshan-card" id="liveDarshanCard">
+          <div class="phone-darshan-label"><span class="phone-live-dot"></span> <span id="liveStatus">Live Darshan Now</span></div>
+          <div class="phone-darshan-title" id="darshanTitle">Kashi Vishwanath</div>
+          <div class="phone-darshan-sub" id="darshanSub">Varanasi, Uttar Pradesh · Mangal Aarti</div>
+        </div>
+        <div class="phone-stats-row">
+          <div class="phone-stat">
+            <div class="phone-stat-val" id="pujasToday">10+</div>
+            <div class="phone-stat-lbl">Pujas Done</div>
           </div>
-          <div class="phone-greeting">Jay Shri Ram 🙏</div>
-          <div class="phone-date">Wednesday, 4 June 2026 · Jyeshtha Shukla Ashtami</div>
-          <div class="phone-darshan-card">
-            <div class="phone-darshan-label"><span class="phone-live-dot"></span> Live Darshan Now</div>
-            <div class="phone-darshan-title">Kashi Vishwanath</div>
-            <div class="phone-darshan-sub">Varanasi, Uttar Pradesh · Mangal Aarti</div>
-          </div>
-          <div class="phone-stats-row">
-            <div class="phone-stat">
-              <div class="phone-stat-val">10+</div>
-              <div class="phone-stat-lbl">Pujas Done</div>
-            </div>
-            <div class="phone-stat">
-              <div class="phone-stat-val">20+</div>
-              <div class="phone-stat-lbl">Temples</div>
-            </div>
-          </div>
-          <div class="phone-panchang">
-            <div>
-              <div class="phone-panchang-label">Today's Rahu Kaal</div>
-              <div style="font-size:0.65rem;color:rgba(255,255,255,0.35);">Avoid new beginnings</div>
-            </div>
-            <div class="phone-panchang-val">10:30 – 12:00</div>
+          <div class="phone-stat">
+            <div class="phone-stat-val" id="templesToday">20+</div>
+            <div class="phone-stat-lbl">Temples</div>
           </div>
         </div>
-      </div>
-      <div class="float-card float-card-1">
-        <div class="float-icon">🕉️</div>
-        <div>
-          <div class="float-title">Puja Booked</div>
-          <div class="float-sub">Satyanarayan Puja · Today</div>
+        <div class="phone-panchang">
+          <div>
+            <div class="phone-panchang-label">Today's Rahu Kaal</div>
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.35);" id="rahuNote">Avoid new beginnings</div>
+          </div>
+          <div class="phone-panchang-val" id="rahuTime">--</div>
         </div>
-      </div>
-      <div class="float-card float-card-2">
-        <div class="float-title" style="margin-bottom:0.2rem;">📦 Prasad Dispatched</div>
-        <div class="float-sub">From Tirupati · Tracking Live</div>
       </div>
     </div>
+    <div class="float-card float-card-1">
+      <div class="float-icon">🕉️</div>
+      <div>
+        <div class="float-title">Puja Booked</div>
+        <div class="float-sub" id="lastPujaMsg">Satyanarayan Puja · Today</div>
+      </div>
+    </div>
+    <div class="float-card float-card-2">
+      <div class="float-title" style="margin-bottom:0.2rem;">📦 Prasad Dispatched</div>
+      <div class="float-sub" id="prasadMsg">From Tirupati · Tracking Live</div>
+    </div>
   </div>
+</div>
 </section>
 
 <!-- TICKER -->
@@ -1774,5 +1774,228 @@
 </script>
   <script src="assets/js/shared.js"></script>
   <script src="language.js"></script>
+  <script>
+    // ============================================
+// DAILY UPDATING CONTENT
+// ============================================
+
+// Live darshan schedule (changes daily based on day of week)
+const darshanSchedule = {
+  // Each day has: Temple name, location, aarti type, Rahu Kaal range
+  'Sunday': {
+    temple: 'Kashi Vishwanath',
+    location: 'Varanasi, Uttar Pradesh',
+    aarti: 'Mangal Aarti',
+    rahuKaal: '4:30 PM – 6:00 PM',
+    pujaStat: '15+',
+    greeting: 'Jai Shri Ram 🙏'
+  },
+  'Monday': {
+    temple: 'Mahakaleshwar',
+    location: 'Ujjain, Madhya Pradesh',
+    aarti: 'Bhasma Aarti',
+    rahuKaal: '7:30 AM – 9:00 AM',
+    pujaStat: '12+',
+    greeting: 'Har Har Mahadev 🔱'
+  },
+  'Tuesday': {
+    temple: 'Somnath Temple',
+    location: 'Somnath, Gujarat',
+    aarti: 'Evening Aarti',
+    rahuKaal: '3:00 PM – 4:30 PM',
+    pujaStat: '18+',
+    greeting: 'Jai Hanuman 🐒'
+  },
+  'Wednesday': {
+    temple: 'Tirumala Tirupati',
+    location: 'Tirupati, Andhra Pradesh',
+    aarti: 'Suprabhatam',
+    rahuKaal: '12:00 PM – 1:30 PM',
+    pujaStat: '20+',
+    greeting: 'Govinda Govinda 🦚'
+  },
+  'Thursday': {
+    temple: 'Jagannath Puri',
+    location: 'Puri, Odisha',
+    aarti: 'Mangal Aarti',
+    rahuKaal: '1:30 PM – 3:00 PM',
+    pujaStat: '14+',
+    greeting: 'Jai Jagannath 🙏'
+  },
+  'Friday': {
+    temple: 'Meenakshi Amman',
+    location: 'Madurai, Tamil Nadu',
+    aarti: 'Evening Puja',
+    rahuKaal: '10:30 AM – 12:00 PM',
+    pujaStat: '16+',
+    greeting: 'Jai Mata Di 🌸'
+  },
+  'Saturday': {
+    temple: 'Siddhivinayak',
+    location: 'Mumbai, Maharashtra',
+    aarti: 'Morning Aarti',
+    rahuKaal: '9:00 AM – 10:30 AM',
+    pujaStat: '22+',
+    greeting: 'Ganpati Bappa Morya 🐘'
+  }
+};
+
+// Festivals data (date-specific)
+const festivals2026 = [
+  { month: 5, date: 5, name: 'Jyeshtha Purnima', temple: 'Kashi Vishwanath', aarti: 'Purnima Aarti' },
+  { month: 5, date: 12, name: 'Nirjala Ekadashi', temple: 'ISKCON Vrindavan', aarti: 'Ekadashi Puja' },
+  { month: 5, date: 20, name: 'Jyeshtha Amavasya', temple: 'Mahakaleshwar', aarti: 'Amavasya Abhishek' },
+  { month: 6, date: 5, name: 'Guru Purnima', temple: 'Vishwanath Temple', aarti: 'Guru Aarti' },
+  { month: 6, date: 29, name: 'Nag Panchami', temple: 'Nag Temple', aarti: 'Nag Puja' },
+  { month: 7, date: 15, name: 'Raksha Bandhan', temple: 'Vaishno Devi', aarti: 'Raksha Puja' },
+  { month: 7, date: 22, name: 'Janmashtami', temple: 'ISKCON Vrindavan', aarti: 'Midnight Aarti' },
+  { month: 8, date: 7, name: 'Ganesh Chaturthi', temple: 'Siddhivinayak', aarti: 'Ganesh Aarti' }
+];
+
+// Get greeting based on time of day
+function getTimeBasedGreeting() {
+  const hour = new Date().getHours();
+  if (hour < 12) return '🌅 Suprabhatam! 🙏';
+  if (hour < 17) return '🌞 Jai Shri Ram 🙏';
+  if (hour < 20) return '🌆 Jay Jagannath 🙏';
+  return '🌙 Shubh Ratri 🕉️';
+}
+
+// Format date in Hindu calendar style
+function getHinduDate() {
+  const now = new Date();
+  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const monthNames = ['Chaitra', 'Vaishakha', 'Jyeshtha', 'Ashadha', 'Shravana', 'Bhadrapada', 'Ashvina', 'Kartika', 'Margashirsha', 'Pausha', 'Magha', 'Phalguna'];
+  
+  const day = dayNames[now.getDay()];
+  const date = now.getDate();
+  const month = monthNames[now.getMonth()];
+  const year = now.getFullYear();
+  const samvatYear = year + 57;
+  
+  // Calculate tithi (simplified)
+  const tithiNames = ['Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami', 'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami', 'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Purnima', 'Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami', 'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami', 'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Amavasya'];
+  const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+  const tithiIndex = dayOfYear % 30;
+  const paksha = tithiIndex < 15 ? 'Shukla' : 'Krishna';
+  const tithi = tithiNames[tithiIndex];
+  
+  return `${day}, ${date} ${month} ${year} · ${paksha} ${tithi} · Vikram Samvat ${samvatYear}`;
+}
+
+// Check if today is a festival
+function getTodayFestival() {
+  const now = new Date();
+  const todayMonth = now.getMonth();
+  const todayDate = now.getDate();
+  
+  const festival = festivals2026.find(f => f.month === todayMonth && f.date === todayDate);
+  return festival || null;
+}
+
+// Update all dynamic content
+function updateDailyContent() {
+  const now = new Date();
+  const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][now.getDay()];
+  const schedule = darshanSchedule[dayName];
+  
+  // Update greeting (mix of time-based and day-based)
+  const timeGreeting = getTimeBasedGreeting();
+  const greetingElement = document.getElementById('dailyGreeting');
+  if (greetingElement) {
+    greetingElement.innerHTML = schedule.greeting || timeGreeting;
+  }
+  
+  // Update date
+  const dateElement = document.getElementById('phoneDate');
+  if (dateElement) {
+    dateElement.innerHTML = getHinduDate();
+  }
+  
+  // Check for festival
+  const festival = getTodayFestival();
+  
+  // Update darshan card
+  const titleElement = document.getElementById('darshanTitle');
+  const subElement = document.getElementById('darshanSub');
+  const liveStatusElement = document.getElementById('liveStatus');
+  
+  if (festival) {
+    // Show festival content
+    if (titleElement) titleElement.innerHTML = festival.name;
+    if (subElement) subElement.innerHTML = `${festival.temple} · ${festival.aarti}`;
+    if (liveStatusElement) liveStatusElement.innerHTML = '🎊 Festival Special';
+  } else {
+    // Regular schedule
+    if (titleElement) titleElement.innerHTML = schedule.temple;
+    if (subElement) subElement.innerHTML = `${schedule.location} · ${schedule.aarti}`;
+    if (liveStatusElement) liveStatusElement.innerHTML = '🔴 Live Darshan Now';
+  }
+  
+  // Update Rahu Kaal
+  const rahuElement = document.getElementById('rahuTime');
+  if (rahuElement) {
+    rahuElement.innerHTML = schedule.rahuKaal;
+  }
+  
+  // Update puja stats (randomized but realistic)
+  const pujaStatElement = document.getElementById('pujasToday');
+  if (pujaStatElement) {
+    // Random between 8-25 for demo, you can replace with actual API data
+    const randomPujas = Math.floor(Math.random() * (25 - 8 + 1)) + 8;
+    pujaStatElement.innerHTML = schedule.pujaStat || `${randomPujas}+`;
+  }
+  
+  // Update last puja message
+  const lastPujaElement = document.getElementById('lastPujaMsg');
+  if (lastPujaElement) {
+    const pujaTypes = ['Satyanarayan Puja', 'Maha Mrityunjaya', 'Rudra Abhishek', 'Durga Saptashati', 'Ganesh Puja'];
+    const randomPuja = pujaTypes[Math.floor(Math.random() * pujaTypes.length)];
+    lastPujaElement.innerHTML = `${randomPuja} · Today`;
+  }
+  
+  // Update prasad message
+  const prasadElement = document.getElementById('prasadMsg');
+  if (prasadElement) {
+    const temples = ['Tirupati', 'Kashi', 'Mahakaleshwar', 'Somnath'];
+    const randomTemple = temples[Math.floor(Math.random() * temples.length)];
+    prasadElement.innerHTML = `From ${randomTemple} · Tracking Live`;
+  }
+}
+
+// Update current time in phone status
+function updateCurrentTime() {
+  const timeElement = document.getElementById('currentTime');
+  if (timeElement) {
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    timeElement.innerHTML = `${hours}:${minutes} ${ampm}`;
+  }
+}
+
+// Initialize everything
+function initDailyUpdates() {
+  updateDailyContent();
+  updateCurrentTime();
+  
+  // Update time every minute
+  setInterval(updateCurrentTime, 60000);
+  
+  // Update content at midnight (when day changes)
+  const now = new Date();
+  const msUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
+  setTimeout(() => {
+    updateDailyContent();
+    // Then update every 24 hours
+    setInterval(updateDailyContent, 86400000);
+  }, msUntilMidnight);
+}
+
+// Start when page loads
+document.addEventListener('DOMContentLoaded', initDailyUpdates);
+  </script>
 </body>
 </html>
