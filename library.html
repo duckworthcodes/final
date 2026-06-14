@@ -12,13 +12,98 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
-nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5vw;background:rgba(250,246,238,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5vw;background:rgba(250,246,238,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:10px;}
 .nav-logo img{height:55px;width:auto;}
 .nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
 .nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s;}
 .nav-links a:hover,.nav-links a.active{color:var(--saffron);}
 .nav-cta{background:var(--saffron);color:white!important;padding:.5rem 1.3rem;border-radius:2rem;}
 .nav-cta:hover{background:var(--saffron-deep)!important;}
+
+/* ============================================
+   LANGUAGE SWITCHER STYLES
+   ============================================ */
+.language-selector {
+  position: relative;
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+.lang-btn {
+  background: var(--saffron-pale);
+  border: 1px solid var(--saffron);
+  padding: 0.4rem 0.8rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--saffron-deep);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  font-family: 'Jost', sans-serif;
+}
+.lang-btn:hover {
+  background: var(--saffron);
+  color: white;
+  border-color: var(--saffron);
+}
+.lang-dropdown {
+  display: none;
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  padding: 0.5rem;
+  min-width: 200px;
+  z-index: 1000;
+  border: 1px solid var(--border);
+  max-height: 400px;
+  overflow-y: auto;
+}
+.language-selector:hover .lang-dropdown {
+  display: block;
+}
+.lang-dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.85rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+}
+.lang-dropdown a:hover {
+  background: var(--saffron-pale);
+  color: var(--saffron);
+}
+.lang-dropdown a.active {
+  background: var(--saffron);
+  color: white;
+}
+@media (max-width: 900px) {
+  .lang-btn .selected-lang { display: none; }
+  .lang-btn { padding: 0.5rem; }
+  .lang-dropdown { right: -50px; min-width: 180px; }
+  .nav-links { display: none; }
+}
+
+@media(max-width:900px){
+  .featured-row{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+  .footer-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:1rem;}
+  .h-stat-num{font-size:1.3rem;}
+  .scripture-actions{flex-direction:column;}
+}
 
 .page-hero{background:linear-gradient(135deg,#1A0C02 0%,#2A1A06 60%,#1A0A1A 100%);padding:4rem 5vw 3.5rem;position:relative;overflow:hidden;}
 .page-hero::before{content:'📖';position:absolute;font-size:18rem;opacity:.04;top:50%;right:-5vw;transform:translateY(-50%);pointer-events:none;}
@@ -121,18 +206,6 @@ footer{background:var(--ink);padding:3rem 5vw 5rem;color:white;}
 
 .fade-up{opacity:0;transform:translateY(25px);transition:opacity .6s ease,transform .6s ease;}
 .fade-up.visible{opacity:1;transform:translateY(0);}
-
-@media(max-width:900px){
-  .featured-row{grid-template-columns:1fr;}
-  .footer-grid{grid-template-columns:1fr 1fr;}
-  .nav-links{display:none;}
-}
-@media(max-width:600px){
-  .footer-grid{grid-template-columns:1fr;}
-  .hero-stats{gap:1rem;}
-  .h-stat-num{font-size:1.3rem;}
-  .scripture-actions{flex-direction:column;}
-}
 </style>
 </head>
 <body>
@@ -149,6 +222,31 @@ footer{background:var(--ink);padding:3rem 5vw 5rem;color:white;}
     <li><a href="register.html">Register</a></li>
     <li><a href="puja-booking.html" class="nav-cta">Book Puja</a></li>
   </ul>
+
+  <!-- LANGUAGE SWITCHER -->
+  <div class="language-selector">
+    <div class="lang-btn">
+      🌐 <span class="selected-lang">English</span> <span>▼</span>
+    </div>
+    <div class="lang-dropdown">
+      <a data-lang="en">🇬🇧 English</a>
+      <a data-lang="hi">🇮🇳 हिंदी</a>
+      <a data-lang="te">🇮🇳 తెలుగు</a>
+      <a data-lang="ta">🇮🇳 தமிழ்</a>
+      <a data-lang="kn">🇮🇳 ಕನ್ನಡ</a>
+      <a data-lang="ml">🇮🇳 മലയാളം</a>
+      <a data-lang="bn">🇮🇳 বাংলা</a>
+      <a data-lang="gu">🇮🇳 ગુજરાતી</a>
+      <a data-lang="pa">🇮🇳 ਪੰਜਾਬੀ</a>
+      <a data-lang="or">🇮🇳 ଓଡ଼ିଆ</a>
+      <a data-lang="sa">🇮🇳 संस्कृतम्</a>
+      <a data-lang="mr">🇮🇳 मराठी</a>
+      <a data-lang="fr">🇫🇷 Français</a>
+      <a data-lang="de">🇩🇪 Deutsch</a>
+      <a data-lang="es">🇪🇸 Español</a>
+      <a data-lang="zh">🇨🇳 中文</a>
+    </div>
+  </div>
 </nav>
 
 <section class="page-hero">
@@ -437,6 +535,98 @@ document.querySelectorAll('.cat-tab').forEach(tab => {
   });
 });
 
+// ============================================
+// LANGUAGE SWITCHER FUNCTIONALITY
+// ============================================
+(function() {
+  const langNames = {
+    'en': '🇬🇧 English',
+    'hi': '🇮🇳 हिंदी',
+    'te': '🇮🇳 తెలుగు',
+    'ta': '🇮🇳 தமிழ்',
+    'kn': '🇮🇳 ಕನ್ನಡ',
+    'ml': '🇮🇳 മലയാളം',
+    'bn': '🇮🇳 বাংলা',
+    'gu': '🇮🇳 ગુજરાતી',
+    'pa': '🇮🇳 ਪੰਜਾਬੀ',
+    'or': '🇮🇳 ଓଡ଼ିଆ',
+    'sa': '🇮🇳 संस्कृतम्',
+    'mr': '🇮🇳 मराठी',
+    'fr': '🇫🇷 Français',
+    'de': '🇩🇪 Deutsch',
+    'es': '🇪🇸 Español',
+    'zh': '🇨🇳 中文'
+  };
+
+  let currentLang = localStorage.getItem('maha_lang') || 'en';
+
+  function loadGoogleTranslate() {
+    if (document.querySelector('.goog-te-combo')) return;
+    const script = document.createElement('script');
+    script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.head.appendChild(script);
+  }
+
+  window.googleTranslateElementInit = function() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: Object.keys(langNames).join(','),
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+    
+    if (currentLang && currentLang !== 'en') {
+      setTimeout(() => {
+        const select = document.querySelector('.goog-te-combo');
+        if (select) {
+          select.value = currentLang;
+          select.dispatchEvent(new Event('change'));
+        }
+      }, 500);
+    }
+  };
+
+  window.setLanguage = function(lang) {
+    currentLang = lang;
+    localStorage.setItem('maha_lang', lang);
+    
+    document.querySelectorAll('.lang-option').forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('data-lang') === lang) {
+        link.classList.add('active');
+      }
+    });
+    
+    const btnText = document.querySelector('.lang-btn .selected-lang');
+    if (btnText && langNames[lang]) {
+      btnText.innerHTML = langNames[lang];
+    }
+    
+    const select = document.querySelector('.goog-te-combo');
+    if (select) {
+      select.value = lang;
+      select.dispatchEvent(new Event('change'));
+    }
+  };
+
+  function initLanguageSwitcher() {
+    document.querySelectorAll('.lang-option').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const lang = link.getAttribute('data-lang');
+        if (lang) setLanguage(lang);
+      });
+    });
+    loadGoogleTranslate();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLanguageSwitcher);
+  } else {
+    initLanguageSwitcher();
+  }
+})();
+
 // Initial render
 renderFilmSongs();
 renderAudioGrid('aarti', 'aartiGrid');
@@ -449,5 +639,7 @@ renderScriptures();
 const observer = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:.1});
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
+<div id="google_translate_element" style="display: none;"></div>
+<script src="language.js"></script>
 </body>
 </html>
