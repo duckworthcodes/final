@@ -1152,5 +1152,37 @@ Date: ${new Date(payment.created_at * 1000).toLocaleString()}
   });
 </script>
 <script src="language.js"></script>
+<!-- Simple Background Music -->
+<audio id="bgMusic" loop autoplay>
+  <source src="audio/Jai Ganesh Deva Aarti-Instrumental - Strumm Spiritual.mp3" type="audio/mpeg">
+</audio>
+<button onclick="toggleMusic()" style="position: fixed; bottom: 20px; left: 20px; z-index: 9999; background: #C6721B; color: white; border: none; padding: 8px 15px; border-radius: 30px; cursor: pointer; font-size: 12px; font-family: Arial;">
+  🎵 Play Music
+</button>
+
+<script>
+  var music = document.getElementById('bgMusic');
+  var isPlaying = false;
+  
+  function toggleMusic() {
+    if (isPlaying) {
+      music.pause();
+      isPlaying = false;
+      event.target.innerHTML = '🎵 Play Music';
+    } else {
+      music.play();
+      isPlaying = true;
+      event.target.innerHTML = '🔇 Pause';
+    }
+  }
+  
+  // Auto-start (browsers may block this, user needs to click first)
+  document.body.addEventListener('click', function once() {
+    if (!isPlaying) {
+      music.play().catch(e => console.log('Click to play music'));
+    }
+    document.body.removeEventListener('click', once);
+  }, { once: true });
+</script>
 </body>
 </html>
