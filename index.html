@@ -1260,6 +1260,23 @@
     .download-trust { flex-wrap: wrap; gap: 1.5rem; }
     .countries-grid { grid-template-columns: repeat(2, 1fr); }
   }
+  .service-card {
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.service-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.service-card .service-name {
+  color: white !important;
+}
+
+.service-card .service-desc {
+  color: rgba(255,255,255,0.8) !important;
+}
 </style>
   <link rel="stylesheet" href="assets/css/shared.css"/>
 </head>
@@ -1317,26 +1334,7 @@
       <a href="puja-booking.html" class="btn-primary">Book a Puja →</a>
       <a href="temples.html" class="btn-secondary">Explore Temples</a>
     </div>
-    <div class="hero-trust">
-      <div class="trust-item">
-        <div class="trust-num">0</div>
-        <div class="trust-label">Devotees</div>
-      </div>
-      <div class="trust-divider"></div>
-      <div class="trust-item">
-        <div class="trust-num">100+</div>
-        <div class="trust-label">Sacred Temples</div>
-      </div>
-      <div class="trust-divider"></div>
-      <div class="trust-item">
-        <div class="trust-num">10+</div>
-        <div class="trust-label">Countries</div>
-      </div>
-      <div class="trust-divider"></div>
-      <div class="trust-item">
-        <div class="trust-num">4.5★</div>
-        <div class="trust-label">Rated</div>
-      </div>
+
     </div>
   </div>
 
@@ -1411,7 +1409,6 @@
     <div class="strip-item"><span>🌐</span> 30+ Countries Served</div>
   </div>
 </div>
-
 <!-- SERVICES -->
 <section class="services">
   <div class="section-header fade-up">
@@ -1421,50 +1418,80 @@
   </div>
 
   <div class="services-grid fade-up">
-    <a href="puja-booking.html" class="service-card">
-      <div class="service-number">01</div>
-      <div class="service-icon-wrap">🪔</div>
-      <div class="service-name">Puja Seva</div>
-      <p class="service-desc">Book personalised pujas performed by expert pandits at India's most sacred temples — in your name, your gotra, for your family.</p>
-      <div class="service-arrow">Book a Puja →</div>
+    <!-- Service 1: Puja Seva -->
+    <a href="puja-booking.html" class="service-card" style="background-image: url('WhatsApp%20Image%202026-06-22%20at%2013.01.10.jpeg'); background-size: cover; background-position: center; position: relative; min-height: 320px;">
+      <div style="position: absolute; inset: 0; background: rgba(26,18,8,0.75); border-radius: inherit;"></div>
+      <div style="position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%;">
+        <div class="service-number" style="color: rgba(255,255,255,0.12);">01</div>
+        <div class="service-icon-wrap" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(4px);">🪔</div>
+        <div class="service-name" style="color: white;">Puja Seva</div>
+        <p class="service-desc" style="color: rgba(255,255,255,0.85); flex: 1;">Book personalised pujas performed by expert pandits at India's most sacred temples — in your name, your gotra, for your family.</p>
+        <div class="service-arrow" style="color: var(--gold);">Book a Puja →</div>
+      </div>
     </a>
-    <a href="chadhava.html" class="service-card">
-      <div class="service-number">02</div>
-      <div class="service-icon-wrap">📿</div>
-      <div class="service-name">Chadhava</div>
-      <p class="service-desc">Offer sacred items — flowers, sweets, coins, sindoor — directly at the deity's sanctum. Video proof of every offering delivered to you.</p>
-      <div class="service-arrow">Offer Chadhava →</div>
+
+    <!-- Service 2: Chadhava -->
+    <a href="chadhava.html" class="service-card" style="background-image: url('WhatsApp%20Image%202026-06-22%20at%2013.01.31.jpeg'); background-size: cover; background-position: center; position: relative; min-height: 320px;">
+      <div style="position: absolute; inset: 0; background: rgba(26,18,8,0.75); border-radius: inherit;"></div>
+      <div style="position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%;">
+        <div class="service-number" style="color: rgba(255,255,255,0.12);">02</div>
+        <div class="service-icon-wrap" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(4px);">📿</div>
+        <div class="service-name" style="color: white;">Chadhava</div>
+        <p class="service-desc" style="color: rgba(255,255,255,0.85); flex: 1;">Offer sacred items — flowers, sweets, coins, sindoor — directly at the deity's sanctum. Video proof of every offering delivered to you.</p>
+        <div class="service-arrow" style="color: var(--gold);">Offer Chadhava →</div>
+      </div>
     </a>
-    <a href="darshan.html" class="service-card">
-      <div class="service-number">03</div>
-      <div class="service-icon-wrap">👁️</div>
-      <div class="service-name">Live Darshan</div>
-      <p class="service-desc">Witness the morning aarti at Kashi Vishwanath or the evening darshan at Tirupati — live, from anywhere in the world.</p>
-      <div class="service-arrow">Watch Darshan →</div>
+
+    <!-- Service 3: Live Darshan -->
+    <a href="darshan.html" class="service-card" style="background-image: url('WhatsApp%20Image%202026-06-22%20at%2013.02.02.jpeg'); background-size: cover; background-position: center; position: relative; min-height: 320px;">
+      <div style="position: absolute; inset: 0; background: rgba(26,18,8,0.75); border-radius: inherit;"></div>
+      <div style="position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%;">
+        <div class="service-number" style="color: rgba(255,255,255,0.12);">03</div>
+        <div class="service-icon-wrap" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(4px);">👁️</div>
+        <div class="service-name" style="color: white;">Live Darshan</div>
+        <p class="service-desc" style="color: rgba(255,255,255,0.85); flex: 1;">Witness the morning aarti at Kashi Vishwanath or the evening darshan at Tirupati — live, from anywhere in the world.</p>
+        <div class="service-arrow" style="color: var(--gold);">Watch Darshan →</div>
+      </div>
     </a>
-    <a href="panchang.html" class="service-card">
-      <div class="service-number">04</div>
-      <div class="service-icon-wrap">🗓️</div>
-      <div class="service-name">Panchang</div>
-      <p class="service-desc">Accurate daily Panchang — tithi, nakshatra, rahu kaal, shubh muhurat — personalised to your timezone and regional tradition.</p>
-      <div class="service-arrow">View Panchang →</div>
+
+    <!-- Service 4: Panchang -->
+    <a href="panchang.html" class="service-card" style="background-image: url('WhatsApp%20Image%202026-06-22%20at%2013.02.43.jpeg'); background-size: cover; background-position: center; position: relative; min-height: 320px;">
+      <div style="position: absolute; inset: 0; background: rgba(26,18,8,0.75); border-radius: inherit;"></div>
+      <div style="position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%;">
+        <div class="service-number" style="color: rgba(255,255,255,0.12);">04</div>
+        <div class="service-icon-wrap" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(4px);">🗓️</div>
+        <div class="service-name" style="color: white;">Panchang</div>
+        <p class="service-desc" style="color: rgba(255,255,255,0.85); flex: 1;">Accurate daily Panchang — tithi, nakshatra, rahu kaal, shubh muhurat — personalised to your timezone and regional tradition.</p>
+        <div class="service-arrow" style="color: var(--gold);">View Panchang →</div>
+      </div>
     </a>
-    <a href="horoscope.html" class="service-card">
-      <div class="service-number">05</div>
-      <div class="service-icon-wrap">⭐</div>
-      <div class="service-name">Jyotish & Astrology</div>
-      <p class="service-desc">Free daily horoscope, kundali matching, and access to learned Vedic astrologers for personal guidance on life's most important moments.</p>
-      <div class="service-arrow">Read Horoscope →</div>
+
+    <!-- Service 5: Jyotish & Astrology -->
+    <a href="horoscope.html" class="service-card" style="background-image: url('images/horoscope-bg.jpg'); background-size: cover; background-position: center; position: relative; min-height: 320px;">
+      <div style="position: absolute; inset: 0; background: rgba(26,18,8,0.75); border-radius: inherit;"></div>
+      <div style="position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%;">
+        <div class="service-number" style="color: rgba(255,255,255,0.12);">05</div>
+        <div class="service-icon-wrap" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(4px);">⭐</div>
+        <div class="service-name" style="color: white;">Jyotish & Astrology</div>
+        <p class="service-desc" style="color: rgba(255,255,255,0.85); flex: 1;">Free daily horoscope, kundali matching, and access to learned Vedic astrologers for personal guidance on life's most important moments.</p>
+        <div class="service-arrow" style="color: var(--gold);">Read Horoscope →</div>
+      </div>
     </a>
-    <a href="library.html" class="service-card">
-      <div class="service-number">06</div>
-      <div class="service-icon-wrap">📖</div>
-      <div class="service-name">Sacred Library</div>
-      <p class="service-desc">5000+ bhajans, aartis, chalisas, mantras, and curated articles on Sanatan Dharma — beautifully organised, ad-free, always accessible.</p>
-      <div class="service-arrow">Explore Library →</div>
+
+    <!-- Service 6: Sacred Library -->
+    <a href="library.html" class="service-card" style="background-image: url('WhatsApp%: 20Image % 202026px 6px 22% 20at % 2013.04em 0.3em;.jpeg'); background-size: cover; background-position: center; position: relative; min-height: 320px;">
+      <div style="position: absolute; inset: 0; background: rgba(26,18,8,0.75); border-radius: inherit;"></div>
+      <div style="position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%;">
+        <div class="service-number" style="color: rgba(255,255,255,0.12);">06</div>
+        <div class="service-icon-wrap" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(4px);">📖</div>
+        <div class="service-name" style="color: white;">Sacred Library</div>
+        <p class="service-desc" style="color: rgba(255,255,255,0.85); flex: 1;">5000+ bhajans, aartis, chalisas, mantras, and curated articles on Sanatan Dharma — beautifully organised, ad-free, always accessible.</p>
+        <div class="service-arrow" style="color: var(--gold);">Explore Library →</div>
+      </div>
     </a>
   </div>
 </section>
+
 
 <!-- FEATURED PUJA -->
 <section class="featured">
